@@ -5,41 +5,31 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import useStyles from './loginStyles';
 import { Button, MenuItem, Typography } from '@mui/material';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { changeUser } from 'redux/slice/userSlice';
+
+import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
-import Lottie from 'lottie-web';
-import MyLottieAnimation from 'components/lottie/lottieLogo';
-
-interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-}
-
-const GET_USERS = gql`
-    query MyQuery {
-        allUsers {
-            nodes {
-                firstName
-                lastName
-                id
-            }
-        }
-    }
-`;
+import GET_USERS from 'queries/query/getAllUser';
+import User from 'models/interface/user';
 
 const Login: React.FC = () => {
     const { classes } = useStyles();
     const [selectedUserId, setSelectedUserId] = useState<string>('');
     const [users, setUsers] = useState<User[]>([]);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const navigatoin = useNavigate();
 
     const handleChange = (event: SelectChangeEvent) => {
         setSelectedUserId(event.target.value as string);
-        dispatch(changeUser(event.target.value));
+        const user: any = users.find((user) => user.id === event.target.value);
+        dispatch(
+            setUser({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+            })
+        );
     };
 
     useQuery(GET_USERS, {
@@ -49,67 +39,44 @@ const Login: React.FC = () => {
     });
     const homeNavigation = () => {
         if (selectedUserId) {
-            navigate('firstPage');
+            navigatoin('firstPage/songs');
         }
     };
 
     return (
-        <>
-            <div className={classes.lottieStyle}>
-                <MyLottieAnimation />
-            </div>
-            <div className={classes.fieldsContainer}>
-                <Typography className={classes.title}>Musify</Typography>
-                <Box>
-                    <FormControl className={classes.menu} fullWidth>
-                        <InputLabel
-                            className={classes.titleMenu}
-                            id="demo-simple-select-label"
-                        >
-                            בחר משתמש להתחברות
-                        </InputLabel>
-                        <Select
-                            // open
-                            className={classes.select}
-                            value={selectedUserId}
-                            label="בחר משתמש להתחברות"
-                            onChange={handleChange}
-                        >
-                            {users.map((user) => {
-                                return (
-                                    <MenuItem
-                                        key={user.id}
-                                        value={
-                                            user.firstName + ' ' + user.lastName
-                                        }
-                                    >
-                                        {user.firstName}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormControl>
-                </Box>
-                <Button
-                    onClick={homeNavigation}
-                    className={classes.btn}
-                    variant="contained"
+        <div className={classes.fieldsContainer}>
+            <Typography className={classes.title}>Musify</Typography>
+            <FormControl className={classes.menu} fullWidth>
+                <InputLabel
+                    className={classes.titleMenu}
+                    id="demo-simple-select-label"
                 >
-                    התחבר
-                </Button>
-            </div>
-        </>
+                    בחר משתמש להתחברות
+                </InputLabel>
+                <Select
+                    className={classes.select}
+                    value={selectedUserId}
+                    label="בחר משתמש להתחברות"
+                    onChange={handleChange}
+                >
+                    {users.map((user) => {
+                        return (
+                            <MenuItem key={user.id} value={user.id}>
+                                {user.firstName + ' ' + user.lastName}
+                            </MenuItem>
+                        );
+                    })}
+                </Select>
+            </FormControl>
+            <Button
+                onClick={homeNavigation}
+                className={classes.btn}
+                variant="contained"
+            >
+                התחבר
+            </Button>
+        </div>
     );
 };
 
 export default Login;
-
-// const dispatch = useDispatch();
-
-// const handleChangeUser = (user: string) => {
-// 	dispatch(changeUser(user));
-// };
-
-// const handleCurrentUser = () => {
-// 	dispatch(currentUser());
-// };

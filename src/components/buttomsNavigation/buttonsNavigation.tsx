@@ -1,27 +1,20 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import useStyles from './buttonsMenuStyles';
-import { useNavigate, useLocation } from 'react-router-dom';
-
+import useStyles from './buttonsNavigationStyles';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const MENU_BTN = [
     { item: 'שירים', path: 'songs', color: '', id: 1 },
     { item: 'פלייליסטים', path: 'playlist', color: '', id: 2 },
     { item: 'מועדפים', path: 'favorites', color: '', id: 3 },
 ];
 
-const ButtonsMenu: React.FC = () => {
-    const navigate = useNavigate();
+const ButtonsNavigation: React.FC = () => {
     const location = useLocation();
+    const navigation = useNavigate();
 
     const { classes, cx } = useStyles();
 
-    const homeNavigation = (path: string) => {
-        navigate(path);
-    };
-
-    const changeNoteColor = (path: string) => {
-        MENU_BTN.map((btn) => (btn.path !== path ? (btn.color = 'green') : {}));
-    };
     return (
         <div className={classes.btnContainer}>
             {MENU_BTN.map((btn) => (
@@ -33,7 +26,7 @@ const ButtonsMenu: React.FC = () => {
                             '/firstPage/' + btn.path === location.pathname,
                     })}
                     onClick={() => {
-                        homeNavigation(btn.path);
+                        navigation(btn.path);
                     }}
                 >
                     {btn.item}
@@ -43,4 +36,4 @@ const ButtonsMenu: React.FC = () => {
     );
 };
 
-export default ButtonsMenu;
+export default ButtonsNavigation;

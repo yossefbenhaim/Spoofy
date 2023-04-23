@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { styled } from '@mui/material/styles';
 
 import { Typography } from '@mui/material';
@@ -10,32 +10,48 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
-import useStyles from './sliderStyles';
+import useStyles from './musicPlayerStyles';
 import Slide from '@mui/material/Slide';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useSelector } from 'react-redux';
-import { statusSlider } from 'redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { currentSong, allSongs } from 'redux/store';
 import formatDuration from 'utils/formatDuration';
+import { setCurrentSong } from 'redux/slice/currentSong';
+import Song from 'models/interface/song';
 
-const Sliderr: React.FC = () => {
+const MusicPlayer: React.FC = () => {
     const { classes } = useStyles();
-    const duration = 90; // seconds
-    const status = useSelector((state: statusSlider) => state.statusSlider);
-
+    const dispatch = useDispatch();
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    const [currentTime, setCurrentTime] = useState(0);
+    const [currentTime, setCurrentTime] = useState<number>(0);
+
+    const allSongs = useSelector((state: allSongs) => state.allSongs);
+    const currentSongId = useSelector(
+        (state: currentSong) => state.currentSong
+    );
+
+    const currentSong = useMemo(() => {
+        return allSongs.songs.find((song) => song.id === currentSongId.id);
+    }, [currentSongId, allSongs]);
+
+    const duration: any = currentSong?.duration; // seconds
 
     useEffect(() => {
         let interval: any = null;
         if (isPlaying) {
-            interval = setInterval(() => {
-                setCurrentTime((currentTime) => currentTime + 1);
-            }, 1000);
+            if (currentTime !== duration + 1) {
+                interval = setInterval(() => {
+                    setCurrentTime((currentTime) => currentTime + 1);
+                }, 1000);
+            } else {
+                setCurrentTime(0);
+                nextSong(1);
+            }
         } else {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
-    }, [isPlaying]);
+    }, [isPlaying, currentTime]);
 
     const handleClickPlay = () => {
         setIsPlaying(!isPlaying);
@@ -44,11 +60,28 @@ const Sliderr: React.FC = () => {
     const handleSliderChange = (newValue: number) => {
         setCurrentTime(newValue);
     };
+
+    const nextSong = (direction: number): void => {
+        const currentSongIndex = allSongs.songs.findIndex(
+            (song) => song.id === currentSongId.id
+        );
+        const next: Song = allSongs.songs[currentSongIndex + direction];
+        dispatch(setCurrentSong(next.id));
+        setCurrentTime(0);
+    };
+
+    let flagTimeChange: any = false;
+    if (Boolean(currentSongId.id)) {
+        flagTimeChange = Boolean(currentSongId.id);
+    }
     const icon = (
         <div className={classes.sliderContainer}>
             <div className={classes.playContainer}>
                 <div className={classes.playSong}>
-                    <IconButton className={classes.sizeIcon}>
+                    <IconButton
+                        onClick={() => nextSong(-1)}
+                        className={classes.sizeIcon}
+                    >
                         <SkipPreviousIcon className={classes.sizeSvg} />
                     </IconButton>
                     <IconButton
@@ -61,13 +94,18 @@ const Sliderr: React.FC = () => {
                             <PauseIcon className={classes.sizeSvg} />
                         )}
                     </IconButton>
-                    <IconButton className={classes.sizeIcon}>
+                    <IconButton
+                        onClick={() => nextSong(1)}
+                        className={classes.sizeIcon}
+                    >
                         <SkipNextIcon className={classes.sizeSvg} />
                     </IconButton>
                 </div>
                 <div className={classes.titleSong}>
-                    <div className={classes.artistSize}>שם השיר</div>
-                    <div>שם האומן</div>
+                    <div className={classes.artistSize}>
+                        {currentSong?.name}
+                    </div>
+                    <div>{currentSong?.artistByArtistId.name} </div>
                 </div>
             </div>
 
@@ -85,18 +123,21 @@ const Sliderr: React.FC = () => {
                     {formatDuration(currentTime)}
                 </Typography>
                 <Typography className={classes.tinyText}>
-                    {formatDuration(duration - currentTime)}
+                    {formatDuration(
+                        flagTimeChange ? duration - currentTime : currentTime
+                    )}
                 </Typography>
             </div>
         </div>
     );
+
     return (
         <div className={classes.slide}>
-            <Slide direction="up" in={status.status}>
+            <Slide direction="up" in={Boolean(currentSongId.id)}>
                 {icon}
             </Slide>
         </div>
     );
 };
 
-export default Sliderr;
+export default MusicPlayer;

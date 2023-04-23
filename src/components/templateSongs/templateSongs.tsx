@@ -1,53 +1,34 @@
-import React, { useState } from 'react';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import useStyles from './templateSongsStyles';
-import { Button } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AddSongToPlaylist from 'components/iconAaddSongToPlaylist/iconAddSongToPlaylist';
+import MenuRow from 'components/menuRow/menuRow';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery, gql } from '@apollo/client';
-import Song from 'models/interface/song';
-import { statusSlider } from 'redux/store';
-import { changeStatus, currentSlider } from 'redux/slice/statusSlider';
-
+import { allSongs, currentSong } from 'redux/store';
+import { setSongs } from 'redux/slice/allSongs';
+import { setCurrentSong } from 'redux/slice/currentSong';
+import { useQuery } from '@apollo/client';
+import MyLottieAnimation from 'components/lottie/lottieLogo';
+import GET_SONGS from 'queries/query/getAllSongs';
+import AddSong from 'components/addSong/addSong';
 // import { LicenseInfo } from '@mui/x-data-grid-pro';
 // LicenseInfo.setLicenseKey(
 //     '6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVR1c3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU01PTj0x'
 // );
-const GET_USERS = gql`
-    query MyQuery {
-        allSongs {
-            nodes {
-                id
-                name
-                duration
-                artistByArtistId {
-                    name
-                }
-            }
-        }
-    }
-`;
 
 const TemplateSongs: React.FC = () => {
     const { classes } = useStyles();
     const dispatch = useDispatch();
-    const [songs, setSongs] = useState<Song[]>([]);
+    const allSongs = useSelector((state: allSongs) => state.allSongs);
+    const currentSongId = useSelector(
+        (state: currentSong) => state.currentSong.id
+    );
 
-    const status = useSelector((state: statusSlider) => state.statusSlider);
-
-    function handleClick() {
-        dispatch(changeStatus(!status.status));
-    }
-
-    useQuery(GET_USERS, {
+    useQuery(GET_SONGS, {
         onCompleted: (data) => {
-            setSongs(data.allSongs.nodes);
+            dispatch(setSongs(data.allSongs.nodes));
         },
     });
-    console.log(songs);
 
-    const rows = songs.map((item) => ({
+    const rows = allSongs.songs.map((item) => ({
         id: item.id,
         song: item.name,
         duration: item.duration,
@@ -93,7 +74,7 @@ const TemplateSongs: React.FC = () => {
             renderCell: () => {
                 return (
                     <div>
-                        <AddSongToPlaylist />
+                        <MenuRow />
                     </div>
                 );
             },
@@ -104,10 +85,10 @@ const TemplateSongs: React.FC = () => {
             headerClassName: classes.headerDataGrid,
             sortable: false,
             resizable: false,
-            width: 50,
+            width: 70,
             headerAlign: 'left',
             renderCell: () => {
-                return <FavoriteBorderIcon />;
+                return <MyLottieAnimation></MyLottieAnimation>;
             },
         },
     ];
@@ -116,7 +97,6 @@ const TemplateSongs: React.FC = () => {
         <div className={classes.fieldContainer}>
             <div className={classes.header}>רשימת השירים</div>
             <DataGridPro
-                onCellClick={handleClick}
                 className={classes.dataGride}
                 disableColumnMenu
                 rows={rows}
@@ -125,12 +105,20 @@ const TemplateSongs: React.FC = () => {
                 hideFooterRowCount
                 hideFooterPagination
                 hideFooterSelectedRowCount
+                rowSelectionModel={currentSongId}
+                onRowSelectionModelChange={(selectedRoe) => {
+                    const test: any = selectedRoe[0];
+                    if (selectedRoe[0] !== undefined) {
+                        dispatch(setCurrentSong(test));
+                    }
+                    if (selectedRoe[0] === currentSongId) {
+                        dispatch(setCurrentSong(''));
+                    }
+                }}
             />
 
             <div className={classes.addSongBtnContainer}>
-                <Button variant="contained" className={classes.addSongBtn}>
-                    + צור שיר
-                </Button>
+                <AddSong />
             </div>
         </div>
     );

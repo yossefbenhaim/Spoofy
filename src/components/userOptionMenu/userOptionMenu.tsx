@@ -1,19 +1,18 @@
 import * as React from 'react';
-import useStyles from './statusAccountStyles';
+import useStyles from './userOptionMenuStyles';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { currentUser, changeUser } from 'redux/slice/userSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { UserStor } from 'redux/store';
-
+import { currentUser } from 'redux/store';
+import { gql, useMutation } from '@apollo/client';
+import DELETE_USER from 'queries/mu/deleteUser';
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
@@ -23,12 +22,12 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const StatusAccount: React.FC = () => {
+const UserOptionMenu: React.FC = () => {
     const [open, setOpen] = React.useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const dispatch = useDispatch();
-    const name = useSelector((state: UserStor) => state.nameUser);
+    const navigation = useNavigate();
+    const { classes } = useStyles();
+    const currentUser = useSelector((state: currentUser) => state.currentUser);
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -38,13 +37,26 @@ const StatusAccount: React.FC = () => {
     };
 
     const navigateToHome = () => {
-        navigate('/');
+        navigation('/');
+        handleDeleteUser(currentUser.id);
     };
 
-    const { classes } = useStyles();
+    const [deleteUser, { loading, error }] = useMutation(DELETE_USER);
+
+    const handleDeleteUser = (userId: string) => {
+        deleteUser({ variables: { id: userId } })
+            .then(() => console.log('User deleted successfully!'))
+            .catch((err) => console.error('Failed to delete user: ', err));
+    };
+
     return (
         <div className={classes.fieldsContainer}>
-            <div className={classes.title}>{name.name + '   היי  '}</div>
+            <div className={classes.title}>
+                {currentUser.firstName +
+                    ' ' +
+                    currentUser.lastName +
+                    '   היי  '}
+            </div>
             <div>
                 <Button
                     onClick={handleClickOpen}
@@ -100,4 +112,4 @@ const StatusAccount: React.FC = () => {
         </div>
     );
 };
-export default StatusAccount;
+export default UserOptionMenu;

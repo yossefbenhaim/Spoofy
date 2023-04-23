@@ -4,7 +4,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './lottieLogoStyles';
 
-const MyLottieAnimation = () => {
+const LogoHome = () => {
     const container: any = useRef(null);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -20,7 +20,7 @@ const MyLottieAnimation = () => {
             renderer: 'svg',
             loop: false,
             autoplay: true,
-            path: '/src/like.json',
+            path: '/src/logoHome.json',
         });
 
         animation.play();
@@ -34,7 +34,7 @@ const MyLottieAnimation = () => {
         <div>
             <IconButton className={classes.iconBotton} onClick={handleClose}>
                 {isVisible ? (
-                    <FavoriteBorderIcon className={classes.icon2} />
+                    <div className={classes.logo} ref={container} />
                 ) : (
                     <div className={classes.logo} ref={container} />
                 )}
@@ -43,4 +43,4 @@ const MyLottieAnimation = () => {
     );
 };
 
-export default MyLottieAnimation;
+export default LogoHome;

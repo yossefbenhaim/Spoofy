@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 
-const AddSongToPlaylist: React.FC = () => {
+const MenuRow: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,4 +43,4 @@ const AddSongToPlaylist: React.FC = () => {
     );
 };
 
-export default AddSongToPlaylist;
+export default MenuRow;
