@@ -48,53 +48,34 @@ const useStyles = makeStyles()({
     },
     titleMenu: {
         left: 'inherit',
-
+        color: `rgb(${74}, ${191}, ${117})`,
         '&.Mui-focused': {
             color: `rgb(${74}, ${191}, ${117})!important`,
         },
     },
     select: {
-        // width: '220px',
-        // backgroundColor: `rgb(${112}, ${106}, ${106})`,
-        // borderRadius: '17px',
-        '& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon': {
-            right: '10%',
-        },
+        color: `rgb(${255}, ${255}, ${255})`,
 
-        '& .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon': {
-            right: '10%',
-        },
-        '& .css-ujn4t5-MuiInputBase-root-MuiInput-root-MuiSelect-root-select .MuiSelect-icon':
+        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input':
             {
-                right: '10%',
+                paddingRight: '0px',
             },
+
         '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus':
             {
                 backgroundColor: `rgb(${118}, ${118}, ${118})`,
             },
-        '& .css-gbe0rs-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root-select':
-            {
-                borderRadius: '17px',
-            },
-        '& .MuiSelect-icon': {
-            left: '7px',
-            color: 'white',
-        },
-
-        '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-            {
-                padding: '16.5px 55px',
-            },
-        '& .css-s087wz-MuiInputBase-root-MuiInput-root-MuiSelect-root-select::after':
-            {
-                borderBottom: `rgb(${74}, ${191}, ${117})`,
-            },
-        '& .css-14v4aj8-MuiInputBase-root-MuiInput-root-MuiSelect-root-select::after':
-            {
-                borderBottom: `rgb(${74}, ${191}, ${117})`,
-            },
         '::after': {
             borderBottom: `rgb(${74}, ${191}, ${117})`,
+        },
+
+        '& .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon': {
+            position: 'unset',
+            color: `rgb(${255}, ${255}, ${255})`,
+        },
+        '& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon': {
+            position: 'unset',
+            color: `rgb(${255}, ${255}, ${255})`,
         },
     },
     input: {
@@ -105,7 +86,7 @@ const useStyles = makeStyles()({
 
         '& .Mui-focused': {
             left: 'inherit',
-            color: `rgb(${74}, ${191}, ${117})`,
+            color: `rgb(${255}, ${255}, ${255})`,
         },
 
         '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root': {

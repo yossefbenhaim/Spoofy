@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { currentUser } from 'redux/store';
-import { gql, useMutation } from '@apollo/client';
-import DELETE_USER from 'queries/mu/deleteUser';
+import { useMutation } from '@apollo/client';
+import DELETE_USER from 'queries/mutation/deleteUser';
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;

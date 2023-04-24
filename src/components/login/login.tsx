@@ -7,7 +7,6 @@ import useStyles from './loginStyles';
 import { Button, MenuItem, Typography } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
 import GET_USERS from 'queries/query/getAllUser';
