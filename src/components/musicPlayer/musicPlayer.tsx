@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-
 import { Typography } from '@mui/material';
 
 import Slider from '@mui/material/Slider';
@@ -68,10 +67,6 @@ const MusicPlayer: React.FC = () => {
 		setCurrentTime(0);
 	};
 
-	let flagTimeChange: any = false;
-	if (Boolean(currentSongId.id)) {
-		flagTimeChange = Boolean(currentSongId.id);
-	}
 	const icon = (
 		<div className={classes.sliderContainer}>
 			<div className={classes.playContainer}>
@@ -122,7 +117,7 @@ const MusicPlayer: React.FC = () => {
 				</Typography>
 				<Typography className={classes.tinyText}>
 					{formatDuration(
-						flagTimeChange ? duration - currentTime : currentTime
+						Boolean(currentSongId.id) ? duration - currentTime : currentTime
 					)}
 				</Typography>
 			</div>

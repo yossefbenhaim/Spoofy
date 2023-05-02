@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, MenuItem, Typography } from '@mui/material';
+import { Button, MenuItem } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
 import useStyles from './addSongStyles';
@@ -7,19 +7,24 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { useQuery } from '@apollo/client';
 import GET_ALL_ARTIST from 'queries/query/getAiiArtist';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Artist from 'models/interface/artist';
 import { useMutation } from '@apollo/client';
 import ADD_SONG from 'queries/mutation/addSong';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller } from 'react-hook-form';
 import FormHelperText from '@mui/material/FormHelperText';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 
-import * as z from 'zod';
+interface FormAddSong {
+	songName: string;
+	artistName: string;
+	duration: number;
+}
 
+import * as z from 'zod';
 const schema = z.object({
 	songName: z.string().min(2, { message: "Song name must be at least 2 characters long" }).max(50, 'Name must be at least 50 characters'),
 	artistName: z.string().refine((value) => value !== '', {
@@ -28,28 +33,17 @@ const schema = z.object({
 	duration: z.number().min(30, { message: "you must pick duration" }),
 });
 
-let flag: boolean = false
-
-
-
-interface FormAddSong {
-	songName: string;
-	artistName: string;
-	duration: number;
-}
-
 const AddSong: React.FC = () => {
 	const resolver = zodResolver(schema)
 	const { classes, cx } = useStyles();
 	const [open, setOpen] = useState(false);
 	const [artists, setArtists] = useState<Artist[]>([]);
+	const [addSong] = useMutation(ADD_SONG);
 	const { control, handleSubmit, formState: { errors } } = useForm<FormAddSong>({
 		resolver
 	});
-	const [addSong] = useMutation(ADD_SONG);
 
 	const onSubmit = (data: FormAddSong) => {
-
 		addSong({
 			variables: {
 				input: {
@@ -74,14 +68,11 @@ const AddSong: React.FC = () => {
 		setOpen(false);
 	};
 
-
 	useQuery(GET_ALL_ARTIST, {
 		onCompleted: (data) => {
 			setArtists(data.allArtists.nodes);
 		},
 	});
-
-
 
 	return (
 		<div>
@@ -100,12 +91,9 @@ const AddSong: React.FC = () => {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className={classes.dialog}>
 						<div className={classes.header}>יצירת שיר</div>
-
-
 						<Controller
 							name="songName"
 							control={control}
-							defaultValue=""
 							render={({ field }) => (
 								<TextField
 									className={classes.input}
@@ -116,9 +104,7 @@ const AddSong: React.FC = () => {
 									error={!!errors.songName}
 									helperText={errors.songName && <span className={classes.error}>{errors.songName.message}</span>}
 								/>
-
 							)}
-
 						/>
 						<Controller
 							name="artistName"
@@ -132,7 +118,6 @@ const AddSong: React.FC = () => {
 									<InputLabel className={cx(classes.titleMenu, {
 										[classes.error]: errors.artistName?.message === 'Selection cannot be an empty string'
 									})}>
-
 										בחר זמר
 									</InputLabel>
 									<Select
@@ -152,7 +137,6 @@ const AddSong: React.FC = () => {
 										})}
 									</Select>
 									<FormHelperText className={classes.error}>{errors.artistName && <span className={classes.error}>{errors.artistName.message}</span>}</FormHelperText>
-
 								</FormControl>
 							)}
 						/>
@@ -176,7 +160,6 @@ const AddSong: React.FC = () => {
 								/>
 							)}
 						/>
-
 						<Button
 							className={classes.btn}
 							variant="contained"

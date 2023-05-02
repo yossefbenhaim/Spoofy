@@ -11,7 +11,6 @@ const LogoHome: React.FC = () => {
 		setIsVisible(!isVisible);
 	};
 	useEffect(() => {
-
 		const animation = Lottie.loadAnimation({
 			container: container.current,
 			renderer: 'svg',

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -9,6 +8,7 @@ import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
+
 import GET_USERS from 'queries/query/getAllUser';
 import User from 'models/interface/user';
 
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
 
 	const handleChange = (event: SelectChangeEvent) => {
 		setSelectedUserId(event.target.value as string);
-		// להסתכל אצל שמואל זה אותו דבר
+		// להסתכל אצל שמואל זה אותו 
 		const user: any = users.find((user) => user.id === event.target.value);
 		dispatch(
 			setUser({

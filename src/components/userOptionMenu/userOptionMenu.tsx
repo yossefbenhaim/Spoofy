@@ -30,7 +30,6 @@ const UserOptionMenu: React.FC = () => {
 
 	const navigateToHome = () => {
 		navigation('/');
-		handleDeleteUser(currentUser.id);
 	};
 
 	const [deleteUser] = useMutation(DELETE_USER);
@@ -93,6 +92,7 @@ const UserOptionMenu: React.FC = () => {
 							onClick={() => {
 								handleClose();
 								navigateToHome();
+								handleDeleteUser(currentUser.id);
 							}}
 						>
 							כן
