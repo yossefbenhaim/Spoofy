@@ -32,7 +32,7 @@ const TemplateSongs: React.FC = () => {
 	const rows = allSongs.songs.map((item) => ({
 		id: item.id,
 		song: item.name,
-		duration: formatDuration(item.duration),
+		duration: formatDuration(parseInt(item.duration)),
 		name_artist: item.artistByArtistId.name,
 	}));
 
@@ -40,6 +40,16 @@ const TemplateSongs: React.FC = () => {
 		{
 			field: 'song',
 			headerName: 'Song',
+			width: 350,
+			sortable: false,
+			resizable: false,
+			headerClassName: classes.headerDataGrid,
+			headerAlign: 'left',
+		},
+
+		{
+			field: 'name_artist',
+			headerName: 'Artist',
 			width: 200,
 			sortable: false,
 			resizable: false,
@@ -50,15 +60,6 @@ const TemplateSongs: React.FC = () => {
 			field: 'duration',
 			headerName: 'Duration',
 			width: 150,
-			sortable: false,
-			resizable: false,
-			headerClassName: classes.headerDataGrid,
-			headerAlign: 'left',
-		},
-		{
-			field: 'name_artist',
-			headerName: 'Artist',
-			width: 200,
 			sortable: false,
 			resizable: false,
 			headerClassName: classes.headerDataGrid,

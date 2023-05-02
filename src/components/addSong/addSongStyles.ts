@@ -137,14 +137,15 @@ const useStyles = makeStyles()({
         marginBottom: '3%',
         fontSize: '1rem',
         padding: '3px 16px',
-
         '&:hover': {
             backgroundColor: `rgb(${80}, ${160}, ${60})`,
         },
     },
 	error: {
 		color:' #d32f2f ',
-		float: 'right'
+		float: 'right',
+		fontWeight: 'bold'
+
 
 	}
 });

@@ -7,6 +7,7 @@ const useStyles = makeStyles()({
         height: '100%',
     },
     dataGride: {
+		padding: '1%',
         direction: 'rtl',
         color: `rgb(${225}, ${225}, ${225})`,
         borderColor: `rgb(${80}, ${77}, ${77})`,
@@ -14,11 +15,8 @@ const useStyles = makeStyles()({
         height: '400px',
         backgroundColor: 'gray',
         outline: 'solid #d0130d 0px',
-
         borderRadius: '20px',
-        '& .css-axafay-MuiDataGrid-virtualScroller': {
-            borderRadius: '28px',
-        },
+        
         '& .MuiDataGrid-columnHeader:focus': {
             outline: 'none!important',
         },
@@ -34,6 +32,9 @@ const useStyles = makeStyles()({
         '& .MuiDataGrid-main > div:nth-child(3)': {
             display: 'none',
         },
+		'& .css-1iyq7zh-MuiDataGrid-columnHeaders': {
+			fontSize: '20px'
+		}
     },
 
     header: {
