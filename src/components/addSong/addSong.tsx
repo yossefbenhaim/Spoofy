@@ -13,173 +13,182 @@ import { useMutation } from '@apollo/client';
 import ADD_SONG from 'queries/mutation/addSong';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller } from 'react-hook-form';
+import FormHelperText from '@mui/material/FormHelperText';
+import dayjs, { Dayjs } from 'dayjs';
+import { zodResolver } from '@hookform/resolvers/zod';
+import ConvertToMilliseconds from 'utils/convertToMilliseconds';
+
+import * as z from 'zod';
+
+const schema = z.object({
+	songName: z.string().min(2, { message: "Song name must be at least 2 characters long" }).max(50, 'Name must be at least 50 characters'),
+	artistName: z.string().refine((value) => value !== '', {
+		message: 'Selection cannot be an empty string',
+	}),
+	duration: z.number().min(30, { message: "you must pick duration" }),
+});
+
+let flag: boolean = false
+
+
 
 interface FormAddSong {
-    songName: string;
-    artistName: string;
-    duration: React.ChangeEvent<HTMLInputElement>;
+	songName: string;
+	artistName: string;
+	duration: number;
 }
 
 const AddSong: React.FC = () => {
-    const { classes } = useStyles();
-    const [open, setOpen] = useState(false);
-    const [selectedUserId, setSelectedUserId] = useState<string>('');
-    const [artists, setArtists] = useState<Artist[]>([]);
-    const { control, handleSubmit } = useForm<FormAddSong>();
+	const resolver = zodResolver(schema)
+	const { classes, cx } = useStyles();
+	const [open, setOpen] = useState(false);
+	const [artists, setArtists] = useState<Artist[]>([]);
+	const { control, handleSubmit, formState: { errors } } = useForm<FormAddSong>({
+		resolver
+	});
+	const [addSong] = useMutation(ADD_SONG);
 
-    const [selectedTime, setSelectedTime] = useState<Date | null>(null);
+	const onSubmit = (data: FormAddSong) => {
 
-    const handleTimeChange = (newValue: Date | null) => {
-        consol.log(newValue);
-        setSelectedTime(newValue);
-    };
+		addSong({
+			variables: {
+				input: {
+					song: {
+						name: data.songName,
+						artistId: data.artistName,
+						duration: data.duration,
+					},
+				},
+			},
+		})
+			.then(() => console.log('Song Add successfully!'))
+			.catch((err) => console.error('Failed to add song: ', err));
+		handleClose();
+	};
 
-    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (selectedTime) {
-            const hours = selectedTime.getHours();
-            const minutes = selectedTime.getMinutes();
-            console.log(`Hours: ${hours}, Minutes: ${minutes}`);
-        }
-    };
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
-    const [addSong, { loading, error }] = useMutation(ADD_SONG);
+	const handleClose = () => {
+		setOpen(false);
+	};
 
-    const onSubmit = (data: FormAddSong) => {
-        console.log(data.duration);
 
-        addSong({
-            variables: {
-                input: {
-                    song: {
-                        name: data.songName,
-                        artistId: data.artistName,
-                        duration: parseInt(data.duration.target),
-                    },
-                },
-            },
-        })
-            .then(() => console.log('User Add successfully!'))
-            .catch((err) => console.error('Failed to add song: ', err));
-        console.log(data);
-        console.log('yes');
-        handleClose();
-    };
+	useQuery(GET_ALL_ARTIST, {
+		onCompleted: (data) => {
+			setArtists(data.allArtists.nodes);
+		},
+	});
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
-    const handleClose = () => {
-        setOpen(false);sfdmioosdfmiomidsf
-    };
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setSelectedUserId(event.target.value as string);
-    };
+	return (
+		<div>
+			<Button
+				variant="contained"
+				onClick={handleClickOpen}
+				className={classes.addSongBtn}
+			>
+				+ צור שיר
+			</Button>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				className={classes.dialogContainer}
+			>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<div className={classes.dialog}>
+						<div className={classes.header}>יצירת שיר</div>
 
-    useQuery(GET_sssALL_ARTISddT, {
-        onCompleted: (data) => {
-            setArtists(data.allArtists.nodes);
-        },
-    });
 
-    return (
-        <div>
-            <Button
-                variant="contained"
-                onClick={handleClickOpen}
-                className={classes.addSongBtn}
-            >
-                + צור שיר
-            </Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                className={classes.dialogContainer}
-            >
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className={classes.dialog}>
-                        <div className={classes.header}>יצירת שיר</div>
+						<Controller
+							name="songName"
+							control={control}
+							defaultValue=""
+							render={({ field }) => (
+								<TextField
+									className={classes.input}
+									id="standard-basic"
+									label="שם השיר"
+									variant="standard"
+									{...field}
+									error={!!errors.songName}
+									helperText={errors.songName && <span className={classes.error}>{errors.songName.message}</span>}
+								/>
 
-                        <Controller
-                            name="songName"
-                            control={control}
-                            defaultValue=""
-                            // rules={{ required: true }}
-                            render={({ field }) => (
-                                <TextField
-                                    className={classes.input}
-                                    id="standard-basic"
-                                    label="שם השיר"
-                                    variant="standard"
-                                    {...field}
-                                />
-                            )}
-                        />
+							)}
 
-                        <Controller
-                            name="artistName"
-                            control={control}
-                            defaultValue=""
-                            // rules={{ requir ed: true }}
-                            render={({ field }) => (
-                                <FormControl
-                                    className={classes.menu}
-                                    variant="standard"
-                                    // required
-                                >
-                                    <InputLabel className={classes.titleMenu}>
-                                        בחר זמר
-                                    </InputLabel>
-                                    <Select
-                                        {...field}
-                                        className={classes.select}
-                                        value={selectedUserId}
-                                        onChange={handleChange}
-                                    >
-                                        {artists.map((artist) => {
-                                            return (
-                                                <MenuItem
-                                                    key={artist.id}
-                                                    value={artist.id}
-                                                >
-                                                    {artist.name}
-                                                </MenuItem>
-                                            );
-                                        })}
-                                    </Select>
-                                </FormControl>
-                            )}
-                        />
-                        <Controller
-                            name="duration"
-                            control={control}
-                            // rules={{ required: true }}
-                            render={({ field }) => (
-                                <TimeField
-                                    onChange={() => handleTimeChange}
-                                    // {...field}
-                                    className={classes.input}
-                                    label="Duration"
-                                    variant="standard"
-                                    format="HH:mm"
-                                />
-                            )}
-                        />
-                        <Button
-                            onClick={handleClose}
-                            className={classes.btn}
-                            variant="contained"
-                            type="submit"
-                        >
-                            צור שיר
-                        </Button>
-                    </div>
-                </form>
-            </Dialog>
-        </div>
-    );
+						/>
+						<Controller
+							name="artistName"
+							control={control}
+							defaultValue=''
+							render={({ field }) => (
+								<FormControl
+									className={classes.menu}
+									variant="standard"
+								>
+									<InputLabel className={cx(classes.titleMenu, {
+										[classes.error]: errors.artistName?.message === 'Selection cannot be an empty string'
+									})}>
+
+										בחר זמר
+									</InputLabel>
+									<Select
+										variant="standard"
+										{...field}
+										className={classes.select}
+									>
+										{artists.map((artist) => {
+											return (
+												<MenuItem
+													key={artist.id}
+													value={artist.id}
+												>
+													{artist.name}
+												</MenuItem>
+											);
+										})}
+									</Select>
+									<FormHelperText className={classes.error}>{errors.artistName && <span className={classes.error}>{errors.artistName.message}</span>}</FormHelperText>
+
+								</FormControl>
+							)}
+						/>
+						<Controller
+							name="duration"
+							control={control}
+							render={({ field: { onChange, value = 0 } }) => (
+								<TimeField
+									onChange={(time: any) => {
+										const formattedTime: number =
+											ConvertToMilliseconds(time?.minute(), time?.second())
+										onChange(formattedTime);
+										console.log(formattedTime);
+									}}
+									value={dayjs(value).format('mm:ss')}
+									className={classes.input}
+									label="Duration"
+									variant="standard"
+									format="mm:ss"
+									helperText={errors.duration && <span className={classes.error}>{errors.duration.message}</span>}
+								/>
+							)}
+						/>
+
+						<Button
+							className={classes.btn}
+							variant="contained"
+							type="submit"
+						>
+							צור שיר
+						</Button>
+					</div>
+				</form>
+			</Dialog>
+		</div>
+	);
 };
 
 export default AddSong;
