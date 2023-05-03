@@ -1,24 +1,22 @@
-import * as React from 'react';
+import React from 'react';
 import useStyles from './userOptionMenuStyles';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
+import { Button, Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import { currentUser } from 'redux/store';
 import { useMutation } from '@apollo/client';
+import { setUser } from 'redux/slice/currentUser';
+
 import DELETE_USER from 'queries/mutation/deleteUser';
+import { useDispatch } from 'react-redux';
 
 const UserOptionMenu: React.FC = () => {
 	const [open, setOpen] = React.useState(false);
 	const navigation = useNavigate();
 	const { classes } = useStyles();
 	const currentUser = useSelector((state: currentUser) => state.currentUser);
+	const [deleteUser] = useMutation(DELETE_USER);
+	const dispatch = useDispatch();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -29,10 +27,15 @@ const UserOptionMenu: React.FC = () => {
 	};
 
 	const navigateToHome = () => {
+		dispatch(
+			setUser({
+				id: '',
+				firstName: '',
+				lastName: '',
+			})
+		);
 		navigation('/');
 	};
-
-	const [deleteUser] = useMutation(DELETE_USER);
 
 	const handleDeleteUser = (userId: string) => {
 		deleteUser({ variables: { id: userId } })

@@ -7,17 +7,30 @@ import { Button, MenuItem, Typography } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { currentUser } from 'redux/store';
+import { SnackbarOrigin } from '@mui/material/Snackbar';
+import AlertUser from 'components/alert/alertUser';
+export interface State extends SnackbarOrigin {
+	open: boolean;
+}
+
 
 import GET_USERS from 'queries/query/getAllUser';
 import User from 'models/interface/user';
 
 const Login: React.FC = () => {
 	const { classes } = useStyles();
-	const [selectedUserId, setSelectedUserId] = useState<string>('');
 	const [users, setUsers] = useState<User[]>([]);
+	const currentUser = useSelector((state: currentUser) => state.currentUser);
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
+
+	const [state, setState] = React.useState<State>({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+	});
 
 	useQuery(GET_USERS, {
 		onCompleted: (data) => {
@@ -25,8 +38,16 @@ const Login: React.FC = () => {
 		},
 	});
 
+	const handleClick = (newState: SnackbarOrigin) => () => {
+		if (currentUser.id) {
+			navigatoin('firstPage/songs');
+		}
+		else {
+			setState({ open: true, ...newState });
+		}
+	};
+
 	const handleChange = (event: SelectChangeEvent) => {
-		setSelectedUserId(event.target.value as string);
 		// להסתכל אצל שמואל זה אותו 
 		const user: any = users.find((user) => user.id === event.target.value);
 		dispatch(
@@ -38,11 +59,7 @@ const Login: React.FC = () => {
 		);
 	};
 
-	const homeNavigation = () => {
-		if (selectedUserId) {
-			navigatoin('firstPage/songs');
-		}
-	};
+
 
 	return (
 		<div className={classes.fieldsContainer}>
@@ -56,7 +73,7 @@ const Login: React.FC = () => {
 				</InputLabel>
 				<Select
 					className={classes.select}
-					value={selectedUserId}
+					value={currentUser.id}
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>
@@ -70,12 +87,16 @@ const Login: React.FC = () => {
 				</Select>
 			</FormControl>
 			<Button
-				onClick={homeNavigation}
+				onClick={handleClick({
+					vertical: 'top',
+					horizontal: 'center',
+				})}
 				className={classes.btn}
 				variant="contained"
 			>
 				התחבר
 			</Button>
+			<AlertUser setState={setState} state={state} />
 		</div>
 	);
 };
