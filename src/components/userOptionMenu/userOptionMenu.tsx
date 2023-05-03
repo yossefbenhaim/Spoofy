@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useStyles from './userOptionMenuStyles';
 import { Button, Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
@@ -16,12 +16,6 @@ const UserOptionMenu: React.FC = () => {
 	const currentUser = useSelector((state: currentUser) => state.currentUser);
 	const [deleteUser] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (!currentUser.id) {
-			navigation('/');
-		}
-	}, [currentUser.id]);
 
 	const handleClickOpen = () => {
 		setOpen(true);
