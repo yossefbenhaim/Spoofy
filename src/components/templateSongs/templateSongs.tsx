@@ -6,7 +6,7 @@ import { allSongs, currentSong } from 'redux/store';
 import { setSongs } from 'redux/slice/allSongs';
 import { setCurrentSong } from 'redux/slice/currentSong';
 import { useQuery } from '@apollo/client';
-import MyLottieAnimation from 'components/lottie/lottieLogo';
+import LikeSong from 'components/lottie/likeSong';
 import GET_SONGS from 'queries/query/getAllSongs';
 import AddSong from 'components/addSong/addSong';
 import formatDuration from 'utils/formatDuration';
@@ -90,7 +90,7 @@ const TemplateSongs: React.FC = () => {
 			width: 70,
 			headerAlign: 'left',
 			renderCell: () => {
-				return <MyLottieAnimation></MyLottieAnimation>;
+				return <LikeSong></LikeSong>;
 			},
 		},
 	];

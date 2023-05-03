@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Lottie from 'lottie-web';
 import IconButton from '@mui/material/IconButton';
-import useStyles from './lottieLogoStyles';
+import useStyles from './iconMusifyStyle';
 
-const LogoHome: React.FC = () => {
+const IconMusify: React.FC = () => {
 	const container: any = useRef(null);
 	const [isVisible, setIsVisible] = useState<boolean>(true);
 	const { classes } = useStyles();
@@ -39,4 +39,4 @@ const LogoHome: React.FC = () => {
 	);
 };
 
-export default LogoHome;
+export default IconMusify;

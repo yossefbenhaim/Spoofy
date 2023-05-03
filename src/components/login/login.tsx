@@ -15,7 +15,6 @@ export interface State extends SnackbarOrigin {
 	open: boolean;
 }
 
-
 import GET_USERS from 'queries/query/getAllUser';
 import User from 'models/interface/user';
 
@@ -58,8 +57,6 @@ const Login: React.FC = () => {
 			})
 		);
 	};
-
-
 
 	return (
 		<div className={classes.fieldsContainer}>

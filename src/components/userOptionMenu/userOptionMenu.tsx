@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useStyles from './userOptionMenuStyles';
 import { Button, Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { currentUser } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { setUser } from 'redux/slice/currentUser';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DELETE_USER from 'queries/mutation/deleteUser';
-import { useDispatch } from 'react-redux';
 
 const UserOptionMenu: React.FC = () => {
 	const [open, setOpen] = React.useState(false);
@@ -17,6 +16,12 @@ const UserOptionMenu: React.FC = () => {
 	const currentUser = useSelector((state: currentUser) => state.currentUser);
 	const [deleteUser] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!currentUser.id) {
+			navigation('/');
+		}
+	}, [currentUser.id]);
 
 	const handleClickOpen = () => {
 		setOpen(true);

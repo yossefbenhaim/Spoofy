@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useStyles from './firstPageStyles';
-import logo from 'svg/spotify.svg';
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import ButtonsNavigation from 'components/buttomsNavigation/buttonsNavigation';
 import { Outlet } from 'react-router-dom';
-import LogoHome from 'components/lottie/logoHome';
+import IconMusify from 'components/lottie/iconMusify';
 
 const FirstPage: React.FC = () => {
 	const { classes } = useStyles();
@@ -16,7 +15,7 @@ const FirstPage: React.FC = () => {
 				<div className={classes.titleContainer}>
 					<UserOptionMenu></UserOptionMenu>
 					<div className={classes.logoContainer}>
-						<LogoHome></LogoHome>
+						<IconMusify></IconMusify>
 						<div>musify </div>
 					</div>
 				</div>
