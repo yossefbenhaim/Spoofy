@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Lottie from 'lottie-web';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
-import useStyles from './iconMusifyStyle';
+import useStyles from './iconMusifyStyles';
 
 const LikeSong: React.FC = () => {
 	const container: any = useRef(null);

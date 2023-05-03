@@ -20,6 +20,7 @@ const FirstPage: React.FC = () => {
 			navigation('/');
 		}
 	}, [currentUser.id]);
+
 	return (
 		<div className={classes.fieldsContainer}>
 			<div className={classes.header}>

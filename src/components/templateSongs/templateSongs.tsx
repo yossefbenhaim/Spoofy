@@ -1,11 +1,12 @@
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-import useStyles from './templateSongsStyles';
-import MenuRow from 'components/menuRow/menuRow';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { allSongs, currentSong } from 'redux/store';
 import { setSongs } from 'redux/slice/allSongs';
 import { setCurrentSong } from 'redux/slice/currentSong';
 import { useQuery } from '@apollo/client';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import useStyles from './templateSongsStyles';
+import MenuRow from 'components/menuRow/menuRow';
 import LikeSong from 'components/lottie/likeSong';
 import GET_SONGS from 'queries/query/getAllSongs';
 import AddSong from 'components/addSong/addSong';
