@@ -45,8 +45,8 @@ const useStyles = makeStyles()({
     content: { width: '80%', height: '100%', backgroundColor: 'green' },
 
     tableValuse: {
-        width: '60%',
-        marginLeft: '20%',
+        width: '55%',
+        marginLeft: '22.5%',
     },
 });
 

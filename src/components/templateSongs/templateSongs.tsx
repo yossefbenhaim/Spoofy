@@ -48,21 +48,21 @@ const TemplateSongs: React.FC = () => {
 	const columns: GridColDef[] = [
 		{
 			field: RowsFieldsb.song,
-			headerName: RowsFieldsb.song,
-			width: 350,
+			headerName: 'שירים',
+			width: 250,
 			...settingRowGlobal
 		},
 
 		{
 			field: RowsFieldsb.nameArtist,
-			headerName: RowsFieldsb.nameArtist,
+			headerName: 'זמר',
 			width: 200,
 			...settingRowGlobal
 
 		},
 		{
 			field: RowsFieldsb.duration,
-			headerName: RowsFieldsb.duration,
+			headerName: "משך שיר",
 			width: 150,
 			...settingRowGlobal
 
@@ -70,13 +70,12 @@ const TemplateSongs: React.FC = () => {
 		{
 			field: 'menu',
 			headerName: '',
+
 			...settingRowGlobal,
 			width: 50,
 			renderCell: () => {
 				return (
-					<div>
-						<MenuRow />
-					</div>
+					<MenuRow />
 				);
 			},
 		},
@@ -86,7 +85,7 @@ const TemplateSongs: React.FC = () => {
 			...settingRowGlobal,
 			width: 70,
 			renderCell: () => {
-				return <LikeSong></LikeSong>;
+				return <LikeSong />;
 			},
 		},
 	];

@@ -3,10 +3,12 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
+import useStyles from './menuRowStyles';
 
 const MenuRow: React.FC = () => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const { classes } = useStyles();
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -17,6 +19,7 @@ const MenuRow: React.FC = () => {
 	return (
 		<div>
 			<IconButton
+				className={classes.addIcon}
 				id="basic-button"
 				aria-controls={open ? 'basic-menu' : undefined}
 				aria-haspopup="true"

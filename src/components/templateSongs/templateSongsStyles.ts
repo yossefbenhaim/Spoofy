@@ -7,16 +7,16 @@ const useStyles = makeStyles()({
         height: '100%',
     },
     dataGride: {
-		padding: '1%',
+        padding: '1.2%',
         direction: 'rtl',
-        color: `rgb(${225}, ${225}, ${225})`,
+        color: 'white',
         borderColor: `rgb(${80}, ${77}, ${77})`,
         width: '100%',
         height: '400px',
         backgroundColor: 'gray',
         outline: 'solid #d0130d 0px',
         borderRadius: '20px',
-        
+
         '& .MuiDataGrid-columnHeader:focus': {
             outline: 'none!important',
         },
@@ -32,9 +32,12 @@ const useStyles = makeStyles()({
         '& .MuiDataGrid-main > div:nth-of-type(3)': {
             display: 'none',
         },
-		'& .css-1iyq7zh-MuiDataGrid-columnHeaders': {
-			fontSize: '20px'
-		}
+        '& .css-1iyq7zh-MuiDataGrid-columnHeaders': {
+            fontSize: '20px',
+        },
+        '& .MuiDataGrid-cell:focus-within': {
+            outline: 'none!important',
+        },
     },
 
     header: {
@@ -57,6 +60,7 @@ const useStyles = makeStyles()({
 
     headerDataGrid: {
         boxSizing: 'inherit',
+        color: 'white',
     },
 });
 
