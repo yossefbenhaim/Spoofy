@@ -29,11 +29,7 @@ const IconMusify: React.FC = () => {
 	return (
 		<div>
 			<IconButton className={classes.iconBotton} onClick={handleClose}>
-				{isVisible ? (
-					<div className={classes.logo} ref={container} />
-				) : (
-					<div className={classes.logo} ref={container} />
-				)}
+				<div className={classes.logo} ref={container} />
 			</IconButton>
 		</div>
 	);

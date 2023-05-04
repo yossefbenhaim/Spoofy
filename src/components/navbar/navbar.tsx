@@ -1,14 +1,14 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import useStyles from './buttonsNavigationStyles';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-const MENU_BTN = [
+import useStyles from './navbarStyles';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const MENU_BUTTONS: any[] = [//change type
 	{ item: 'שירים', path: 'songs', color: '', id: 1 },
 	{ item: 'פלייליסטים', path: 'playlist', color: '', id: 2 },
 	{ item: 'מועדפים', path: 'favorites', color: '', id: 3 },
 ];
-const ButtonsNavigation: React.FC = () => {
+const Navbar: React.FC = () => {
 	const location = useLocation();
 	const navigation = useNavigate();
 
@@ -16,7 +16,7 @@ const ButtonsNavigation: React.FC = () => {
 
 	return (
 		<div className={classes.btnContainer}>
-			{MENU_BTN.map((btn) => (
+			{MENU_BUTTONS.map((btn) => (
 				<Button
 					key={btn.id}
 					variant="contained"
@@ -35,4 +35,4 @@ const ButtonsNavigation: React.FC = () => {
 	);
 };
 
-export default ButtonsNavigation;
+export default Navbar;

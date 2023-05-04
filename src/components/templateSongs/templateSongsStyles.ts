@@ -29,7 +29,7 @@ const useStyles = makeStyles()({
         '& .css-jdy3vi-MuiDataGrid-root-dataGride': {
             fontSize: '1.5rem',
         },
-        '& .MuiDataGrid-main > div:nth-child(3)': {
+        '& .MuiDataGrid-main > div:nth-of-type(3)': {
             display: 'none',
         },
 		'& .css-1iyq7zh-MuiDataGrid-columnHeaders': {

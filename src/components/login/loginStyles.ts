@@ -65,6 +65,7 @@ const useStyles = makeStyles()({
         width: '220px',
         backgroundColor: `rgb(${112}, ${106}, ${106})`,
         borderRadius: '17px',
+        color: `rgb(${255}, ${255}, ${255})`,
 
         '& .css-gbe0rs-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root-select':
             {

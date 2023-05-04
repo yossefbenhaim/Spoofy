@@ -1,17 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import CurrentUser from './slice/currentUser';
-import AllSongs from './slice/allSongs';
-import CurrentSong from './slice/currentSong';
+
+import allSongsReducer from './slice/allSongs';
+import currentSongReducer from './slice/currentSong';
+import currentUserReducer from './slice/currentUser';
+
 const store = configureStore({
     reducer: {
-        currentUser: CurrentUser,
-        allSongs: AllSongs,
-        currentSong: CurrentSong,
+        currentUser: currentUserReducer,
+        allSongs: allSongsReducer,
+        currentSong: currentSongReducer,
     },
 });
 
-export type currentUser = ReturnType<typeof store.getState>;
-export type allSongs = ReturnType<typeof store.getState>;
-export type currentSong = ReturnType<typeof store.getState>;
+export type CurrentUser = ReturnType<typeof store.getState>;
+export type AllSongs = ReturnType<typeof store.getState>;
+export type CurrentSong = ReturnType<typeof store.getState>;
 
 export default store;

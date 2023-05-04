@@ -8,22 +8,22 @@ import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
-import { currentUser } from 'redux/store';
+import { CurrentUser } from 'redux/store';
 import { SnackbarOrigin } from '@mui/material/Snackbar';
 import AlertUser from 'components/alert/alertUser';
 export interface State extends SnackbarOrigin {
 	open: boolean;
 }
-
 import GET_USERS from 'queries/query/getAllUser';
 import User from 'models/interface/user';
 
 const Login: React.FC = () => {
 	const { classes } = useStyles();
 	const [users, setUsers] = useState<User[]>([]);
-	const currentUser = useSelector((state: currentUser) => state.currentUser);
+	const currentUser = useSelector((state: CurrentUser) => state.currentUser.user?.id);
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
+	console.log(currentUser, "kjbkj");
 
 	const [state, setState] = React.useState<State>({
 		open: false,
@@ -38,7 +38,7 @@ const Login: React.FC = () => {
 	});
 
 	const handleClick = (newState: SnackbarOrigin) => () => {
-		if (currentUser.id) {
+		if (currentUser) {
 			navigatoin('firstPage/songs');
 		}
 		else {
@@ -70,7 +70,7 @@ const Login: React.FC = () => {
 				</InputLabel>
 				<Select
 					className={classes.select}
-					value={currentUser.id}
+					value={currentUser}
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>

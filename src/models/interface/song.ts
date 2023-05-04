@@ -1,7 +1,7 @@
 interface Song {
     id: string;
     name: string;
-    duration: string;
+    duration: number;
     artistByArtistId: {
         name: string;
     };

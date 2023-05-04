@@ -9,7 +9,9 @@ const useStyles = makeStyles()({
         padding: '7px 35px',
         backgroundColor: 'gray',
         '&:hover': {
-            backgroundColor: `rgb(${74}, ${191}, ${117})`,
+            backgroundColor: `rgb(${255}, ${255}, ${255})`,
+            color: `rgb(${74}, ${191}, ${117})`,
+            border: '1px solid rgb(74, 191, 117)',
         },
     },
     activeBtn: {

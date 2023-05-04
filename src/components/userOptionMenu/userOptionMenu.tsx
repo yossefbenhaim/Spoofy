@@ -2,7 +2,7 @@ import React from 'react';
 import useStyles from './userOptionMenuStyles';
 import { Button, Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
-import { currentUser } from 'redux/store';
+import { CurrentUser } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ const UserOptionMenu: React.FC = () => {
 	const [open, setOpen] = React.useState(false);
 	const navigation = useNavigate();
 	const { classes } = useStyles();
-	const currentUser = useSelector((state: currentUser) => state.currentUser);
+	const currentUser = useSelector((state: CurrentUser) => state.currentUser);
 	const [deleteUser] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ const UserOptionMenu: React.FC = () => {
 		navigation('/');
 	};
 
-	const handleDeleteUser = (userId: string) => {
+	const handleDeleteUser = (userId: string | undefined) => {
 		deleteUser({ variables: { id: userId } })
 			.then(() => console.log('User deleted successfully!'))
 			.catch((err) => console.error('Failed to delete user: ', err));
@@ -45,9 +45,9 @@ const UserOptionMenu: React.FC = () => {
 	return (
 		<div className={classes.fieldsContainer}>
 			<div className={classes.title}>
-				{currentUser.firstName +
+				{currentUser.user?.firstName +
 					' ' +
-					currentUser.lastName +
+					currentUser.user?.lastName +
 					'   היי  '}
 			</div>
 			<div>
@@ -94,7 +94,7 @@ const UserOptionMenu: React.FC = () => {
 							onClick={() => {
 								handleClose();
 								navigateToHome();
-								handleDeleteUser(currentUser.id);
+								handleDeleteUser(currentUser.user?.id);
 							}}
 						>
 							כן

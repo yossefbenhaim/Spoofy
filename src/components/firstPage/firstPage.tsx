@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import useStyles from './firstPageStyles';
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
-import ButtonsNavigation from 'components/buttomsNavigation/buttonsNavigation';
+import Navbar from 'components/navbar/navbar';
 import { useNavigate } from 'react-router-dom';
-import { currentUser } from 'redux/store';
+import { CurrentUser } from 'redux/store';
 import { useSelector } from 'react-redux';
 
 import { Outlet } from 'react-router-dom';
@@ -12,20 +12,20 @@ import IconMusify from 'components/lottie/iconMusify';
 
 const FirstPage: React.FC = () => {
 	const { classes } = useStyles();
-	const currentUser = useSelector((state: currentUser) => state.currentUser);
+	const currentUser = useSelector((state: CurrentUser) => state.currentUser.user?.id);
 	const navigation = useNavigate();
 
 	useEffect(() => {
-		if (!currentUser.id) {
+		if (!currentUser) {
 			navigation('/');
 		}
-	}, [currentUser.id]);
+	}, [currentUser]);
 
 	return (
 		<div className={classes.fieldsContainer}>
 			<div className={classes.header}>
 				<div className={classes.titleContainer}>
-					<UserOptionMenu></UserOptionMenu>
+					<UserOptionMenu />
 					<div className={classes.logoContainer}>
 						<IconMusify></IconMusify>
 						<div>musify </div>
@@ -37,7 +37,7 @@ const FirstPage: React.FC = () => {
 					<Outlet />
 				</div>
 				<div className={classes.buttonsContainer}>
-					<ButtonsNavigation />
+					<Navbar />
 				</div>
 			</div>
 			<MusicPlayer />

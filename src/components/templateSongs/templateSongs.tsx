@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { allSongs, currentSong } from 'redux/store';
+import { AllSongs, CurrentSong } from 'redux/store';
 import { setSongs } from 'redux/slice/allSongs';
 import { setCurrentSong } from 'redux/slice/currentSong';
 import { useQuery } from '@apollo/client';
@@ -11,6 +11,7 @@ import LikeSong from 'components/lottie/likeSong';
 import GET_SONGS from 'queries/query/getAllSongs';
 import AddSong from 'components/addSong/addSong';
 import formatDuration from 'utils/formatDuration';
+import RowsFieldsb from 'models/emuns/rowsField';
 // import { LicenseInfo } from '@mui/x-data-grid-pro';
 // LicenseInfo.setLicenseKey(
 //     '6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVR1c3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU01PTj0x'
@@ -19,9 +20,9 @@ import formatDuration from 'utils/formatDuration';
 const TemplateSongs: React.FC = () => {
 	const { classes } = useStyles();
 	const dispatch = useDispatch();
-	const allSongs = useSelector((state: allSongs) => state.allSongs);
+	const allSongs = useSelector((state: AllSongs) => state.allSongs);
 	const currentSongId = useSelector(
-		(state: currentSong) => state.currentSong.id
+		(state: CurrentSong) => state.currentSong.id
 	);
 
 	useQuery(GET_SONGS, {
@@ -33,47 +34,44 @@ const TemplateSongs: React.FC = () => {
 	const rows = allSongs.songs.map((item) => ({
 		id: item.id,
 		song: item.name,
-		duration: formatDuration(parseInt(item.duration)),
-		name_artist: item.artistByArtistId.name,
+		duration: formatDuration(item.duration),
+		nameArtist: item.artistByArtistId.name,
 	}));
+
+	const settingRowGlobal: Partial<GridColDef> = {
+		sortable: false,
+		resizable: false,
+		headerClassName: classes.headerDataGrid,
+		headerAlign: 'left',
+	}
 
 	const columns: GridColDef[] = [
 		{
-			field: 'song',
-			headerName: 'Song',
+			field: RowsFieldsb.song,
+			headerName: RowsFieldsb.song,
 			width: 350,
-			sortable: false,
-			resizable: false,
-			headerClassName: classes.headerDataGrid,
-			headerAlign: 'left',
+			...settingRowGlobal
 		},
 
 		{
-			field: 'name_artist',
-			headerName: 'Artist',
+			field: RowsFieldsb.nameArtist,
+			headerName: RowsFieldsb.nameArtist,
 			width: 200,
-			sortable: false,
-			resizable: false,
-			headerClassName: classes.headerDataGrid,
-			headerAlign: 'left',
+			...settingRowGlobal
+
 		},
 		{
-			field: 'duration',
-			headerName: 'Duration',
+			field: RowsFieldsb.duration,
+			headerName: RowsFieldsb.duration,
 			width: 150,
-			sortable: false,
-			resizable: false,
-			headerClassName: classes.headerDataGrid,
-			headerAlign: 'left',
+			...settingRowGlobal
+
 		},
 		{
 			field: 'menu',
 			headerName: '',
-			headerClassName: classes.headerDataGrid,
-			sortable: false,
-			resizable: false,
+			...settingRowGlobal,
 			width: 50,
-			headerAlign: 'left',
 			renderCell: () => {
 				return (
 					<div>
@@ -85,11 +83,8 @@ const TemplateSongs: React.FC = () => {
 		{
 			field: 'favorites',
 			headerName: '',
-			headerClassName: classes.headerDataGrid,
-			sortable: false,
-			resizable: false,
+			...settingRowGlobal,
 			width: 70,
-			headerAlign: 'left',
 			renderCell: () => {
 				return <LikeSong></LikeSong>;
 			},
@@ -109,12 +104,12 @@ const TemplateSongs: React.FC = () => {
 				hideFooterPagination
 				hideFooterSelectedRowCount
 				rowSelectionModel={currentSongId}
-				onRowSelectionModelChange={(selectedRoe) => {
-					const test: any = selectedRoe[0];
-					if (selectedRoe[0] !== undefined) {
+				onRowSelectionModelChange={(selectedRow) => {
+					const test: any = selectedRow[0];
+					if (selectedRow[0] !== undefined) {
 						dispatch(setCurrentSong(test));
 					}
-					if (selectedRoe[0] === currentSongId) {
+					if (selectedRow[0] === currentSongId) {
 						dispatch(setCurrentSong(''));
 					}
 				}}

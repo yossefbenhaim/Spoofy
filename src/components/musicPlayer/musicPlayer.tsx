@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Typography } from '@mui/material';
 import { setCurrentSong } from 'redux/slice/currentSong';
 import { useSelector, useDispatch } from 'react-redux';
-import { currentSong, allSongs } from 'redux/store';
+import { CurrentSong, AllSongs } from 'redux/store';
 import { Slide, Slider, IconButton } from '@mui/material/';
 
 import SkipNextIcon from '@mui/icons-material/SkipNext';
@@ -17,25 +17,26 @@ import Song from 'models/interface/song';
 const MusicPlayer: React.FC = () => {
 	const { classes } = useStyles();
 	const dispatch = useDispatch();
+
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
-	const allSongs = useSelector((state: allSongs) => state.allSongs);
+	const allSongs = useSelector((state: AllSongs) => state.allSongs);
 	const currentSongId = useSelector(
-		(state: currentSong) => state.currentSong
+		(state: CurrentSong) => state.currentSong.id
 	);
 
 
 	const currentSong = useMemo(() => {
-		return allSongs.songs.find((song) => song.id === currentSongId.id);
+		return allSongs.songs.find((song) => song.id === currentSongId);
 	}, [currentSongId, allSongs]);
 
-	const fullTime: any = currentSong?.duration; // seconds
+	const currentSongDuration: any = currentSong?.duration; // seconds
 
 	useEffect(() => {
-		let interval: any = null;
+		let interval: NodeJS.Timer | undefined = undefined;
 		if (isPlaying) {
-			if (currentTime !== fullTime + 1) {
+			if (currentTime !== currentSongDuration + 1) {
 				interval = setInterval(() => {
 					setCurrentTime((currentTime) => currentTime + 1);
 				}, 1000);
@@ -50,7 +51,7 @@ const MusicPlayer: React.FC = () => {
 	}, [isPlaying, currentTime]);
 
 	const handleClickPlay = () => {
-		setIsPlaying(!isPlaying);
+		setIsPlaying(prev => !prev);
 	};
 
 	const handleSliderChange = (newValue: number) => {
@@ -59,7 +60,7 @@ const MusicPlayer: React.FC = () => {
 
 	const nextSong = (direction: number): void => {
 		const currentSongIndex = allSongs.songs.findIndex(
-			(song) => song.id === currentSongId.id
+			(song) => song.id === currentSongId
 		);
 		const isEndOfListSong = currentSongIndex === allSongs.songs.length - 1;
 
@@ -117,7 +118,7 @@ const MusicPlayer: React.FC = () => {
 				value={currentTime}
 				min={0}
 				step={1}
-				max={fullTime}
+				max={currentSongDuration}
 				onChange={(_, value) => handleSliderChange(value as number)}
 			/>
 			<div className={classes.songTime}>
@@ -126,7 +127,7 @@ const MusicPlayer: React.FC = () => {
 				</Typography>
 				<Typography className={classes.tinyText}>
 					{formatDuration(
-						Boolean(currentSongId.id) ? fullTime - currentTime : currentTime
+						Boolean(currentSongId) ? currentSongDuration - currentTime : currentTime
 					)}
 				</Typography>
 			</div>
@@ -135,7 +136,7 @@ const MusicPlayer: React.FC = () => {
 
 	return (
 		<div className={classes.slide}>
-			<Slide direction="up" in={Boolean(currentSongId.id)}>
+			<Slide direction="up" in={Boolean(currentSongId)}>
 				{icon}
 			</Slide>
 		</div>

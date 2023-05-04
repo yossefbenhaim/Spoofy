@@ -13,12 +13,12 @@ const AllSongs = createSlice({
     name: 'songs',
     initialState,
     reducers: {
-        addSong: (state, action: PayloadAction<Song>) => {
-            state.songs.push(action.payload);
+		setSongs: (state, action: PayloadAction<Song[]>) => {
+			state.songs = action.payload;
         },
-        setSongs: (state, action: PayloadAction<Song[]>) => {
-            state.songs = action.payload;
-        },
+		addSong: (state, action: PayloadAction<Song>) => {
+			state.songs.push(action.payload);
+		},
     },
 });
 

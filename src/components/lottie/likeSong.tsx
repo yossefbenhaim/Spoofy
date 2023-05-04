@@ -1,41 +1,47 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Lottie from 'lottie-web';
+import Lottie, { AnimationItem } from 'lottie-web';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconMusifyStyles';
+import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 
 const LikeSong: React.FC = () => {
-	const container: any = useRef(null);
-	const [isVisible, setIsVisible] = useState<boolean>(true);
+	const container = useRef<HTMLDivElement>(null);
+	const animref = useRef<AnimationItem | undefined>();
+	const [isVisible, setIsVisible] = useState<boolean>(false);
+
 	const { classes } = useStyles();
 	const handleClose = () => {
 		setIsVisible(!isVisible);
 	};
 
 	useEffect(() => {
-		const animation = Lottie.loadAnimation({
-			container: container.current,
+		animref.current = Lottie.loadAnimation({
+			container: container.current!,
 			renderer: 'svg',
 			loop: false,
-			autoplay: true,
+			autoplay: false,
 			path: '/src/like.json',
 		});
 
-		animation.play();
-
 		return () => {
-			animation.destroy();
+			animref.current && animref.current.destroy();
 		};
+	}, []);
+
+	useEffect(() => {
+		if (isVisible) {
+			animref.current && animref.current.play();
+		} else {
+			animref.current && animref.current.stop();
+		}
 	}, [isVisible]);
+
 
 	return (
 		<div>
 			<IconButton className={classes.iconBotton} onClick={handleClose}>
-				{isVisible ? (
-					<FavoriteBorderIcon className={classes.icon2} />
-				) : (
-					<div className={classes.logo} ref={container} />
-				)}
+				<div className={classes.logo} ref={container} />
 			</IconButton>
 		</div>
 	);

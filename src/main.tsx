@@ -11,15 +11,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StyledEngineProvider injectFirst>
-                <ApolloProvider client={client}>
-                    <Provider store={store}>
-                        <App />
-                    </Provider>
-                </ApolloProvider>
-            </StyledEngineProvider>
-        </LocalizationProvider>
-    </React.StrictMode>
+	<React.StrictMode>
+		<LocalizationProvider dateAdapter={AdapterDayjs}>
+			<StyledEngineProvider injectFirst>
+				<ApolloProvider client={client}>
+					<Provider store={store}>
+						<App />
+					</Provider>
+				</ApolloProvider>
+			</StyledEngineProvider>
+		</LocalizationProvider>
+	</React.StrictMode>
 );
