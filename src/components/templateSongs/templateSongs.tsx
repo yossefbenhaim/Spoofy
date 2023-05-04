@@ -104,15 +104,18 @@ const TemplateSongs: React.FC = () => {
 				hideFooterSelectedRowCount
 				rowSelectionModel={currentSongId}
 				onRowSelectionModelChange={(selectedRow) => {
-					const test: any = selectedRow[0];
+
+					const test: string | number = selectedRow[0];
+					console.log(typeof (test));
 					if (selectedRow[0] !== undefined) {
-						dispatch(setCurrentSong(test));
+						dispatch(setCurrentSong(test.toString()));
 					}
 					if (selectedRow[0] === currentSongId) {
 						dispatch(setCurrentSong(''));
 					}
 				}}
 			/>
+
 
 			<div className={classes.addSongBtnContainer}>
 				<AddSong />

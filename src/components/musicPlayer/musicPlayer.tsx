@@ -92,9 +92,10 @@ const MusicPlayer: React.FC = () => {
 						onClick={handleClickPlay}
 					>
 						{isPlaying ? (
-							<PlayArrowIcon className={classes.sizeSvg} />
-						) : (
 							<PauseIcon className={classes.sizeSvg} />
+						) : (
+							<PlayArrowIcon className={classes.sizeSvg} />
+
 						)}
 					</IconButton>
 					<IconButton

@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface currentSong {
-    id: string;
+    id?: string;
 }
 
 const initialState: currentSong = {
-    id: '',
+    id: undefined,
 };
 
 const CurrentSong = createSlice({
