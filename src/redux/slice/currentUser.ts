@@ -7,11 +7,11 @@ interface CurrentUserSlice {
 }
 
 const initialState: CurrentUserSlice = {
-    user: { id: '', firstName: '', lastName: '' },
+    user: undefined,
 };
 
 const CurrentUser = createSlice({
-    name: 'counter',
+    name: 'user',
     initialState,
     reducers: {
         setUser(state, action: PayloadAction<User>) {

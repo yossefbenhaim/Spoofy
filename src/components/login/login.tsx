@@ -20,10 +20,9 @@ import User from 'models/interface/user';
 const Login: React.FC = () => {
 	const { classes } = useStyles();
 	const [users, setUsers] = useState<User[]>([]);
-	const currentUser = useSelector((state: CurrentUser) => state.currentUser.user?.id);
+	const currentUser = useSelector((state: CurrentUser) => state?.currentUser.user);
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
-	console.log(currentUser, "kjbkj");
 
 	const [state, setState] = React.useState<State>({
 		open: false,
@@ -48,12 +47,12 @@ const Login: React.FC = () => {
 
 	const handleChange = (event: SelectChangeEvent) => {
 		// להסתכל אצל שמואל זה אותו 
-		const user: any = users.find((user) => user.id === event.target.value);
+		const user: User | undefined = users.find((user) => user.id === event.target.value);
 		dispatch(
 			setUser({
-				id: user.id,
-				firstName: user.firstName,
-				lastName: user.lastName,
+				id: user?.id,
+				firstName: user?.firstName,
+				lastName: user?.lastName,
 			})
 		);
 	};
@@ -70,7 +69,7 @@ const Login: React.FC = () => {
 				</InputLabel>
 				<Select
 					className={classes.select}
-					value={currentUser}
+					value={currentUser?.id || ''}
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>
