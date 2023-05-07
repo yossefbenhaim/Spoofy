@@ -8,7 +8,7 @@ import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import useStyles from './templateSongsStyles';
 import MenuRow from 'components/menuRow/menuRow';
 import LikeSong from 'components/lottie/likeSong';
-import GET_SONGS from 'queries/query/getAllSongs';
+import GET_SONGS from 'queries/query/songs';
 import AddSong from 'components/addSong/addSong';
 import formatDuration from 'utils/formatDuration';
 import RowsFieldsb from 'models/emuns/rowsField';

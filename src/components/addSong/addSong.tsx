@@ -6,7 +6,7 @@ import useStyles from './addSongStyles';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { useQuery } from '@apollo/client';
-import GET_ALL_ARTIST from 'queries/query/getAiiArtist';
+import GET_ALL_ARTIST from 'queries/query/artists';
 import Select from '@mui/material/Select';
 import Artist from 'models/interface/artist';
 import { useMutation } from '@apollo/client';

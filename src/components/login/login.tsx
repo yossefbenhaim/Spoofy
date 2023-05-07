@@ -14,7 +14,7 @@ import AlertUser from 'components/alert/alertUser';
 export interface State extends SnackbarOrigin {
 	open: boolean;
 }
-import GET_USERS from 'queries/query/getAllUser';
+import GET_USERS from 'queries/query/users';
 import User from 'models/interface/user';
 
 const Login: React.FC = () => {
