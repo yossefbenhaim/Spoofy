@@ -58,14 +58,12 @@ const TemplateSongs: React.FC = () => {
 			headerName: 'זמר',
 			width: 200,
 			...settingRowGlobal
-
 		},
 		{
 			field: RowsFieldsb.duration,
 			headerName: "משך שיר",
 			width: 150,
 			...settingRowGlobal
-
 		},
 		{
 			field: 'menu',
@@ -104,18 +102,18 @@ const TemplateSongs: React.FC = () => {
 				hideFooterSelectedRowCount
 				rowSelectionModel={currentSongId}
 				onRowSelectionModelChange={(selectedRow) => {
-
 					const test: string | number = selectedRow[0];
 					console.log(typeof (test));
 					if (selectedRow[0] !== undefined) {
 						dispatch(setCurrentSong(test.toString()));
+						console.log("test ");
+
 					}
 					if (selectedRow[0] === currentSongId) {
 						dispatch(setCurrentSong(''));
 					}
 				}}
 			/>
-
 
 			<div className={classes.addSongBtnContainer}>
 				<AddSong />

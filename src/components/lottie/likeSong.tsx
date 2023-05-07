@@ -1,16 +1,24 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconMusifyStyles';
-import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
-
+import { useSelector } from 'react-redux';
+import { CurrentSong, CurrentUser } from 'redux/store';
+import { useMutation } from '@apollo/client';
+import ADD_FAVORITE from 'queries/mutation/addFavorite';
 const LikeSong: React.FC = () => {
+	const { classes } = useStyles();
+
 	const container = useRef<HTMLDivElement>(null);
 	const animref = useRef<AnimationItem | undefined>();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [addFavorite] = useMutation(ADD_FAVORITE);
 
-	const { classes } = useStyles();
+	const currentUserId = useSelector((state: CurrentUser) => state.currentUser.user?.id);
+	const currentSongId = useSelector(
+		(state: CurrentSong) => state.currentSong.id
+	);
+
 	const handleClose = () => {
 		setIsVisible(!isVisible);
 	};
@@ -31,6 +39,18 @@ const LikeSong: React.FC = () => {
 
 	useEffect(() => {
 		if (isVisible) {
+			addFavorite({
+				variables: {
+					input: {
+						favorite: {
+							userId: currentUserId,
+							songId: currentSongId
+						},
+					},
+				},
+			})
+				.then(() => console.log('Song Add successfully!'))
+				.catch((err) => console.error('Failed to add song: ', err));
 			animref.current && animref.current.play();
 		} else {
 			animref.current && animref.current.stop();
