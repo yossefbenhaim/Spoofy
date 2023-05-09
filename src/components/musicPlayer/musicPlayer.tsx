@@ -21,7 +21,7 @@ const MusicPlayer: React.FC = () => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
-	const allSongs = useSelector((state: AllSongs) => state.allSongs);
+	const allSongs = useSelector((state: AllSongs) => state.songs);
 	const currentSongId = useSelector(
 		(state: CurrentSong) => state.currentSong.id
 	);
