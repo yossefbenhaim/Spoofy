@@ -8,23 +8,25 @@ import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
-import { CurrentUser } from 'redux/store';
+import { RootReducer } from 'redux/store';
 import { SnackbarOrigin } from '@mui/material/Snackbar';
 import AlertUser from 'components/alert/alertUser';
+import FeedbackMessage from 'models/emuns/feedbackMessage';
 export interface State extends SnackbarOrigin {
 	open: boolean;
 }
 import GET_USERS from 'queries/query/users';
 import User from 'models/interface/user';
 
+
 const Login: React.FC = () => {
 	const { classes } = useStyles();
 	const [users, setUsers] = useState<User[]>([]);
-	const currentUser = useSelector((state: CurrentUser) => state?.currentUser.user);
+	const currentUser = useSelector((state: RootReducer) => state?.currentUser.user);
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
 
-	const [state, setState] = React.useState<State>({
+	const [state, setState] = useState<State>({
 		open: false,
 		vertical: 'top',
 		horizontal: 'center',
@@ -36,17 +38,16 @@ const Login: React.FC = () => {
 		},
 	});
 
-	const handleClick = (newState: SnackbarOrigin) => () => {
-		if (currentUser) {
+	const handleClick = (parametrMessage: SnackbarOrigin) => () => {
+		if (currentUser?.id) {
 			navigatoin('firstPage/songs');
 		}
 		else {
-			setState({ open: true, ...newState });
+			setState({ open: true, ...parametrMessage });
 		}
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
-		// להסתכל אצל שמואל זה אותו 
 		const user: User | undefined = users.find((user) => user.id === event.target.value);
 		dispatch(
 			setUser({
@@ -92,7 +93,7 @@ const Login: React.FC = () => {
 			>
 				התחבר
 			</Button>
-			<AlertUser setState={setState} state={state} />
+			<AlertUser massege={FeedbackMessage.mustSelectUser} setState={setState} state={state} />
 		</div>
 	);
 };

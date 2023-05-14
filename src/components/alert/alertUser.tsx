@@ -9,10 +9,11 @@ export interface State extends SnackbarOrigin {
 interface Props {
 	setState: (value: React.SetStateAction<State>) => void;
 	state: State
+	massege: string
 }
 
 const AlertUser: React.FC<Props> = (props) => {
-	const { setState, state } = props
+	const { setState, state, massege } = props
 	const { vertical, horizontal, open } = state;
 
 	const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -33,7 +34,7 @@ const AlertUser: React.FC<Props> = (props) => {
 				onClose={handleClose}
 				key={vertical + horizontal}>
 				<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-					אתה חייב לבחור משתמש
+					{massege}
 				</Alert>
 			</Snackbar>
 		</div>

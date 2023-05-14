@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import SliceName from 'models/emuns/sliceName';
 import Song from 'models/interface/song';
 
 interface Songs {
@@ -10,7 +11,7 @@ const initialState: Songs = {
 };
 
 const Songs = createSlice({
-    name: 'songs',
+    name: SliceName.songs,
     initialState,
     reducers: {
         setSongs: (state, action: PayloadAction<Song[]>) => {

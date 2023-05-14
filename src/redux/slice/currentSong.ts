@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import SliceName from 'models/emuns/sliceName';
 interface currentSong {
     id?: string;
 }
@@ -9,7 +9,7 @@ const initialState: currentSong = {
 };
 
 const CurrentSong = createSlice({
-    name: 'counter',
+    name: SliceName.currentSong,
     initialState,
     reducers: {
         setCurrentSong(state, action: PayloadAction<string>) {

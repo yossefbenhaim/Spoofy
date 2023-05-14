@@ -2,7 +2,7 @@ import React from 'react';
 import useStyles from './userOptionMenuStyles';
 import { Button, Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
-import { CurrentUser } from 'redux/store';
+import { RootReducer } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ const UserOptionMenu: React.FC = () => {
 	const [open, setOpen] = React.useState(false);
 	const navigation = useNavigate();
 	const { classes } = useStyles();
-	const currentUser = useSelector((state: CurrentUser) => state.currentUser);
+	const currentUser = useSelector((state: RootReducer) => state.currentUser);
 	const [deleteUser] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import useStyles from './navbarStyles';
+import PathName from 'models/emuns/pathName';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const MENU_BUTTONS: any[] = [//change type
-	{ item: 'שירים', path: 'songs', color: '', id: 1 },
-	{ item: 'פלייליסטים', path: 'playlist', color: '', id: 2 },
-	{ item: 'מועדפים', path: 'favorites', color: '', id: 3 },
+const MENU_BUTTONS: any[] = [
+	{ item: 'שירים', path: PathName.songs },
+	{ item: 'פלייליסטים', path: PathName.playlist },
+	{ item: 'מועדפים', path: PathName.favorites },
 ];
 const Navbar: React.FC = () => {
 	const location = useLocation();
@@ -18,11 +19,11 @@ const Navbar: React.FC = () => {
 		<div className={classes.btnContainer}>
 			{MENU_BUTTONS.map((btn) => (
 				<Button
-					key={btn.id}
+					key={btn.item}
 					variant="contained"
 					className={cx(classes.btnMenu, {
 						[classes.activeBtn]:
-							'/firstPage/' + btn.path === location.pathname,
+							PathName.firstPage + btn.path === location.pathname,
 					})}
 					onClick={() => {
 						navigation(btn.path);

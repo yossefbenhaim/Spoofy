@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import SliceName from 'models/emuns/sliceName';
 import User from 'models/interface/user';
 
 interface CurrentUserSlice {
@@ -11,7 +11,7 @@ const initialState: CurrentUserSlice = {
 };
 
 const CurrentUser = createSlice({
-    name: 'user',
+    name: SliceName.currentUser,
     initialState,
     reducers: {
         setUser(state, action: PayloadAction<User>) {

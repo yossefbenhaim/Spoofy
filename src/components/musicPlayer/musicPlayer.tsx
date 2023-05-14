@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Typography } from '@mui/material';
 import { setCurrentSong } from 'redux/slice/currentSong';
 import { useSelector, useDispatch } from 'react-redux';
-import { CurrentSong, AllSongs } from 'redux/store';
+import { RootReducer } from 'redux/store';
 import { Slide, Slider, IconButton } from '@mui/material/';
 
 import SkipNextIcon from '@mui/icons-material/SkipNext';
@@ -21,9 +21,9 @@ const MusicPlayer: React.FC = () => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
-	const allSongs = useSelector((state: AllSongs) => state.songs);
+	const allSongs = useSelector((state: RootReducer) => state.songs);
 	const currentSongId = useSelector(
-		(state: CurrentSong) => state.currentSong.id
+		(state: RootReducer) => state.currentSong.id
 	);
 
 

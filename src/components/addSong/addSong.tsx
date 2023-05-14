@@ -149,7 +149,6 @@ const AddSong: React.FC = () => {
 										const formattedTime: number =
 											ConvertToMilliseconds(time?.minute(), time?.second())
 										onChange(formattedTime);
-										console.log(formattedTime);
 									}}
 									value={dayjs(value).format('mm:ss')}
 									className={classes.input}
