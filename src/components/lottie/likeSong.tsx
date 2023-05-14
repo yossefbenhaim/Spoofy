@@ -33,7 +33,6 @@ const LikeSong: React.FC<Props> = (props) => {
 		if (variant == 'info') {
 			enqueueSnackbar(FeedbackMessage.deletingSongToFavorite, { variant });
 		}
-
 	}
 
 	useEffect(() => {

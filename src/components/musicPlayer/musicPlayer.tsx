@@ -42,7 +42,7 @@ const MusicPlayer: React.FC = () => {
 				}, 1000);
 			} else {
 				setCurrentTime(0);
-				nextSong(1);
+				diractionNextSong(1);
 			}
 		} else {
 			clearInterval(interval);
@@ -58,13 +58,11 @@ const MusicPlayer: React.FC = () => {
 		setCurrentTime(newValue);
 	};
 
-	const nextSong = (direction: number): void => {
-		const currentSongIndex = allSongs.songs.findIndex(
+	const diractionNextSong = (direction: number): void => {
+		const currentSongIndex: number = allSongs.songs.findIndex(
 			(song) => song.id === currentSongId
 		);
-		const isEndOfListSong = currentSongIndex === allSongs.songs.length - 1;
-
-		if (isEndOfListSong) {
+		if (currentSongIndex === allSongs.songs.length - 1 || currentSongIndex === 0 && direction == -1) {
 			const firstSong: Song = allSongs.songs[0];
 			dispatch(setCurrentSong(firstSong.id));
 			setCurrentTime(0);
@@ -73,8 +71,6 @@ const MusicPlayer: React.FC = () => {
 			dispatch(setCurrentSong(next.id));
 			setCurrentTime(0);
 		}
-
-
 	};
 
 	const icon = (
@@ -82,7 +78,7 @@ const MusicPlayer: React.FC = () => {
 			<div className={classes.playContainer}>
 				<div className={classes.playSong}>
 					<IconButton
-						onClick={() => nextSong(-1)}
+						onClick={() => diractionNextSong(-1)}
 						className={classes.sizeIcon}
 					>
 						<SkipPreviousIcon className={classes.sizeSvg} />
@@ -95,11 +91,10 @@ const MusicPlayer: React.FC = () => {
 							<PauseIcon className={classes.sizeSvg} />
 						) : (
 							<PlayArrowIcon className={classes.sizeSvg} />
-
 						)}
 					</IconButton>
 					<IconButton
-						onClick={() => nextSong(1)}
+						onClick={() => diractionNextSong(1)}
 						className={classes.sizeIcon}
 					>
 						<SkipNextIcon className={classes.sizeSvg} />
