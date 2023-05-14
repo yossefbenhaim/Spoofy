@@ -6,8 +6,11 @@ import { RootReducer } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
+import { VariantType, useSnackbar } from 'notistack';
+import FeedbackMessage from 'models/emuns/feedbackMessage';
 import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
+
 interface Props {
 	liked: string;
 }
@@ -21,6 +24,17 @@ const LikeSong: React.FC<Props> = (props) => {
 	const animref = useRef<AnimationItem | undefined>();
 	const [deleteFavorite] = useMutation(DELETE_FAVORITE);
 	const dispatch = useDispatch();
+	const { enqueueSnackbar } = useSnackbar();
+
+	const handleQueryMessage = (variant: VariantType) => {
+		if (variant == 'success') {
+			enqueueSnackbar(FeedbackMessage.addingSongToFavorite, { variant });
+		}
+		if (variant == 'info') {
+			enqueueSnackbar(FeedbackMessage.deletingSongToFavorite, { variant });
+		}
+
+	}
 
 	useEffect(() => {
 		animref.current = Lottie.loadAnimation({
@@ -38,19 +52,19 @@ const LikeSong: React.FC<Props> = (props) => {
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
 		if (favoritesLike?.some((favorite) => favorite.songId === liked)) {
-			dispatch(deleteFavoriteFrom({ songId: liked }))
-			heandlDeleteFavorite();
 			animref.current && animref.current.stop();
+			heandlDeleteFavorite();
+			dispatch(deleteFavoriteFrom({ songId: liked }))
 		} else {
+			animref.current && animref.current.play();
 			dispatch(addFavorite({ songId: liked }))
 			heandlAddFavorite();
-			animref.current && animref.current.play();
 		}
 	};
 
 	const heandlDeleteFavorite = () => {
 		deleteFavorite({ variables: { userId: currentUserId, songId: liked } })
-			.then(() => console.log('User deleted successfully!'))
+			.then(() => handleQueryMessage('info'))
 			.catch((err) => console.error('Failed to delete user: ', err));
 	}
 
@@ -65,7 +79,7 @@ const LikeSong: React.FC<Props> = (props) => {
 				},
 			},
 		})
-			.then(() => console.log('Song Add successfully!'))
+			.then(() => { handleQueryMessage('success') })
 			.catch((err) => console.error('Failed to add song: ', err));
 	}
 

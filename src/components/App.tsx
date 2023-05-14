@@ -6,6 +6,7 @@ import TemplateSongs from './templateSongs/templateSongs';
 import TemplatePlaylist from './templatePlaylist/templatePlaylist';
 import TemplateFavorites from './templateFavorites/templateFavorites';
 import PathName from 'models/emuns/pathName';
+
 const App: React.FC = () => {
 
 	return (

@@ -10,21 +10,21 @@ import { ApolloProvider } from '@apollo/client';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { PersistGate } from 'redux-persist/integration/react';
-// import { persistStore } from 'redux-persist';
-
-
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<StyledEngineProvider injectFirst>
-				<ApolloProvider client={client}>
-					<Provider store={store}>
-						<PersistGate persistor={persistodStore}>
-							<App />
-						</PersistGate>
-					</Provider>
-				</ApolloProvider>
+				<SnackbarProvider maxSnack={2}>
+					<ApolloProvider client={client}>
+						<Provider store={store}>
+							<PersistGate persistor={persistodStore}>
+								<App />
+							</PersistGate>
+						</Provider>
+					</ApolloProvider>
+				</SnackbarProvider>
 			</StyledEngineProvider>
 		</LocalizationProvider>
 	</React.StrictMode>

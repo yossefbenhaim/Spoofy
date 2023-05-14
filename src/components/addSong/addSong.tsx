@@ -136,7 +136,12 @@ const AddSong: React.FC = () => {
 											);
 										})}
 									</Select>
-									<FormHelperText className={classes.error}>{errors.artistName && <span className={classes.error}>{errors.artistName.message}</span>}</FormHelperText>
+									<FormHelperText
+										className={classes.error}>
+										{errors.artistName &&
+											<span className={classes.error}>
+												{errors.artistName.message}</span>}
+									</FormHelperText>
 								</FormControl>
 							)}
 						/>

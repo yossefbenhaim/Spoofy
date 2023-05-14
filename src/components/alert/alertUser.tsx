@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-
 export interface State extends SnackbarOrigin {
 	open: boolean;
 }
