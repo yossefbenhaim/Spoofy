@@ -14,14 +14,22 @@ import ADD_SONG from 'queries/mutation/addSong';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller } from 'react-hook-form';
 import FormHelperText from '@mui/material/FormHelperText';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 
+
+
+enum ControllerName {
+	songName = 'songName',
+	artistName = 'artistName',
+	duration = 'duration'
+}
+
 interface FormAddSong {
-	songName: string;
-	artistName: string;
-	duration: number;
+	[ControllerName.songName]: string;
+	[ControllerName.artistName]: string;
+	[ControllerName.duration]: number;
 }
 
 import * as z from 'zod';
@@ -40,8 +48,15 @@ const AddSong: React.FC = () => {
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [addSong] = useMutation(ADD_SONG);
 	const { control, handleSubmit, formState: { errors } } = useForm<FormAddSong>({
-		resolver
+		resolver,
+		defaultValues: {
+			[ControllerName.songName]: '',
+			[ControllerName.artistName]: '',
+			[ControllerName.duration]: 0,
+		},
 	});
+
+	const [valueTime, setValueTime] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'));
 
 	const onSubmit = (data: FormAddSong) => {
 		addSong({
@@ -92,11 +107,12 @@ const AddSong: React.FC = () => {
 					<div className={classes.dialog}>
 						<div className={classes.header}>יצירת שיר</div>
 						<Controller
-							name="songName"
+							name={ControllerName.songName}
 							control={control}
 							render={({ field }) => (
 								<TextField
 									className={classes.input}
+
 									id="standard-basic"
 									label="שם השיר"
 									variant="standard"
@@ -107,9 +123,8 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name="artistName"
+							name={ControllerName.artistName}
 							control={control}
-							defaultValue=''
 							render={({ field }) => (
 								<FormControl
 									className={classes.menu}
@@ -146,13 +161,14 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name="duration"
+							name={ControllerName.duration}
 							control={control}
 							render={({ field: { onChange, value = 0 } }) => (
 								<TimeField
 									onChange={(time: any) => {
 										const formattedTime: number =
 											ConvertToMilliseconds(time?.minute(), time?.second())
+										console.log(formattedTime, typeof (dayjs(value).format('mm:ss')));
 										onChange(formattedTime);
 									}}
 									value={dayjs(value).format('mm:ss')}

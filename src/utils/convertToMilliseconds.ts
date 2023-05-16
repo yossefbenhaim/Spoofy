@@ -1,5 +1,8 @@
-const ConvertToMilliseconds = (minute: number, second: number): number => {
-    const totalSeconds = minute * 60 + second;
+const ConvertToMilliseconds = (
+    minute: number | undefined,
+    second: number | undefined
+): number => {
+    const totalSeconds = (minute ?? 0) * 60 + (second ?? 0);
     return totalSeconds;
 };
 

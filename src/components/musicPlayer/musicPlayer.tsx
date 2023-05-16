@@ -115,7 +115,7 @@ const MusicPlayer: React.FC = () => {
 				min={0}
 				step={1}
 				max={currentSongDuration}
-				onChange={(_, value) => handleSliderChange(value as number)}
+				onChange={(_: number, value: number) => handleSliderChange(value as number)}
 			/>
 			<div className={classes.songTime}>
 				<Typography className={classes.tinyText}>
