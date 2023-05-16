@@ -14,9 +14,10 @@ import ADD_SONG from 'queries/mutation/addSong';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller } from 'react-hook-form';
 import FormHelperText from '@mui/material/FormHelperText';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
+import { TimeValidationError } from '@mui/x-date-pickers/models';
 
 
 
@@ -56,7 +57,20 @@ const AddSong: React.FC = () => {
 		},
 	});
 
+	const [error, setError] = React.useState<TimeValidationError | null>(null);
 
+
+	const errorMessage = React.useMemo(() => {
+		switch (error) {
+			case 'disableFuture': {
+				return 'Please select a date in the first quarter of 2022';
+			}
+
+			default: {
+				return '';
+			}
+		}
+	}, [error]);
 
 	const onSubmit = (data: FormAddSong) => {
 		addSong({
@@ -112,7 +126,6 @@ const AddSong: React.FC = () => {
 							render={({ field }) => (
 								<TextField
 									className={classes.input}
-
 									id="standard-basic"
 									label="שם השיר"
 									variant="standard"
@@ -130,9 +143,7 @@ const AddSong: React.FC = () => {
 									className={classes.menu}
 									variant="standard"
 								>
-									<InputLabel className={cx(classes.titleMenu, {
-										[classes.error]: errors.artistName?.message === 'Selection cannot be an empty string'
-									})}>
+									<InputLabel error={!!errors.artistName} className={classes.titleMenu} >
 										בחר זמר
 									</InputLabel>
 									<Select
@@ -163,15 +174,16 @@ const AddSong: React.FC = () => {
 						<Controller
 							name={ControllerName.duration}
 							control={control}
-							render={({ field: { onChange, value = 0 } }) => (
+							render={({ field: { onChange } }) => (
 								<TimeField
 									onChange={(time: Dayjs | null) => {
 										const formattedTime: number =
 											ConvertToMilliseconds(time?.minute(), time?.second())
 										onChange(formattedTime);
 									}}
-									value={dayjs(value).format('mm:ss') as unknown as Dayjs}
-									className={classes.input}
+									className={cx(classes.input, {
+										[classes.errorInput]: errors.duration?.message === 'you must pick duration'
+									})}
 									label="Duration"
 									variant="standard"
 									format='mm:ss'

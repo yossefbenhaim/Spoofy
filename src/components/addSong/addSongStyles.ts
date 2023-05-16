@@ -130,6 +130,58 @@ const useStyles = makeStyles()({
         },
     },
 
+    errorInput: {
+        marginLeft: '2%',
+        marginRight: '2%',
+        direction: 'rtl',
+        left: 'inherit',
+
+        '& .css-1x51dt5-MuiInputBase-input-MuiInput-input': {
+            direction: 'ltr',
+            textAlign: 'end',
+        },
+        '& .Mui-focused': {
+            left: 'inherit',
+            color: ' #d32f2f ',
+        },
+
+        '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root': {
+            left: 'inherit',
+            color: ' #d32f2f ',
+        },
+        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
+            left: 'inherit',
+            color: ' #d32f2f ',
+        },
+        '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
+            {
+                left: 'inherit',
+                color: ' #d32f2f ',
+            },
+        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
+            {
+                left: 'inherit',
+                color: ' #d32f2f ',
+            },
+        '& .css-v4u5dn-MuiInputBase-root-MuiInput-root:after': {
+            left: 'inherit',
+            color: ' #d32f2f ',
+        },
+        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root': {
+            left: 'inherit',
+            color: ' #d32f2f ',
+        },
+        '& .css-1d1r5q-MuiFormHelperText-root': {
+            color: ' #d32f2f ',
+        },
+        '& .css-v4u5dn-MuiInputBase-root-MuiInput-root.Mui-error:before': {
+            borderBottomColor: 'black',
+        },
+        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-error': {
+            color: ' #d32f2f ',
+        },
+    },
+
     btn: {
         backgroundColor: `rgb(${70}, ${138}, ${41})`,
         borderRadius: '30px',
