@@ -56,7 +56,7 @@ const AddSong: React.FC = () => {
 		},
 	});
 
-	const [valueTime, setValueTime] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'));
+
 
 	const onSubmit = (data: FormAddSong) => {
 		addSong({
@@ -165,17 +165,16 @@ const AddSong: React.FC = () => {
 							control={control}
 							render={({ field: { onChange, value = 0 } }) => (
 								<TimeField
-									onChange={(time: any) => {
+									onChange={(time: Dayjs | null) => {
 										const formattedTime: number =
 											ConvertToMilliseconds(time?.minute(), time?.second())
-										console.log(formattedTime, typeof (dayjs(value).format('mm:ss')));
 										onChange(formattedTime);
 									}}
-									value={dayjs(value).format('mm:ss')}
+									value={dayjs(value).format('mm:ss') as unknown as Dayjs}
 									className={classes.input}
 									label="Duration"
 									variant="standard"
-									format="mm:ss"
+									format='mm:ss'
 									helperText={errors.duration && <span className={classes.error}>{errors.duration.message}</span>}
 								/>
 							)}
