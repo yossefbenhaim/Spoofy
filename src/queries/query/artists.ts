@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GET_ALL_ARTIST = gql`
+const GET_ARTIST = gql`
     query MyQuery {
         allArtists {
             nodes {
@@ -11,4 +11,4 @@ const GET_ALL_ARTIST = gql`
     }
 `;
 
-export default GET_ALL_ARTIST;
+export default GET_ARTIST;

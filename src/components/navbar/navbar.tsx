@@ -4,6 +4,9 @@ import useStyles from './navbarStyles';
 import PathName from 'models/emuns/pathName';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+
+
+
 const MENU_BUTTONS: any[] = [
 	{ item: 'שירים', path: PathName.songs },
 	{ item: 'פלייליסטים', path: PathName.playlist },

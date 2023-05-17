@@ -4,7 +4,7 @@ import { setSongs } from 'redux/slice/songs';
 import { setCurrentSong } from 'redux/slice/currentSong';
 import { useQuery } from '@apollo/client';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-import useStyles from './templateSongsStyles';
+import useStyles from './tableSongsStyles';
 import MenuRow from 'components/menuRow/menuRow';
 import LikeSong from 'components/lottie/likeSong';
 import GET_SONGS from 'queries/query/songs';
@@ -13,10 +13,10 @@ import formatDuration from 'utils/formatDuration';
 import RowsFieldsb from 'models/emuns/rowsField';
 import { RootReducer } from 'redux/store';
 
-const TemplateSongs: React.FC = () => {
+const TableSongs: React.FC = () => {
 	const { classes } = useStyles();
 	const dispatch = useDispatch();
-	const allSongs = useSelector((state: RootReducer) => state.songs.songs);
+	const songs = useSelector((state: RootReducer) => state.songs.songs);
 	const currentSongId = useSelector(
 		(state: RootReducer) => state.currentSong.id
 	);
@@ -27,12 +27,12 @@ const TemplateSongs: React.FC = () => {
 		},
 	});
 
-	const rows = useMemo(() => allSongs.map((item) => ({
+	const rows = useMemo(() => songs.map((item) => ({
 		id: item.id,
 		song: item.name,
 		duration: formatDuration(item.duration),
 		nameArtist: item.artistByArtistId.name,
-	})), [allSongs]);
+	})), [songs]);
 
 	const settingRowGlobal: Partial<GridColDef> = {
 		sortable: false,
@@ -119,4 +119,4 @@ const TemplateSongs: React.FC = () => {
 	);
 };
 
-export default TemplateSongs;
+export default TableSongs;

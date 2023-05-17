@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, MenuItem } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
@@ -6,7 +6,7 @@ import useStyles from './addSongStyles';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { useQuery } from '@apollo/client';
-import GET_ALL_ARTIST from 'queries/query/artists';
+import GET_ARTIST from 'queries/query/artists';
 import Select from '@mui/material/Select';
 import Artist from 'models/interface/artist';
 import { useMutation } from '@apollo/client';
@@ -15,11 +15,11 @@ import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller } from 'react-hook-form';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Dayjs } from 'dayjs';
+import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
-import { TimeValidationError } from '@mui/x-date-pickers/models';
-
-
+import { addSong } from 'redux/slice/songs';
+import Song from 'models/interface/song';
 
 enum ControllerName {
 	songName = 'songName',
@@ -28,18 +28,18 @@ enum ControllerName {
 }
 
 interface FormAddSong {
-	[ControllerName.songName]: string;
-	[ControllerName.artistName]: string;
-	[ControllerName.duration]: number;
+	songName: string,
+	artistName: string,
+	duration: number,
 }
 
 import * as z from 'zod';
 const schema = z.object({
-	songName: z.string().min(2, { message: "Song name must be at least 2 characters long" }).max(50, 'Name must be at least 50 characters'),
+	songName: z.string().min(2, { message: "חייב לבחור שם של שיר לפחות מ 2 תווים" }).max(50, 'שם של שיר יכול להיות מקסימום 50 תווים'),
 	artistName: z.string().refine((value) => value !== '', {
-		message: 'Selection cannot be an empty string',
+		message: 'חייב לבחור אומן כדי ליצור שיר ',
 	}),
-	duration: z.number().min(30, { message: "you must pick duration" }),
+	duration: z.number().min(30, { message: "שיר חייב להיות מינמום 30 שניות" }),
 });
 
 const AddSong: React.FC = () => {
@@ -47,7 +47,7 @@ const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
 	const [open, setOpen] = useState(false);
 	const [artists, setArtists] = useState<Artist[]>([]);
-	const [addSong] = useMutation(ADD_SONG);
+	const [mutationAddSong] = useMutation(ADD_SONG);
 	const { control, handleSubmit, formState: { errors } } = useForm<FormAddSong>({
 		resolver,
 		defaultValues: {
@@ -56,24 +56,21 @@ const AddSong: React.FC = () => {
 			[ControllerName.duration]: 0,
 		},
 	});
+	const dispatch = useDispatch();
+	const openId = useRef<number>(1);
 
-	const [error, setError] = React.useState<TimeValidationError | null>(null);
-
-
-	const errorMessage = React.useMemo(() => {
-		switch (error) {
-			case 'disableFuture': {
-				return 'Please select a date in the first quarter of 2022';
-			}
-
-			default: {
-				return '';
-			}
+	useEffect(() => {
+		console.log(open);
+		if (open === false) { // Increment id each time modal closes
+			console.log('yes');
+			openId.current = openId.current + 1;
 		}
-	}, [error]);
+		console.log(openId.current);
+
+	}, [open]);
 
 	const onSubmit = (data: FormAddSong) => {
-		addSong({
+		mutationAddSong({
 			variables: {
 				input: {
 					song: {
@@ -86,6 +83,15 @@ const AddSong: React.FC = () => {
 		})
 			.then(() => console.log('Song Add successfully!'))
 			.catch((err) => console.error('Failed to add song: ', err));
+
+		const newSong: Song | undefined = {
+			id: '',
+			name: data.songName,
+			duration: data.duration,
+			artistByArtistId: { name: data.artistName }
+		}
+
+		dispatch(addSong(newSong))
 		handleClose();
 	};
 
@@ -95,9 +101,12 @@ const AddSong: React.FC = () => {
 
 	const handleClose = () => {
 		setOpen(false);
+		openId.current = openId.current + 1;
+		console.log(openId.current);
+
 	};
 
-	useQuery(GET_ALL_ARTIST, {
+	useQuery(GET_ARTIST, {
 		onCompleted: (data) => {
 			setArtists(data.allArtists.nodes);
 		},
@@ -113,6 +122,7 @@ const AddSong: React.FC = () => {
 				+ צור שיר
 			</Button>
 			<Dialog
+				key={openId.current}
 				open={open}
 				onClose={handleClose}
 				className={classes.dialogContainer}
@@ -154,6 +164,7 @@ const AddSong: React.FC = () => {
 										{artists.map((artist) => {
 											return (
 												<MenuItem
+													className={classes.menuItem}
 													key={artist.id}
 													value={artist.id}
 												>
@@ -182,7 +193,7 @@ const AddSong: React.FC = () => {
 										onChange(formattedTime);
 									}}
 									className={cx(classes.input, {
-										[classes.errorInput]: errors.duration?.message === 'you must pick duration'
+										[classes.errorInput]: errors.duration?.message === "שיר חייב להיות מינמום 30 שניות"
 									})}
 									label="Duration"
 									variant="standard"

@@ -1,10 +1,10 @@
 import React from 'react';
 import Login from './login/login';
-import FirstPage from './firstPage/firstPage';
+import MainPage from './mainPage/mainPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import TemplateSongs from './templateSongs/templateSongs';
-import TemplatePlaylist from './templatePlaylist/templatePlaylist';
-import TemplateFavorites from './templateFavorites/templateFavorites';
+import TableSongs from './tableSongs/tableSongs';
+import TablePlaylist from './tablePlaylist/tablePlaylist';
+import TableFavorites from './tableFavorites/tableFavorites';
 import PathName from 'models/emuns/pathName';
 
 const App: React.FC = () => {
@@ -13,10 +13,10 @@ const App: React.FC = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route index element={<Login />} />
-				<Route path={PathName.firstPage} element={<FirstPage />}>
-					<Route path={PathName.songs} element={<TemplateSongs />} />
-					<Route path={PathName.playlist} element={<TemplatePlaylist />} />
-					<Route path={PathName.favorites} element={<TemplateFavorites />} />
+				<Route path={PathName.firstPage} element={<MainPage />}>
+					<Route path={PathName.songs} element={<TableSongs />} />
+					<Route path={PathName.playlist} element={<TablePlaylist />} />
+					<Route path={PathName.favorites} element={<TableFavorites />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

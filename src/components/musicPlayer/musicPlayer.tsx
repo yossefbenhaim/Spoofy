@@ -21,7 +21,7 @@ const MusicPlayer: React.FC = () => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
-	const allSongs = useSelector((state: RootReducer) => state.songs);
+	const songs = useSelector((state: RootReducer) => state.songs.songs);
 	const currentSongId = useSelector(
 		(state: RootReducer) => state.currentSong.id
 	);
@@ -29,8 +29,9 @@ const MusicPlayer: React.FC = () => {
 
 	const currentSong = useMemo(() => {
 		setCurrentTime(0);
-		return allSongs.songs.find((song) => song.id === currentSongId);
-	}, [currentSongId, allSongs]);
+		setIsPlaying(true);
+		return songs?.find((song) => song.id === currentSongId);
+	}, [currentSongId, songs]);
 
 	const currentSongDuration: any = currentSong?.duration; // seconds
 
@@ -60,15 +61,15 @@ const MusicPlayer: React.FC = () => {
 	};
 
 	const diractionNextSong = (direction: number): void => {
-		const currentSongIndex: number = allSongs.songs.findIndex(
+		const currentSongIndex: number | undefined = songs?.findIndex(
 			(song) => song.id === currentSongId
 		);
-		if (currentSongIndex === allSongs.songs.length - 1 || currentSongIndex === 0 && direction == -1) {
-			const firstSong: Song = allSongs.songs[0];
+		if (currentSongIndex === songs.length - 1 || currentSongIndex === 0 && direction == -1) {
+			const firstSong: Song = songs[0];
 			dispatch(setCurrentSong(firstSong.id));
 			setCurrentTime(0);
 		} else {
-			const next: Song = allSongs.songs[currentSongIndex + direction];
+			const next: Song = songs[currentSongIndex + direction];
 			dispatch(setCurrentSong(next.id));
 			setCurrentTime(0);
 		}

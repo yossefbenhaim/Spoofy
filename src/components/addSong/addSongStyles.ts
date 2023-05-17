@@ -46,6 +46,9 @@ const useStyles = makeStyles()({
                 color: 'white',
             },
     },
+    menuItem: {
+        direction: 'rtl',
+    },
     titleMenu: {
         left: 'inherit',
         color: `rgb(${74}, ${191}, ${117})`,
@@ -120,7 +123,7 @@ const useStyles = makeStyles()({
             borderBottom: `rgb(${74}, ${191}, ${117})`,
         },
         '& .css-1d1r5q-MuiFormHelperText-root': {
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
         '& .css-v4u5dn-MuiInputBase-root-MuiInput-root.Mui-error:before': {
             borderBottomColor: 'black',
@@ -142,43 +145,43 @@ const useStyles = makeStyles()({
         },
         '& .Mui-focused': {
             left: 'inherit',
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
 
         '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root': {
             left: 'inherit',
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
         '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
             left: 'inherit',
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
         '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
             {
                 left: 'inherit',
-                color: ' #d32f2f ',
+                color: ' #ff0000 ',
             },
         '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
             {
                 left: 'inherit',
-                color: ' #d32f2f ',
+                color: ' #ff0000 ',
             },
         '& .css-v4u5dn-MuiInputBase-root-MuiInput-root:after': {
             left: 'inherit',
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
         '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root': {
             left: 'inherit',
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
         '& .css-1d1r5q-MuiFormHelperText-root': {
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
         '& .css-v4u5dn-MuiInputBase-root-MuiInput-root.Mui-error:before': {
             borderBottomColor: 'black',
         },
         '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-error': {
-            color: ' #d32f2f ',
+            color: ' #ff0000 ',
         },
     },
 
@@ -196,9 +199,10 @@ const useStyles = makeStyles()({
         },
     },
     error: {
-        color: ' #d32f2f ',
+        color: ' #ff0000 ',
         float: 'right',
         fontWeight: 'bold',
+        fontSize: '14px',
     },
 });
 
