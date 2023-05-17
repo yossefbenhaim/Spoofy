@@ -1,12 +1,20 @@
 import { gql } from '@apollo/client';
 
 const ADD_SONG = gql`
-    mutation CreateSong($input: CreateSongInput!) {
-        createSong(input: $input) {
+    mutation CreateSong($name: String!, $artistId: UUID!, $duration: Int!) {
+        createSong(
+            input: {
+                song: { name: $name, artistId: $artistId, duration: $duration }
+            }
+        ) {
+            clientMutationId
             song {
+                id
                 name
-                artistId
                 duration
+                artistByArtistId {
+                    name
+                }
             }
         }
     }

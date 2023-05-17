@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { Button, MenuItem } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
@@ -12,86 +12,82 @@ import Artist from 'models/interface/artist';
 import { useMutation } from '@apollo/client';
 import ADD_SONG from 'queries/mutation/addSong';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Dayjs } from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import { addSong } from 'redux/slice/songs';
-import Song from 'models/interface/song';
 
 enum ControllerName {
-	songName = 'songName',
-	artistName = 'artistName',
+	name = 'name',
+	artist = 'artist',
 	duration = 'duration'
 }
 
 interface FormAddSong {
-	songName: string,
-	artistName: string,
+	name: string,
+	artist: string,
 	duration: number,
 }
 
 import * as z from 'zod';
 const schema = z.object({
-	songName: z.string().min(2, { message: "חייב לבחור שם של שיר לפחות מ 2 תווים" }).max(50, 'שם של שיר יכול להיות מקסימום 50 תווים'),
-	artistName: z.string().refine((value) => value !== '', {
+	[ControllerName.name]: z.string().min(2, { message: "חייב לבחור שם של שיר לפחות מ 2 תווים" }).max(50, 'שם של שיר יכול להיות מקסימום 50 תווים'),
+	[ControllerName.artist]: z.string().refine((value) => value !== '', {
 		message: 'חייב לבחור אומן כדי ליצור שיר ',
 	}),
-	duration: z.number().min(30, { message: "שיר חייב להיות מינמום 30 שניות" }),
+	[ControllerName.duration]: z.number().min(30, { message: "שיר חייב להיות מינמום 30 שניות" }),
 });
 
 const AddSong: React.FC = () => {
-	const resolver = zodResolver(schema)
 	const { classes, cx } = useStyles();
 	const [open, setOpen] = useState(false);
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
-	const { control, handleSubmit, formState: { errors } } = useForm<FormAddSong>({
-		resolver,
+	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
+		resolver: zodResolver(schema),
+
 		defaultValues: {
-			[ControllerName.songName]: '',
-			[ControllerName.artistName]: '',
+			[ControllerName.name]: '',
+			[ControllerName.artist]: '',
 			[ControllerName.duration]: 0,
 		},
 	});
-	const dispatch = useDispatch();
-	const openId = useRef<number>(1);
 
 	useEffect(() => {
-		console.log(open);
-		if (open === false) { // Increment id each time modal closes
-			console.log('yes');
-			openId.current = openId.current + 1;
+		if (!open) {
+			reset({
+				[ControllerName.name]: '',
+				[ControllerName.artist]: '',
+				[ControllerName.duration]: 0,
+			})
 		}
-		console.log(openId.current);
+	}, [open])
 
-	}, [open]);
-
-	const onSubmit = (data: FormAddSong) => {
+	const dispatch = useDispatch();
+	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
+		const { name: name, artist, duration } = data;
 		mutationAddSong({
 			variables: {
-				input: {
-					song: {
-						name: data.songName,
-						artistId: data.artistName,
-						duration: data.duration,
-					},
-				},
+				name: name,
+				artistId: artist,
+				duration: duration,
 			},
 		})
-			.then(() => console.log('Song Add successfully!'))
+			.then((responsFromMutation) => {
+				dispatch(addSong({
+					id: responsFromMutation.data.createSong.song.id,
+					name: name,
+					duration: duration,
+					artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
+				}))
+			})
 			.catch((err) => console.error('Failed to add song: ', err));
 
-		const newSong: Song | undefined = {
-			id: '',
-			name: data.songName,
-			duration: data.duration,
-			artistByArtistId: { name: data.artistName }
-		}
 
-		dispatch(addSong(newSong))
+
 		handleClose();
 	};
 
@@ -101,8 +97,8 @@ const AddSong: React.FC = () => {
 
 	const handleClose = () => {
 		setOpen(false);
-		openId.current = openId.current + 1;
-		console.log(openId.current);
+
+
 
 	};
 
@@ -122,7 +118,6 @@ const AddSong: React.FC = () => {
 				+ צור שיר
 			</Button>
 			<Dialog
-				key={openId.current}
 				open={open}
 				onClose={handleClose}
 				className={classes.dialogContainer}
@@ -131,7 +126,7 @@ const AddSong: React.FC = () => {
 					<div className={classes.dialog}>
 						<div className={classes.header}>יצירת שיר</div>
 						<Controller
-							name={ControllerName.songName}
+							name={ControllerName.name}
 							control={control}
 							render={({ field }) => (
 								<TextField
@@ -140,20 +135,20 @@ const AddSong: React.FC = () => {
 									label="שם השיר"
 									variant="standard"
 									{...field}
-									error={!!errors.songName}
-									helperText={errors.songName && <span className={classes.error}>{errors.songName.message}</span>}
+									error={!!errors.name}
+									helperText={errors.name && <span className={classes.error}>{errors.name.message}</span>}
 								/>
 							)}
 						/>
 						<Controller
-							name={ControllerName.artistName}
+							name={ControllerName.artist}
 							control={control}
 							render={({ field }) => (
 								<FormControl
 									className={classes.menu}
 									variant="standard"
 								>
-									<InputLabel error={!!errors.artistName} className={classes.titleMenu} >
+									<InputLabel error={!!errors.artist} className={classes.titleMenu} >
 										בחר זמר
 									</InputLabel>
 									<Select
@@ -175,9 +170,9 @@ const AddSong: React.FC = () => {
 									</Select>
 									<FormHelperText
 										className={classes.error}>
-										{errors.artistName &&
+										{errors.artist &&
 											<span className={classes.error}>
-												{errors.artistName.message}</span>}
+												{errors.artist.message}</span>}
 									</FormHelperText>
 								</FormControl>
 							)}

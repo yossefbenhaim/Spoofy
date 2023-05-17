@@ -106,7 +106,7 @@ const MusicPlayer: React.FC = () => {
 					<div className={classes.artistSize}>
 						{currentSong?.name}
 					</div>
-					<div>{currentSong?.artistByArtistId.name} </div>
+					<div>{currentSong?.artist} </div>
 				</div>
 			</div>
 

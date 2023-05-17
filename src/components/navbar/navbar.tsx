@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
-const MENU_BUTTONS: any[] = [
+const MENU_BUTTONS = [
 	{ item: 'שירים', path: PathName.songs },
 	{ item: 'פלייליסטים', path: PathName.playlist },
 	{ item: 'מועדפים', path: PathName.favorites },
@@ -29,11 +29,14 @@ const Navbar: React.FC = () => {
 							PathName.firstPage + btn.path === location.pathname,
 					})}
 					onClick={() => {
+						console.log('local', location.pathname, 'btn', PathName.firstPage, btn.path);
+
 						navigation(btn.path);
 					}}
 				>
 					{btn.item}
 				</Button>
+
 			))}
 		</div>
 	);

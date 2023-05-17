@@ -12,6 +12,7 @@ import AddSong from 'components/addSong/addSong';
 import formatDuration from 'utils/formatDuration';
 import RowsFieldsb from 'models/emuns/rowsField';
 import { RootReducer } from 'redux/store';
+import Song from 'models/interface/song';
 
 const TableSongs: React.FC = () => {
 	const { classes } = useStyles();
@@ -23,7 +24,14 @@ const TableSongs: React.FC = () => {
 
 	useQuery(GET_SONGS, {
 		onCompleted: (data) => {
-			dispatch(setSongs(data.allSongs.nodes));
+			const songsData = (data.allSongs.nodes as any[]).map<Song>((songDB) =>
+			({
+				id: songDB.id,
+				name: songDB.name,
+				duration: songDB.duration,
+				artist: songDB.artistByArtistId.name,
+			}));
+			dispatch(setSongs(songsData));
 		},
 	});
 
@@ -31,7 +39,7 @@ const TableSongs: React.FC = () => {
 		id: item.id,
 		song: item.name,
 		duration: formatDuration(item.duration),
-		nameArtist: item.artistByArtistId.name,
+		artist: item.artist,
 	})), [songs]);
 
 	const settingRowGlobal: Partial<GridColDef> = {
@@ -50,7 +58,7 @@ const TableSongs: React.FC = () => {
 		},
 
 		{
-			field: RowsFieldsb.nameArtist,
+			field: RowsFieldsb.artist,
 			headerName: 'זמר',
 			width: 200,
 			...settingRowGlobal

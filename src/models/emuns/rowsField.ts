@@ -2,7 +2,7 @@ enum RowsFieldsb {
     id = 'id',
     song = 'song',
     duration = 'duration',
-    nameArtist = 'nameArtist',
+    artist = 'artist',
 }
 
 export default RowsFieldsb;

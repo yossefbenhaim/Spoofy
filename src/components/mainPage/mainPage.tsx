@@ -29,7 +29,6 @@ const MainPage: React.FC = () => {
 			"userId": currentUser?.id
 		},
 		onCompleted: (data) => {
-			console.log('aaa', data?.allFavorites.nodes);
 			dispatch(setFavorites(data?.allFavorites.nodes));
 		}
 	});
