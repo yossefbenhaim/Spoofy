@@ -57,7 +57,9 @@ const MainPage: React.FC = () => {
 					<Navbar />
 				</div>
 			</div>
-			<MusicPlayer />
+			<div className={classes.musicPlayerContainer}>
+				<MusicPlayer />
+			</div>
 		</div>
 	);
 };

@@ -48,6 +48,9 @@ const useStyles = makeStyles()({
         width: '55%',
         marginLeft: '22.5%',
     },
+    musicPlayerContainer: {
+        height: '15%',
+    },
 });
 
 export default useStyles;

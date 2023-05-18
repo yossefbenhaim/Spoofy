@@ -5,11 +5,13 @@ import { setCurrentSong } from 'redux/slice/currentSong';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootReducer } from 'redux/store';
 import { Slide, Slider, IconButton } from '@mui/material/';
+import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import SkipPreviousRoundedIcon from '@mui/icons-material/SkipPreviousRounded';
+
+import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
+
 import useStyles from './musicPlayerStyles';
 import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
@@ -75,69 +77,71 @@ const MusicPlayer: React.FC = () => {
 		}
 	};
 
-	const icon = (
-		<div className={classes.sliderContainer}>
-			<div className={classes.playContainer}>
-				<div className={classes.playSong}>
-					<IconButton
-						onClick={() => diractionNextSong(-1)}
-						className={classes.sizeIcon}
-					>
-						<SkipPreviousIcon className={classes.sizeSvg} />
-					</IconButton>
-					<IconButton
-						className={classes.sizeIcon}
-						onClick={handleClickPlay}
-					>
-						{isPlaying ? (
-							<PauseIcon className={classes.sizeSvg} />
-						) : (
-							<PlayArrowIcon className={classes.sizeSvg} />
-						)}
-					</IconButton>
-					<IconButton
-						onClick={() => diractionNextSong(1)}
-						className={classes.sizeIcon}
-					>
-						<SkipNextIcon className={classes.sizeSvg} />
-					</IconButton>
-				</div>
-				<div className={classes.titleSong}>
-					<div className={classes.artistSize}>
-						{currentSong?.name}
-					</div>
-					<div>{currentSong?.artist} </div>
-				</div>
-			</div>
+	// const icon = (
 
-			<Slider
-				className={classes.slider}
-				size="small"
-				value={currentTime}
-				min={0}
-				step={1}
-				max={currentSongDuration}
-				onChange={(_, value) => handleSliderChange(value as number)}
-			/>
-			<div className={classes.songTime}>
-				<Typography className={classes.tinyText}>
-					{formatDuration(currentTime)}
-				</Typography>
-				<Typography className={classes.tinyText}>
-					{formatDuration(
-						Boolean(currentSongId) ? currentSongDuration - currentTime : currentTime
-					)}
-				</Typography>
-			</div>
-		</div>
-	);
+	// );
 
 	return (
-		<div className={classes.slide}>
-			<Slide direction="up" in={Boolean(currentSongId)}>
-				{icon}
-			</Slide>
-		</div>
+		// <div className={classes.slide}>
+		<Slide direction="up" in={Boolean(currentSongId)}>
+			<div className={classes.sliderContainer}>
+				<div className={classes.playContainer}>
+					<div className={classes.playSong}>
+						<IconButton
+							onClick={() => diractionNextSong(-1)}
+							className={classes.sizeIcon}
+						>
+							<SkipPreviousRoundedIcon className={classes.sizeSvg} />
+						</IconButton>
+						<IconButton
+							className={classes.sizeIcon}
+							onClick={handleClickPlay}
+						>
+							{isPlaying ? (
+								<PauseRoundedIcon className={classes.sizeSvg} />
+							) : (
+								<PlayArrowRoundedIcon className={classes.sizeSvg} />
+							)}
+						</IconButton>
+						<IconButton
+							onClick={() => diractionNextSong(1)}
+							className={classes.sizeIcon}
+						>
+							<SkipNextRoundedIcon className={classes.sizeSvg} />
+						</IconButton>
+					</div>
+					<div className={classes.titleSong}>
+						<Typography className={classes.songSize}>{currentSong?.name}</Typography>
+						<Typography className={classes.artistSize}>{currentSong?.artist} </Typography>
+					</div>
+				</div>
+
+				<div className={classes.bodySong}>
+					<Slider
+						className={classes.slider}
+						size="small"
+						value={currentTime}
+						min={0}
+						step={1}
+						max={currentSongDuration}
+						onChange={(_, value) => handleSliderChange(value as number)}
+					/>
+					<div className={classes.songTime}>
+						<Typography className={classes.tinyText}>
+							{formatDuration(currentTime)}
+						</Typography>
+						<Typography className={classes.tinyText}>
+							{formatDuration(
+								Boolean(currentSongId) ? currentSongDuration - currentTime : currentTime
+							)}
+						</Typography>
+					</div>
+				</div>
+			</div>
+
+
+		</Slide>
+		// </div>
 	);
 };
 

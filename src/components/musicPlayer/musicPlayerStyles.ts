@@ -2,7 +2,8 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()({
     slide: {
-        height: '15%',
+        // height: '15%',
+        // backgroundColor: 'blue',
     },
 
     sliderContainer: {
@@ -10,49 +11,69 @@ const useStyles = makeStyles()({
         height: '100%',
         textAlign: 'center',
         backgroundColor: `rgb(${112}, ${106}, ${106})`,
-    },
-    playContainer: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
+
     playSong: {
-        width: '100%',
-        marginLeft: ' 10.5%',
-        marginBottom: '-15px',
+        width: '40%',
+        paddingLeft: '34%',
     },
+
     titleSong: {
-        width: '10%',
+        width: '40%',
         textAlign: 'end',
         marginRight: '2.5%',
         color: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
     },
     songTime: {
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        mt: -2,
         marginLeft: '2.5%',
         marginRight: '2.5%',
         marginBottom: '10px',
+
         '& .css-1o6dyha-MuiTypography-root': {
             fontSize: '1rem',
             opacity: '1',
         },
     },
+    playContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: '70%',
+    },
+    bodySong: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '34%',
+    },
     slider: {
         width: '95%',
         padding: '0px',
         color: 'white',
+        marginLeft: '2.5%',
+        marginBottom: '0.1%',
     },
     sizeIcon: {
         color: 'white',
     },
     sizeSvg: {
-        fontSize: '3rem',
+        fontSize: '9vh',
+    },
+    songSize: {
+        fontSize: '1.8rem',
     },
     artistSize: {
-        fontSize: '1rem',
+        marginBottom: '16px',
     },
 
     showDiv: {

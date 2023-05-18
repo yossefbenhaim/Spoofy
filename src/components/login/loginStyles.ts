@@ -42,7 +42,6 @@ const useStyles = makeStyles()({
             },
 
         '& .css-5wednp-MuiFormControl-root-menu': {
-            backgroundColor: 'red',
             left: '30px',
         },
 

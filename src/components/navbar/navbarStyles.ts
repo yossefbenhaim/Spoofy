@@ -8,6 +8,7 @@ const useStyles = makeStyles()({
         fontWeight: '500',
         padding: '7px 35px',
         backgroundColor: 'gray',
+        justifyContent: 'center',
         '&:hover': {
             backgroundColor: `rgb(${255}, ${255}, ${255})`,
             color: `rgb(${74}, ${191}, ${117})`,
