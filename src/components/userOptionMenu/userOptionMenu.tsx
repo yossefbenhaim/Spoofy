@@ -1,11 +1,13 @@
 import React from 'react';
 import useStyles from './userOptionMenuStyles';
-import { Button, Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material/';
+import { Button, Dialog, DialogActions, DialogContentText, DialogTitle, Typography } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
 import { RootReducer } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
+import { VariantType, useSnackbar } from 'notistack';
+import FeedbackMessage from 'models/emuns/feedbackMessage';
 
 import DELETE_USER from 'queries/mutation/deleteUser';
 
@@ -16,6 +18,13 @@ const UserOptionMenu: React.FC = () => {
 	const currentUser = useSelector((state: RootReducer) => state.currentUser);
 	const [deleteUser] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
+	const { enqueueSnackbar } = useSnackbar();
+
+
+	const handleQueryMessage = (variant: VariantType) => {
+		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
+	}
+
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -38,18 +47,18 @@ const UserOptionMenu: React.FC = () => {
 
 	const handleDeleteUser = (userId: string | undefined) => {
 		deleteUser({ variables: { id: userId } })
-			.then(() => console.log('User deleted successfully!'))
+			.then(() => handleQueryMessage('info'))
 			.catch((err) => console.error('Failed to delete user: ', err));
 	};
 
 	return (
 		<div className={classes.fieldsContainer}>
-			<div className={classes.title}>
+			<Typography className={classes.title}>
 				{currentUser.user?.firstName +
 					' ' +
 					currentUser.user?.lastName +
 					'   היי  '}
-			</div>
+			</Typography>
 			<div>
 				<Button
 					onClick={handleClickOpen}

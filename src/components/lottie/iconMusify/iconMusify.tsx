@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Lottie from 'lottie-web';
 import IconButton from '@mui/material/IconButton';
-import useStyles from './iconMusifyStyles';
+import useStyles from '../likeSong/likeSongStyles';
 
 const IconMusify: React.FC = () => {
 	const container: any = useRef(null);
@@ -18,9 +18,7 @@ const IconMusify: React.FC = () => {
 			autoplay: true,
 			path: '/src/logoHome.json',
 		});
-
 		animation.play();
-
 		return () => {
 			animation.destroy();
 		};

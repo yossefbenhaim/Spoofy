@@ -19,12 +19,11 @@ import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import { addSong } from 'redux/slice/songs';
+import { VariantType, useSnackbar } from 'notistack';
+import FeedbackMessage from 'models/emuns/feedbackMessage';
+import DialogFieldsName from 'models/emuns/dialogFieldsName';
+import * as z from 'zod';
 
-enum ControllerName {
-	name = 'name',
-	artist = 'artist',
-	duration = 'duration'
-}
 
 interface FormAddSong {
 	name: string,
@@ -32,13 +31,12 @@ interface FormAddSong {
 	duration: number,
 }
 
-import * as z from 'zod';
 const schema = z.object({
-	[ControllerName.name]: z.string().min(2, { message: "חייב לבחור שם של שיר לפחות מ 2 תווים" }).max(50, 'שם של שיר יכול להיות מקסימום 50 תווים'),
-	[ControllerName.artist]: z.string().refine((value) => value !== '', {
+	[DialogFieldsName.name]: z.string().min(2, { message: "חייב לבחור שם של שיר לפחות מ 2 תווים" }).max(50, 'שם של שיר יכול להיות מקסימום 50 תווים'),
+	[DialogFieldsName.artist]: z.string().refine((value) => value !== '', {
 		message: 'חייב לבחור אומן כדי ליצור שיר ',
 	}),
-	[ControllerName.duration]: z.number().min(30, { message: "שיר חייב להיות מינמום 30 שניות" }),
+	[DialogFieldsName.duration]: z.number().min(30, { message: "שיר חייב להיות מינמום 30 שניות" }),
 });
 
 const AddSong: React.FC = () => {
@@ -46,25 +44,30 @@ const AddSong: React.FC = () => {
 	const [open, setOpen] = useState(false);
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
+	const { enqueueSnackbar } = useSnackbar();
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
 		resolver: zodResolver(schema),
-
 		defaultValues: {
-			[ControllerName.name]: '',
-			[ControllerName.artist]: '',
-			[ControllerName.duration]: 0,
+			[DialogFieldsName.name]: '',
+			[DialogFieldsName.artist]: '',
+			[DialogFieldsName.duration]: 0,
 		},
 	});
 
 	useEffect(() => {
 		if (!open) {
 			reset({
-				[ControllerName.name]: '',
-				[ControllerName.artist]: '',
-				[ControllerName.duration]: 0,
+				[DialogFieldsName.name]: '',
+				[DialogFieldsName.artist]: '',
+				[DialogFieldsName.duration]: 0,
 			})
 		}
 	}, [open])
+
+
+	const handleQueryMessage = (variant: VariantType) => {
+		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
+	}
 
 	const dispatch = useDispatch();
 	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
@@ -83,11 +86,10 @@ const AddSong: React.FC = () => {
 					duration: duration,
 					artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
 				}))
+				handleQueryMessage('success')
 			})
+
 			.catch((err) => console.error('Failed to add song: ', err));
-
-
-
 		handleClose();
 	};
 
@@ -97,9 +99,6 @@ const AddSong: React.FC = () => {
 
 	const handleClose = () => {
 		setOpen(false);
-
-
-
 	};
 
 	useQuery(GET_ARTIST, {
@@ -126,7 +125,7 @@ const AddSong: React.FC = () => {
 					<div className={classes.dialog}>
 						<div className={classes.header}>יצירת שיר</div>
 						<Controller
-							name={ControllerName.name}
+							name={DialogFieldsName.name}
 							control={control}
 							render={({ field }) => (
 								<TextField
@@ -141,7 +140,7 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={ControllerName.artist}
+							name={DialogFieldsName.artist}
 							control={control}
 							render={({ field }) => (
 								<FormControl
@@ -178,7 +177,7 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={ControllerName.duration}
+							name={DialogFieldsName.duration}
 							control={control}
 							render={({ field: { onChange } }) => (
 								<TimeField

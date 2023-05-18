@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import useStyles from './tableSongsStyles';
 import MenuRow from 'components/menuRow/menuRow';
-import LikeSong from 'components/lottie/likeSong';
+import LikeSong from 'components/lottie/likeSong/likeSong';
 import GET_SONGS from 'queries/query/songs';
 import AddSong from 'components/addSong/addSong';
 import formatDuration from 'utils/formatDuration';

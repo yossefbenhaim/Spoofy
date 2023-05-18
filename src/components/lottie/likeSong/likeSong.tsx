@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
 import IconButton from '@mui/material/IconButton';
-import useStyles from './iconMusifyStyles';
+import useStyles from './likeSongStyles';
 import { RootReducer } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
