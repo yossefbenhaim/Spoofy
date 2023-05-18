@@ -54,5 +54,3 @@ const useStyles = makeStyles()({
 });
 
 export default useStyles;
-
-// `rgb(${redValue}, ${greenValue}, ${blueValue})`

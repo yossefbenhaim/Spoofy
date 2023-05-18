@@ -10,7 +10,7 @@ const useStyles = makeStyles()({
         width: '100%',
         height: '100%',
         textAlign: 'center',
-        backgroundColor: `rgb(${112}, ${106}, ${106})`,
+        backgroundColor: `rgb(112, 106, 106)`,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -100,5 +100,3 @@ const useStyles = makeStyles()({
 });
 
 export default useStyles;
-
-// `rgb(${redValue}, ${greenValue}, ${blueValue})`

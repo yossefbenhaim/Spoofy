@@ -18,5 +18,5 @@ const CurrentSong = createSlice({
     },
 });
 
-export const { setCurrentSong: setCurrentSong } = CurrentSong.actions;
+export const { setCurrentSong } = CurrentSong.actions;
 export default CurrentSong.reducer;

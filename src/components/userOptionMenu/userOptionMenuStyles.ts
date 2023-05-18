@@ -42,7 +42,7 @@ const useStyles = makeStyles()({
         },
     },
     ExitAccountTitle: {
-        backgroundColor: `rgb(${74}, ${191}, ${117})`,
+        backgroundColor: `rgb(74, 191, 117)`,
     },
     ExitAccountContent: { backgroundColor: `rgb(${130}, ${130}, ${124})` },
     ExitAccountHeader: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles()({
         paddingRight: '22px',
     },
     ExitBtn: {
-        color: `rgb(${74}, ${191}, ${117})`,
+        color: `rgb(74, 191, 117)`,
     },
 });
 

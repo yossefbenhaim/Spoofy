@@ -2,23 +2,23 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()({
     title: {
-        color: `rgb(${74}, ${191}, ${117})`,
+        color: `rgb(74, 191, 117)`,
         fontSize: '5rem',
         textShadow: '2px 2px 2px black',
     },
     btn: {
-        backgroundColor: `rgb(${70}, ${138}, ${41})`,
+        backgroundColor: `rgb(70, 138, 41)`,
         borderRadius: '10px',
     },
     fieldsContainer: {
-        backgroundColor: `rgb(${80}, ${77}, ${77})`,
+        backgroundColor: `rgb(80, 77, 77)`,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         height: '705px',
         '& .css-1tgv085-MuiButtonBase-root-MuiButton-root-btn:hover': {
-            backgroundColor: `rgb(${21}, ${162}, ${49})`,
+            backgroundColor: `rgb(21, 162, 49)`,
         },
     },
     menu: {
@@ -62,9 +62,9 @@ const useStyles = makeStyles()({
     },
     select: {
         width: '220px',
-        backgroundColor: `rgb(${112}, ${106}, ${106})`,
+        backgroundColor: `rgb(112, 106, 106)`,
         borderRadius: '17px',
-        color: `rgb(${255}, ${255}, ${255})`,
+        color: `rgb(255, 255, 255)`,
 
         '& .css-gbe0rs-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root-select':
             {
@@ -86,5 +86,3 @@ const useStyles = makeStyles()({
 });
 
 export default useStyles;
-
-// `rgb(${redValue}, ${greenValue}, ${blueValue})`

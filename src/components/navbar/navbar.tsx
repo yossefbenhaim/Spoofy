@@ -3,11 +3,16 @@ import Button from '@mui/material/Button';
 import useStyles from './navbarStyles';
 import PathName from 'models/emuns/pathName';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentSong } from 'redux/slice/currentSong';
 
 
+interface MenuButton {
+	item: string,
+	path: string
+}
 
-
-const MENU_BUTTONS = [
+const MENU_BUTTONS: MenuButton[] = [
 	{ item: 'שירים', path: PathName.songs },
 	{ item: 'פלייליסטים', path: PathName.playlist },
 	{ item: 'מועדפים', path: PathName.favorites },
@@ -15,8 +20,16 @@ const MENU_BUTTONS = [
 const Navbar: React.FC = () => {
 	const location = useLocation();
 	const navigation = useNavigate();
-
 	const { classes, cx } = useStyles();
+	const dispatch = useDispatch();
+
+
+	const navigationPage = (path: string) => {
+		if (path != PathName.songs) {
+			dispatch(setCurrentSong(''));
+		}
+		navigation(path);
+	}
 
 	return (
 		<div className={classes.btnContainer}>
@@ -29,9 +42,7 @@ const Navbar: React.FC = () => {
 							PathName.firstPage + btn.path === location.pathname,
 					})}
 					onClick={() => {
-						console.log('local', location.pathname, 'btn', PathName.firstPage, btn.path);
-
-						navigation(btn.path);
+						navigationPage(btn.path)
 					}}
 				>
 					{btn.item}

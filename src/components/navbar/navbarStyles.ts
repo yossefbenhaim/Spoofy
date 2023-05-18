@@ -10,13 +10,13 @@ const useStyles = makeStyles()({
         backgroundColor: 'gray',
         justifyContent: 'center',
         '&:hover': {
-            backgroundColor: `rgb(${255}, ${255}, ${255})`,
-            color: `rgb(${74}, ${191}, ${117})`,
+            backgroundColor: `rgb(255, 255, 255)`,
+            color: `rgb(74, 191, 117)`,
             border: '1px solid rgb(74, 191, 117)',
         },
     },
     activeBtn: {
-        backgroundColor: `rgb(${74}, ${191}, ${117})`,
+        backgroundColor: `rgb(74, 191, 117)`,
     },
     btnContainer: {
         display: 'flex',
@@ -24,7 +24,7 @@ const useStyles = makeStyles()({
         justifyContent: 'space-between',
         height: '150px',
         '& :hover': {
-            backgroundColor: `rgb(${4}, ${166}, ${85})`,
+            backgroundColor: `rgb(4, 166, 85)`,
         },
     },
 });
