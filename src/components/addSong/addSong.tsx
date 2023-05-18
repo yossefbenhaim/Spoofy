@@ -45,6 +45,7 @@ const AddSong: React.FC = () => {
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
 	const { enqueueSnackbar } = useSnackbar();
+	const dispatch = useDispatch();
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
 		resolver: zodResolver(schema),
 		defaultValues: {
@@ -69,7 +70,6 @@ const AddSong: React.FC = () => {
 		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 	}
 
-	const dispatch = useDispatch();
 	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
 		const { name: name, artist, duration } = data;
 		mutationAddSong({

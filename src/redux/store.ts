@@ -7,7 +7,7 @@ import currentUserReducer from './slice/currentUser';
 import favoritesSongReduser from './slice/favorites';
 import SliceName from 'models/emuns/sliceName';
 import storage from 'redux-persist/lib/storage';
-
+import usersReduser from './slice/users';
 const persistConfig = {
     key: 'root',
     type: storage,
@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
     [SliceName.currentSong]: currentSongReducer,
     [SliceName.favorites]: favoritesSongReduser,
     [SliceName.songs]: songsReducer,
+    [SliceName.users]: usersReduser,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

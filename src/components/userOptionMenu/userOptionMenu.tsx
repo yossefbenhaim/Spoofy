@@ -7,16 +7,17 @@ import { useMutation } from '@apollo/client';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
 import { VariantType, useSnackbar } from 'notistack';
+import { deleteUser } from 'redux/slice/users';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
-
 import DELETE_USER from 'queries/mutation/deleteUser';
+import User from 'models/interface/user';
 
 const UserOptionMenu: React.FC = () => {
 	const [open, setOpen] = React.useState(false);
 	const navigation = useNavigate();
 	const { classes } = useStyles();
 	const currentUser = useSelector((state: RootReducer) => state.currentUser);
-	const [deleteUser] = useMutation(DELETE_USER);
+	const [deleteUserMutation] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
 
@@ -45,9 +46,12 @@ const UserOptionMenu: React.FC = () => {
 		navigation('/');
 	};
 
-	const handleDeleteUser = (userId: string | undefined) => {
-		deleteUser({ variables: { id: userId } })
-			.then(() => handleQueryMessage('info'))
+	const handleDeleteUser = (userId: User | undefined) => {
+		deleteUserMutation({ variables: { id: userId?.id } })
+			.then(() => {
+				dispatch(deleteUser(userId))
+				handleQueryMessage('info')
+			})
 			.catch((err) => console.error('Failed to delete user: ', err));
 	};
 
@@ -103,7 +107,7 @@ const UserOptionMenu: React.FC = () => {
 							onClick={() => {
 								handleClose();
 								navigateToHome();
-								handleDeleteUser(currentUser.user?.id);
+								handleDeleteUser(currentUser.user);
 							}}
 						>
 							כן

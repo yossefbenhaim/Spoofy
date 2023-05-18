@@ -10,6 +10,7 @@ import { setUser } from 'redux/slice/currentUser';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducer } from 'redux/store';
 import { SnackbarOrigin } from '@mui/material/Snackbar';
+import { setUsers } from 'redux/slice/users';
 import AlertUser from 'components/alert/alertUser';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 export interface State extends SnackbarOrigin {
@@ -21,8 +22,8 @@ import User from 'models/interface/user';
 
 const Login: React.FC = () => {
 	const { classes } = useStyles();
-	const [users, setUsers] = useState<User[]>([]);
 	const currentUser = useSelector((state: RootReducer) => state?.currentUser.user);
+	const users = useSelector((state: RootReducer) => state?.users.users);
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
 
@@ -34,7 +35,14 @@ const Login: React.FC = () => {
 
 	useQuery(GET_USERS, {
 		onCompleted: (data) => {
-			setUsers(data.allUsers.nodes);
+			const usersData = (data.allUsers.nodes as any[]).map<User>((userDB) =>
+			({
+				id: userDB.id,
+				firstName: userDB.firstName,
+				lastName: userDB.lastName
+
+			}));
+			dispatch(setUsers(usersData));
 		},
 	});
 
@@ -48,7 +56,7 @@ const Login: React.FC = () => {
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
-		const user: User | undefined = users.find((user) => user.id === event.target.value);
+		const user: User | undefined = users?.find((user) => user.id === event.target.value);
 		dispatch(
 			setUser({
 				id: user?.id,
@@ -74,7 +82,7 @@ const Login: React.FC = () => {
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>
-					{users.map((user) => {
+					{users?.map((user) => {
 						return (
 							<MenuItem key={user.id} value={user.id}>
 								{user.firstName + ' ' + user.lastName}
