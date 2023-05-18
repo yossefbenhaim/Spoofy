@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSongs } from 'redux/slice/songs';
-import { setCurrentSong } from 'redux/slice/currentSong';
+import { setCurrentSongId } from 'redux/slice/currentSongId';
 import { useQuery } from '@apollo/client';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import useStyles from './tableSongsStyles';
@@ -111,11 +111,11 @@ const TableSongs: React.FC = () => {
 				onRowSelectionModelChange={(selectedRow) => {
 					const test: string | number = selectedRow[0];
 					if (selectedRow[0] !== undefined) {
-						dispatch(setCurrentSong(test.toString()));
+						dispatch(setCurrentSongId(test.toString()));
 
 					}
 					if (selectedRow[0] === currentSongId) {
-						dispatch(setCurrentSong(''));
+						dispatch(setCurrentSongId(''));
 					}
 				}}
 			/>

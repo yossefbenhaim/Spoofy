@@ -4,7 +4,7 @@ import useStyles from './navbarStyles';
 import PathName from 'models/emuns/pathName';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCurrentSong } from 'redux/slice/currentSong';
+import { setCurrentSongId } from 'redux/slice/currentSongId';
 
 
 interface MenuButton {
@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
 
 	const navigationPage = (path: string) => {
 		if (path != PathName.songs) {
-			dispatch(setCurrentSong(''));
+			dispatch(setCurrentSongId(''));
 		}
 		navigation(path);
 	}

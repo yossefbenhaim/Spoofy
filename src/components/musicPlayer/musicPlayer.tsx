@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 import { Typography } from '@mui/material';
-import { setCurrentSong } from 'redux/slice/currentSong';
+import { setCurrentSongId } from 'redux/slice/currentSongId';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootReducer } from 'redux/store';
 import { Slide, Slider, IconButton } from '@mui/material/';
@@ -66,23 +66,20 @@ const MusicPlayer: React.FC = () => {
 		const currentSongIndex: number | undefined = songs?.findIndex(
 			(song) => song.id === currentSongId
 		);
-		if (currentSongIndex === songs.length - 1 || currentSongIndex === 0 && direction == -1) {
+
+		if (currentSongIndex === songs?.length - 1 || currentSongIndex === 0 && direction == -1) {
 			const firstSong: Song = songs[0];
-			dispatch(setCurrentSong(firstSong.id));
+			dispatch(setCurrentSongId(firstSong.id));
 			setCurrentTime(0);
 		} else {
 			const next: Song = songs[currentSongIndex + direction];
-			dispatch(setCurrentSong(next.id));
+			dispatch(setCurrentSongId(next.id));
 			setCurrentTime(0);
 		}
 	};
 
-	// const icon = (
-
-	// );
 
 	return (
-		// <div className={classes.slide}>
 		<Slide direction="up" in={Boolean(currentSongId)}>
 			<div className={classes.sliderContainer}>
 				<div className={classes.playContainer}>
@@ -138,10 +135,7 @@ const MusicPlayer: React.FC = () => {
 					</div>
 				</div>
 			</div>
-
-
 		</Slide>
-		// </div>
 	);
 };
 
