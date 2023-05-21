@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import { Typography } from '@mui/material';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootReducer } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from 'redux/store';
 import { Slide, Slider, IconButton } from '@mui/material/';
 import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 
@@ -23,9 +23,9 @@ const MusicPlayer: React.FC = () => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
-	const songs = useSelector((state: RootReducer) => state.songs.songs);
-	const currentSongId = useSelector(
-		(state: RootReducer) => state.currentSong.id
+	const songs = useAppSelector((state) => state.songs.songs);
+	const currentSongId = useAppSelector(
+		(state) => state.currentSong.id
 	);
 
 

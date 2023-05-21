@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SliceName from 'models/emuns/sliceName';
-interface currentSong {
+interface currentSongSlice {
     id?: string | undefined;
 }
 
-const initialState: currentSong = {
+const initialState: currentSongSlice = {
     id: undefined,
 };
 

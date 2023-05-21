@@ -2,9 +2,9 @@ import React, { useRef, useEffect } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './likeSongStyles';
-import { RootReducer } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
 import { VariantType, useSnackbar } from 'notistack';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
@@ -18,8 +18,8 @@ const LikeSong: React.FC<Props> = (props) => {
 	const { liked } = props
 	const { classes } = useStyles();
 	const [addFavoriteMutation] = useMutation(ADD_FAVORITE);
-	const currentUserId = useSelector((state: RootReducer) => state.currentUser.user?.id);
-	const favoritesLike = useSelector((state: RootReducer) => state.favorites.favorites);
+	const currentUserId = useAppSelector((state) => state.currentUser.user?.id);
+	const favoritesLike = useAppSelector((state) => state.favorites.favorites);
 	const container = useRef<HTMLDivElement>(null);
 	const animref = useRef<AnimationItem | undefined>();
 	const [deleteFavorite] = useMutation(DELETE_FAVORITE);

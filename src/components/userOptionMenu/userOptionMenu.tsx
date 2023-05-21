@@ -2,10 +2,10 @@ import React from 'react';
 import useStyles from './userOptionMenuStyles';
 import { Button, Dialog, DialogActions, DialogContentText, DialogTitle, Typography } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
-import { RootReducer } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { setUser } from 'redux/slice/currentUser';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { VariantType, useSnackbar } from 'notistack';
 import { deleteUser } from 'redux/slice/users';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
@@ -13,10 +13,10 @@ import DELETE_USER from 'queries/mutation/deleteUser';
 import User from 'models/interface/user';
 
 const UserOptionMenu: React.FC = () => {
-	const [open, setOpen] = React.useState(false);
+	const [openDialogDelete, setOpen] = React.useState(false);
 	const navigation = useNavigate();
 	const { classes } = useStyles();
-	const currentUser = useSelector((state: RootReducer) => state.currentUser);
+	const currentUser = useAppSelector((state) => state.currentUser);
 	const [deleteUserMutation] = useMutation(DELETE_USER);
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
@@ -79,7 +79,7 @@ const UserOptionMenu: React.FC = () => {
 					התנתקות
 				</Button>
 				<Dialog
-					open={open}
+					open={openDialogDelete}
 					keepMounted
 					onClose={handleClose}
 					aria-describedby="alert-dialog-slide-description"

@@ -65,7 +65,7 @@ const useStyles = makeStyles()({
         textAlign: 'center',
     },
 
-    headerDataGrid: {
+    headerDataGridArtistDuration: {
         boxSizing: 'inherit',
         color: 'white',
         fontSize: '1.8rem',
@@ -79,6 +79,3 @@ const useStyles = makeStyles()({
 });
 
 export default useStyles;
-
-// .css-1vvbe8i-MuiDataGrid-root-dataGride .MuiDataGrid-columnHeader:focus-within, .css-1vvbe8i-MuiDataGrid-root-dataGride .MuiDataGrid-cell:focus-within
-// .css-1vvbe8i-MuiDataGrid-root-dataGride .MuiDataGrid-columnHeader:focus, .css-1vvbe8i-MuiDataGrid-root-dataGride .MuiDataGrid-cell:focus

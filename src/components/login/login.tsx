@@ -7,8 +7,8 @@ import { Button, MenuItem, Typography } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootReducer } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from 'redux/store';
 import { SnackbarOrigin } from '@mui/material/Snackbar';
 import { setUsers } from 'redux/slice/users';
 import AlertUser from 'components/alert/alertUser';
@@ -22,8 +22,8 @@ import User from 'models/interface/user';
 
 const Login: React.FC = () => {
 	const { classes } = useStyles();
-	const currentUser = useSelector((state: RootReducer) => state?.currentUser.user);
-	const users = useSelector((state: RootReducer) => state?.users.users);
+	const currentUser = useAppSelector((state) => state.currentUser.user);
+	const users = useAppSelector((state) => state.users.users);
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
 

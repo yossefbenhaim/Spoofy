@@ -1,7 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
+const URI_GRAGHQ_DB = import.meta.env.VITE_URI_GRAGHQ;
+
 const client = new ApolloClient({
-    uri: 'http://localhost:8080/graphql',
+    uri: URI_GRAGHQ_DB,
     cache: new InMemoryCache({
         addTypename: false,
     }),

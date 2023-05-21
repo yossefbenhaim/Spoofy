@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSongs } from 'redux/slice/songs';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
 import { useQuery } from '@apollo/client';
@@ -11,15 +11,15 @@ import GET_SONGS from 'queries/query/songs';
 import AddSong from 'components/addSong/addSong';
 import formatDuration from 'utils/formatDuration';
 import RowsFieldsb from 'models/emuns/rowsField';
-import { RootReducer } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import Song from 'models/interface/song';
 import { Typography } from '@mui/material';
 const TableSongs: React.FC = () => {
 	const { classes } = useStyles();
 	const dispatch = useDispatch();
-	const songs = useSelector((state: RootReducer) => state.songs.songs);
-	const currentSongId = useSelector(
-		(state: RootReducer) => state.currentSong.id
+	const songs = useAppSelector((state) => state.songs.songs);
+	const currentSongId = useAppSelector(
+		(state) => state.currentSong.id
 	);
 
 	useQuery(GET_SONGS, {
@@ -60,14 +60,14 @@ const TableSongs: React.FC = () => {
 			field: RowsFieldsb.artist,
 			headerName: 'זמר',
 			width: 200,
-			headerClassName: classes.headerDataGrid,
+			headerClassName: classes.headerDataGridArtistDuration,
 			...settingRowGlobal
 		},
 		{
 			field: RowsFieldsb.duration,
 			headerName: "משך שיר",
 			width: 150,
-			headerClassName: classes.headerDataGrid,
+			headerClassName: classes.headerDataGridArtistDuration,
 			...settingRowGlobal
 		},
 		{

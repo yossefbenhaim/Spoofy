@@ -21,7 +21,8 @@ import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import { addSong } from 'redux/slice/songs';
 import { VariantType, useSnackbar } from 'notistack';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
-import DialogFieldsName from 'models/emuns/dialogFieldsName';
+import DialogFieldsNames from 'models/emuns/dialogFieldsName';
+import ErrorMessageDialogAddSong from 'models/emuns/errorMessage';
 import * as z from 'zod';
 
 
@@ -32,38 +33,48 @@ interface FormAddSong {
 }
 
 const schema = z.object({
-	[DialogFieldsName.name]: z.string().min(2, { message: "חייב לבחור שם של שיר לפחות מ 2 תווים" }).max(50, 'שם של שיר יכול להיות מקסימום 50 תווים'),
-	[DialogFieldsName.artist]: z.string().refine((value) => value !== '', {
-		message: 'חייב לבחור אומן כדי ליצור שיר ',
-	}),
-	[DialogFieldsName.duration]: z.number().min(30, { message: "שיר חייב להיות מינמום 30 שניות" }),
-});
+	[DialogFieldsNames.name]:
+		z.string
+			().nonempty({
+				message: ErrorMessageDialogAddSong.requiredError
+			})
+			.min(2, { message: ErrorMessageDialogAddSong.songNameMin })
+			.max(50, ErrorMessageDialogAddSong.songNameMax)
+	,
+	[DialogFieldsNames.artist]:
+		z.string({ required_error: ErrorMessageDialogAddSong.requiredError }).nonempty({
+			message: ErrorMessageDialogAddSong.requiredError
+		}),
+	[DialogFieldsNames.duration]:
+		z.number({ invalid_type_error: ErrorMessageDialogAddSong.duration })
+			.min(20, { message: ErrorMessageDialogAddSong.duration }),
+})
 
 const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
-	const [open, setOpen] = useState(false);
+	const [openDialogAddSong, setOpenDialogAddSong] = useState(false);
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
 	const { enqueueSnackbar } = useSnackbar();
 	const dispatch = useDispatch();
-	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
+	const { handleSubmit, formState: { errors }, reset, control, getValues } = useForm<FormAddSong>({
 		resolver: zodResolver(schema),
 		defaultValues: {
-			[DialogFieldsName.name]: '',
-			[DialogFieldsName.artist]: '',
-			[DialogFieldsName.duration]: 0,
+			[DialogFieldsNames.name]: '',
+			[DialogFieldsNames.artist]: '',
+			[DialogFieldsNames.duration]: 0,
 		},
 	});
 
 	useEffect(() => {
-		if (!open) {
+		if (!openDialogAddSong) {
 			reset({
-				[DialogFieldsName.name]: '',
-				[DialogFieldsName.artist]: '',
-				[DialogFieldsName.duration]: 0,
+				[DialogFieldsNames.name]: '',
+				[DialogFieldsNames.artist]: '',
+				[DialogFieldsNames.duration]: 0,
 			})
 		}
-	}, [open])
+	}, [openDialogAddSong])
 
 
 	const handleQueryMessage = (variant: VariantType) => {
@@ -88,17 +99,16 @@ const AddSong: React.FC = () => {
 				}))
 				handleQueryMessage('success')
 			})
-
 			.catch((err) => console.error('Failed to add song: ', err));
 		handleClose();
 	};
 
 	const handleClickOpen = () => {
-		setOpen(true);
+		setOpenDialogAddSong(true);
 	};
 
 	const handleClose = () => {
-		setOpen(false);
+		setOpenDialogAddSong(false);
 	};
 
 	useQuery(GET_ARTIST, {
@@ -117,7 +127,7 @@ const AddSong: React.FC = () => {
 				+ צור שיר
 			</Button>
 			<Dialog
-				open={open}
+				open={openDialogAddSong}
 				onClose={handleClose}
 				className={classes.dialogContainer}
 			>
@@ -125,29 +135,28 @@ const AddSong: React.FC = () => {
 					<div className={classes.dialog}>
 						<div className={classes.header}>יצירת שיר</div>
 						<Controller
-							name={DialogFieldsName.name}
+							name={DialogFieldsNames.name}
 							control={control}
-							render={({ field }) => (
+							render={({ field, fieldState: { error } }) => (
 								<TextField
 									className={classes.input}
-									id="standard-basic"
 									label="שם השיר"
 									variant="standard"
 									{...field}
-									error={!!errors.name}
+									error={!!error}
 									helperText={errors.name && <span className={classes.error}>{errors.name.message}</span>}
 								/>
 							)}
 						/>
 						<Controller
-							name={DialogFieldsName.artist}
+							name={DialogFieldsNames.artist}
 							control={control}
-							render={({ field }) => (
+							render={({ field, fieldState: { error } }) => (
 								<FormControl
 									className={classes.menu}
 									variant="standard"
 								>
-									<InputLabel error={!!errors.artist} className={classes.titleMenu} >
+									<InputLabel error={!!error} className={classes.titleMenu} >
 										בחר זמר
 									</InputLabel>
 									<Select
@@ -169,15 +178,15 @@ const AddSong: React.FC = () => {
 									</Select>
 									<FormHelperText
 										className={classes.error}>
-										{errors.artist &&
+										{error &&
 											<span className={classes.error}>
-												{errors.artist.message}</span>}
+												{error.message}</span>}
 									</FormHelperText>
 								</FormControl>
 							)}
 						/>
 						<Controller
-							name={DialogFieldsName.duration}
+							name={DialogFieldsNames.duration}
 							control={control}
 							render={({ field: { onChange } }) => (
 								<TimeField
@@ -187,7 +196,7 @@ const AddSong: React.FC = () => {
 										onChange(formattedTime);
 									}}
 									className={cx(classes.input, {
-										[classes.errorInput]: errors.duration?.message === "שיר חייב להיות מינמום 30 שניות"
+										[classes.errorInput]: errors.duration?.message === ErrorMessageDialogAddSong.duration
 									})}
 									label="Duration"
 									variant="standard"

@@ -4,9 +4,10 @@ import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import Navbar from 'components/navbar/navbar';
 import { useNavigate } from 'react-router-dom';
-import { RootReducer } from 'redux/store';
+import { useAppSelector } from 'redux/store';
+
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
 import { setFavorites } from 'redux/slice/favorites';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
@@ -14,7 +15,7 @@ import { useQuery } from '@apollo/client';
 
 const MainPage: React.FC = () => {
 	const { classes } = useStyles();
-	const currentUser = useSelector((state: RootReducer) => state.currentUser.user);
+	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
 

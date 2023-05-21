@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SliceName from 'models/emuns/sliceName';
 import Song from 'models/interface/song';
 
-interface Songs {
+interface CurrentSongsSlice {
     songs: Song[];
 }
 
-const initialState: Songs = {
+const initialState: CurrentSongsSlice = {
     songs: [],
 };
 

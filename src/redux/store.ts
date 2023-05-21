@@ -8,6 +8,7 @@ import favoritesSongReduser from './slice/favorites';
 import SliceName from 'models/emuns/sliceName';
 import storage from 'redux-persist/lib/storage';
 import usersReduser from './slice/users';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 const persistConfig = {
     key: 'root',
     type: storage,
@@ -35,8 +36,8 @@ const store = configureStore({
 });
 
 const persistodStore = persistStore(store);
-
-export type RootReducer = ReturnType<typeof store.getState>;
 export type AddDispatch = typeof store.dispatch;
-
+export const useAppSelector: TypedUseSelectorHook<
+    ReturnType<typeof store.getState>
+> = useSelector;
 export { store, persistodStore };

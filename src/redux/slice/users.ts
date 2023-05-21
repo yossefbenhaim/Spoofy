@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import User from 'models/interface/user';
 import SliceName from 'models/emuns/sliceName';
 
-interface currentFavoritesSlice {
+interface currentUsersSlice {
     users: User[] | undefined;
 }
 
-const initialState: currentFavoritesSlice = {
+const initialState: currentUsersSlice = {
     users: undefined,
 };
 

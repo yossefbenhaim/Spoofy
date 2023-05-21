@@ -1,7 +1,7 @@
-enum DialogFieldsName {
+enum DialogFieldsNames {
     name = 'name',
     artist = 'artist',
     duration = 'duration',
 }
 
-export default DialogFieldsName;
+export default DialogFieldsNames;
