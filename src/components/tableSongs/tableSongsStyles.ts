@@ -39,17 +39,24 @@ const useStyles = makeStyles()({
             outline: 'none!important',
         },
     },
-
-    header: {
+    headerContainer: {
         marginBottom: '2%',
         textAlign: 'center',
         borderRadius: '15px',
         height: '10%',
         backgroundColor: `rgb(74, 191, 117)`,
         color: 'white',
-        fontSize: '2.2rem',
-        fontWeight: 'bold',
         fontFamily: 'system-ui',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+
+    header: {
+        color: 'white',
+        fontSize: '2.8rem',
+        fontWeight: 'bold',
+        marginTop: '-5px',
     },
     addSongBtnContainer: {
         height: '8%',
@@ -61,6 +68,13 @@ const useStyles = makeStyles()({
     headerDataGrid: {
         boxSizing: 'inherit',
         color: 'white',
+        fontSize: '1.8rem',
+        borderRight: '1px solid white',
+    },
+    headerDataGridSong: {
+        boxSizing: 'inherit',
+        color: 'white',
+        fontSize: '1.8rem',
     },
 });
 

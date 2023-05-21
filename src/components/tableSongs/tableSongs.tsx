@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSongs } from 'redux/slice/songs';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
@@ -13,7 +13,7 @@ import formatDuration from 'utils/formatDuration';
 import RowsFieldsb from 'models/emuns/rowsField';
 import { RootReducer } from 'redux/store';
 import Song from 'models/interface/song';
-
+import { Typography } from '@mui/material';
 const TableSongs: React.FC = () => {
 	const { classes } = useStyles();
 	const dispatch = useDispatch();
@@ -45,35 +45,34 @@ const TableSongs: React.FC = () => {
 	const settingRowGlobal: Partial<GridColDef> = {
 		sortable: false,
 		resizable: false,
-		headerClassName: classes.headerDataGrid,
 		headerAlign: 'left',
 	}
 
 	const columns: GridColDef[] = [
 		{
 			field: RowsFieldsb.song,
-			headerName: 'שירים',
+			headerName: 'שיר',
 			width: 250,
+			headerClassName: classes.headerDataGridSong,
 			...settingRowGlobal
 		},
-
 		{
 			field: RowsFieldsb.artist,
 			headerName: 'זמר',
 			width: 200,
+			headerClassName: classes.headerDataGrid,
 			...settingRowGlobal
 		},
 		{
 			field: RowsFieldsb.duration,
 			headerName: "משך שיר",
 			width: 150,
+			headerClassName: classes.headerDataGrid,
 			...settingRowGlobal
 		},
 		{
 			field: 'menu',
 			headerName: '',
-
-			...settingRowGlobal,
 			width: 50,
 			renderCell: () => {
 				return (
@@ -84,19 +83,19 @@ const TableSongs: React.FC = () => {
 		{
 			field: 'favorites',
 			headerName: '',
-			...settingRowGlobal,
 			width: 70,
-
 			renderCell: (params) => {
-				const tesst: string = params.id.toString()
-				return <LikeSong liked={tesst} />;
+				const rowId: string = params.id.toString()
+				return <LikeSong liked={rowId} />;
 			},
 		},
 	];
 
 	return (
 		<div className={classes.fieldContainer}>
-			<div className={classes.header}>רשימת השירים</div>
+			<div className={classes.headerContainer}>
+				<Typography className={classes.header}>רשימת השירים</Typography>
+			</div>
 			<DataGridPro
 				className={classes.dataGride}
 				disableColumnMenu
@@ -106,7 +105,9 @@ const TableSongs: React.FC = () => {
 				hideFooterRowCount
 				hideFooterPagination
 				hideFooterSelectedRowCount
-				disableVirtualization
+				disableColumnSelector
+				disableColumnReorder
+				disableColumnResize
 				rowSelectionModel={currentSongId}
 				onRowSelectionModelChange={(selectedRow) => {
 					const test: string | number = selectedRow[0];
