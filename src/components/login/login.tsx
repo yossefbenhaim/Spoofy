@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import useStyles from './loginStyles';
-import { Button, MenuItem, Typography } from '@mui/material';
+import {
+	Button,
+	MenuItem,
+	Typography,
+	SnackbarOrigin,
+	InputLabel,
+	FormControl,
+	Select,
+	SelectChangeEvent
+} from '@mui/material';
+
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
-import { SnackbarOrigin } from '@mui/material/Snackbar';
 import { setUsers } from 'redux/slice/users';
-import AlertUser from 'components/alert/alertUser';
+
 import FeedbackMessage from 'models/emuns/feedbackMessage';
+import User from 'models/interface/user';
+
+import AlertUser from 'components/alert/alertUser';
+import GET_USERS from 'queries/query/users';
+import useStyles from './loginStyles';
+
+
 export interface State extends SnackbarOrigin {
 	open: boolean;
 }
-import GET_USERS from 'queries/query/users';
-import User from 'models/interface/user';
-
 
 const Login: React.FC = () => {
 	const { classes } = useStyles();
@@ -35,24 +44,20 @@ const Login: React.FC = () => {
 
 	useQuery(GET_USERS, {
 		onCompleted: (data) => {
-			const usersData = (data.allUsers.nodes as any[]).map<User>((userDB) =>
-			({
+			const usersData = (data.allUsers.nodes as any[]).map<User>((userDB) => ({
 				id: userDB.id,
 				firstName: userDB.firstName,
 				lastName: userDB.lastName
-
 			}));
 			dispatch(setUsers(usersData));
 		},
 	});
 
 	const handleClick = (parametrMessage: SnackbarOrigin) => () => {
-		if (currentUser?.id) {
+		if (currentUser?.id)
 			navigatoin('firstPage/songs');
-		}
-		else {
+		else
 			setState({ open: true, ...parametrMessage });
-		}
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
@@ -70,10 +75,7 @@ const Login: React.FC = () => {
 		<div className={classes.fieldsContainer}>
 			<Typography className={classes.title}>Musify</Typography>
 			<FormControl className={classes.menu} fullWidth>
-				<InputLabel
-					className={classes.titleMenu}
-					id="demo-simple-select-label"
-				>
+				<InputLabel className={classes.titleMenu} >
 					בחר משתמש להתחברות
 				</InputLabel>
 				<Select

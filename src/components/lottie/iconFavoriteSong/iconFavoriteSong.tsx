@@ -1,38 +1,41 @@
 import React, { useRef, useEffect } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
-import IconButton from '@mui/material/IconButton';
-import useStyles from './likeSongStyles';
 import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
 import { VariantType, useSnackbar } from 'notistack';
-import FeedbackMessage from 'models/emuns/feedbackMessage';
+
 import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
 
+import FeedbackMessage from 'models/emuns/feedbackMessage';
+import IconButton from '@mui/material/IconButton';
+import useStyles from './iconFavoriteSongStyles';
+
+
 interface Props {
-	liked: string;
+	rowSongId: string;
 }
-const LikeSong: React.FC<Props> = (props) => {
-	const { liked } = props
+const IconFavoriteSong: React.FC<Props> = (props) => {
+	const dispatch = useDispatch();
+	const { rowSongId } = props
 	const { classes } = useStyles();
+	const { enqueueSnackbar } = useSnackbar();
+
 	const [addFavoriteMutation] = useMutation(ADD_FAVORITE);
+	const [deleteFavorite] = useMutation(DELETE_FAVORITE);
+
 	const currentUserId = useAppSelector((state) => state.currentUser.user?.id);
 	const favoritesLike = useAppSelector((state) => state.favorites.favorites);
 	const container = useRef<HTMLDivElement>(null);
 	const animref = useRef<AnimationItem | undefined>();
-	const [deleteFavorite] = useMutation(DELETE_FAVORITE);
-	const dispatch = useDispatch();
-	const { enqueueSnackbar } = useSnackbar();
 
 	const handleQueryMessage = (variant: VariantType) => {
-		if (variant == 'success') {
+		if (variant == 'success')
 			enqueueSnackbar(FeedbackMessage.addingSongToFavorite, { variant });
-		}
-		if (variant == 'info') {
+		if (variant == 'info')
 			enqueueSnackbar(FeedbackMessage.deletingSongToFavorite, { variant });
-		}
 	}
 
 	useEffect(() => {
@@ -43,26 +46,42 @@ const LikeSong: React.FC<Props> = (props) => {
 			autoplay: false,
 			path: '/src/like.json',
 		});
-		return () => {
+		return () =>
 			animref.current && animref.current.destroy();
-		};
 	}, []);
+
+	useEffect(() => {
+		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId))
+			animref.current && animref.current.goToAndPlay(1000, true);
+		else
+			animref.current && animref.current.stop();
+	}, [rowSongId, favoritesLike])
 
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
-		if (favoritesLike?.some((favorite) => favorite.songId === liked)) {
+		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId)) {
+
 			animref.current && animref.current.stop();
 			heandlDeleteFavorite();
-			dispatch(deleteFavoriteFrom({ songId: liked }))
+			dispatch(deleteFavoriteFrom({ songId: rowSongId }));
+
 		} else {
-			animref.current && animref.current.play();
-			dispatch(addFavorite({ songId: liked }))
-			heandlAddFavorite();
+			new Promise((resolve) => {
+				animref.current && animref.current.play();
+				setTimeout(resolve, 1000);
+
+			}).then(() => {
+				dispatch(addFavorite({ songId: rowSongId }));
+				heandlAddFavorite();
+
+			}).catch(error => {
+				console.error('Error occurred:', error);
+			});
 		}
 	};
 
 	const heandlDeleteFavorite = () => {
-		deleteFavorite({ variables: { userId: currentUserId, songId: liked } })
+		deleteFavorite({ variables: { userId: currentUserId, songId: rowSongId } })
 			.then(() => handleQueryMessage('info'))
 			.catch((err) => console.error('Failed to delete user: ', err));
 	}
@@ -73,7 +92,7 @@ const LikeSong: React.FC<Props> = (props) => {
 				input: {
 					favorite: {
 						userId: currentUserId,
-						songId: liked
+						songId: rowSongId
 					},
 				},
 			},
@@ -82,21 +101,11 @@ const LikeSong: React.FC<Props> = (props) => {
 			.catch((err) => console.error('Failed to add song: ', err));
 	}
 
-	useEffect(() => {
-		if (favoritesLike?.some((favorite) => favorite.songId === liked)) {
-			animref.current && animref.current.goToAndPlay(1000, true);
-		} else {
-			animref.current && animref.current.stop();
-		}
-	}, [liked, favoritesLike])
-
 	return (
-		<div>
-			<IconButton className={classes.iconBotton} onClick={handleClikeOnLike}>
-				<div className={classes.logo} ref={container} />
-			</IconButton>
-		</div>
+		<IconButton className={classes.iconBotton} onClick={handleClikeOnLike}>
+			<div className={classes.logo} ref={container} />
+		</IconButton>
 	);
 };
 
-export default LikeSong;
+export default IconFavoriteSong;

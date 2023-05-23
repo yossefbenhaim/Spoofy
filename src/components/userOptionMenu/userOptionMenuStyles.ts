@@ -6,6 +6,9 @@ const useStyles = makeStyles()({
         textAlign: 'end',
         marginRight: '5%',
     },
+    body: {
+        textAlign: 'center',
+    },
     fieldsContainer: {
         marginLeft: '1.5%',
         marginTop: '0.5%',

@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 
-import { Typography } from '@mui/material';
+import { Slide, Slider, IconButton, Typography } from '@mui/material/';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
-import { Slide, Slider, IconButton } from '@mui/material/';
-import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 
+import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import SkipPreviousRoundedIcon from '@mui/icons-material/SkipPreviousRounded';
-
 import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 
 import useStyles from './musicPlayerStyles';
@@ -17,10 +15,11 @@ import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
 
 const MusicPlayer: React.FC = () => {
-	const { classes } = useStyles();
 	const dispatch = useDispatch();
+	const { classes } = useStyles();
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
+
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
 	const songs = useAppSelector((state) => state.songs.songs);
 	const currentSongId = useAppSelector((state) => state.currentSong.id);
@@ -40,10 +39,12 @@ const MusicPlayer: React.FC = () => {
 			}, 1000);
 		}
 	}
+
 	const clearIntercal = () => {
 		intarval.current && clearInterval(intarval.current);
 		intarval.current = undefined;
 	}
+
 	useEffect(() => {
 		isPlaying ?
 			createNewIntervalForSlider() :
@@ -57,19 +58,18 @@ const MusicPlayer: React.FC = () => {
 		}
 	}, [currentTime])
 
-	const handleClickPlay = () => {
+	const handleClickPlay = () =>
 		setIsPlaying(prev => !prev);
-	};
 
-	const handleSliderChange = (newValue: number) => {
+
+	const handleSliderChange = (newValue: number) =>
 		setCurrentTime(newValue);
-	};
+
 
 	const diractionNextSong = (direction: number): void => {
 		const currentSongIndex: number | undefined = songs?.findIndex(
 			(song) => song.id === currentSongId
 		);
-
 		if (currentSongIndex === songs?.length - 1 || currentSongIndex === 0 && direction == -1) {
 			const firstSong: Song = songs[0];
 			dispatch(setCurrentSongId(firstSong.id));
@@ -96,11 +96,11 @@ const MusicPlayer: React.FC = () => {
 							className={classes.sizeIcon}
 							onClick={handleClickPlay}
 						>
-							{isPlaying ? (
+							{isPlaying ?
 								<PauseRoundedIcon className={classes.sizeSvg} />
-							) : (
+								:
 								<PlayArrowRoundedIcon className={classes.sizeSvg} />
-							)}
+							}
 						</IconButton>
 						<IconButton
 							onClick={() => diractionNextSong(1)}

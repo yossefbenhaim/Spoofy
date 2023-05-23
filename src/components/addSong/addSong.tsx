@@ -1,6 +1,7 @@
 import React, { useEffect, useState, } from 'react';
 import {
 	Button,
+	Typography,
 	TextField,
 	MenuItem,
 	InputLabel,
@@ -9,6 +10,7 @@ import {
 	Select,
 	Dialog
 } from '@mui/material';
+
 import { addSong } from 'redux/slice/songs';
 import { VariantType, useSnackbar } from 'notistack';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
@@ -17,47 +19,54 @@ import { Dayjs } from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery, useMutation } from '@apollo/client';
+
 import GET_ARTIST from 'queries/query/artists';
 import ADD_SONG from 'queries/mutation/addSong';
-import useStyles from './addSongStyles';
-import ConvertToMilliseconds from 'utils/convertToMilliseconds';
+
 import Artist from 'models/interface/artist';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import DialogFieldsNames from 'models/emuns/dialogFieldsName';
 import ErrorMessageDialogAddSong from 'models/emuns/errorMessage';
+
+import useStyles from './addSongStyles';
+import ConvertToMilliseconds from 'utils/convertToMilliseconds';
+
 import Schema from './zodSchema';
 import * as z from 'zod';
 
 const AddSong: React.FC = () => {
+	const dispatch = useDispatch();
 	const { classes, cx } = useStyles();
-	const [openDialogAddSong, setOpenDialogAddSong] = useState(false);
+	const { enqueueSnackbar } = useSnackbar();
+
+	const [openDialogAddSong, setOpenDialogAddSong] = useState<boolean>(false);
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
-	const { enqueueSnackbar } = useSnackbar();
-	const dispatch = useDispatch();
+
 	type FormAddSong = z.infer<typeof Schema>;
+
+	const restartDialog = {
+		[DialogFieldsNames.name]: '',
+		[DialogFieldsNames.artist]: '',
+		[DialogFieldsNames.duration]: 0,
+	}
+
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
 		resolver: zodResolver(Schema),
 		defaultValues: {
-			[DialogFieldsNames.name]: '',
-			[DialogFieldsNames.artist]: '',
-			[DialogFieldsNames.duration]: 0,
+			...restartDialog
 		},
 	});
 
 	useEffect(() => {
-		if (!openDialogAddSong) {
-			reset({
-				[DialogFieldsNames.name]: '',
-				[DialogFieldsNames.artist]: '',
-				[DialogFieldsNames.duration]: 0,
-			})
-		}
+		if (!openDialogAddSong)
+			reset({ ...restartDialog })
+
 	}, [openDialogAddSong])
 
-	const handleQueryMessage = (variant: VariantType) => {
+	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
-	}
+
 
 	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
 		const { name, artist, duration } = data;
@@ -88,13 +97,13 @@ const AddSong: React.FC = () => {
 		handleClose();
 	};
 
-	const handleClickOpen = () => {
+	const handleClickOpen = () =>
 		setOpenDialogAddSong(true);
-	};
 
-	const handleClose = () => {
+
+	const handleClose = () =>
 		setOpenDialogAddSong(false);
-	};
+
 
 	useQuery(GET_ARTIST, {
 		onCompleted: (data) => {
@@ -103,7 +112,7 @@ const AddSong: React.FC = () => {
 	});
 
 	return (
-		<div>
+		<>
 			<Button
 				variant="contained"
 				onClick={handleClickOpen}
@@ -118,7 +127,7 @@ const AddSong: React.FC = () => {
 			>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className={classes.dialog}>
-						<div className={classes.header}>יצירת שיר</div>
+						<Typography className={classes.header}>יצירת שיר</Typography>
 						<Controller
 							name={DialogFieldsNames.name}
 							control={control}
@@ -129,7 +138,9 @@ const AddSong: React.FC = () => {
 									variant="standard"
 									{...field}
 									error={!!error}
-									helperText={errors.name && <span className={classes.error}>{errors.name.message}</span>}
+									helperText={errors.name &&
+										<span className={classes.error}>
+											{errors.name.message}</span>}
 								/>
 							)}
 						/>
@@ -181,17 +192,20 @@ const AddSong: React.FC = () => {
 										onChange(formattedTime);
 									}}
 									className={cx(classes.input, {
-										[classes.errorInput]: errors.duration?.message === ErrorMessageDialogAddSong.duration
+										[classes.errorInput]:
+											errors.duration?.message === ErrorMessageDialogAddSong.duration
 									})}
 									label="Duration"
 									variant="standard"
 									format='mm:ss'
-									helperText={errors.duration && <span className={classes.error}>{errors.duration.message}</span>}
+									helperText={errors.duration &&
+										<span className={classes.error}>
+											{errors.duration.message}</span>}
 								/>
 							)}
 						/>
 						<Button
-							className={classes.btn}
+							className={classes.submitButton}
 							variant="contained"
 							type="submit"
 						>
@@ -200,7 +214,7 @@ const AddSong: React.FC = () => {
 					</div>
 				</form>
 			</Dialog>
-		</div>
+		</>
 	);
 };
 

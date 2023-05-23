@@ -2,9 +2,7 @@ import * as React from 'react';
 
 const TablePlaylist: React.FC = () => {
 	return (
-		<div>
-			<h1>Playlist</h1>
-		</div>
+		<h1>Playlist</h1>
 	);
 };
 export default TablePlaylist;

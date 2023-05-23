@@ -1,39 +1,47 @@
 import React from 'react';
-import useStyles from './userOptionMenuStyles';
-import { Button, Dialog, DialogActions, DialogContentText, DialogTitle, Typography } from '@mui/material/';
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContentText,
+	DialogTitle,
+	Typography
+} from '@mui/material/';
+
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
-import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
+
+import { setUser } from 'redux/slice/currentUser';
 import { VariantType, useSnackbar } from 'notistack';
 import { deleteUser } from 'redux/slice/users';
+
 import FeedbackMessage from 'models/emuns/feedbackMessage';
-import DELETE_USER from 'queries/mutation/deleteUser';
 import User from 'models/interface/user';
 
+import DELETE_USER from 'queries/mutation/deleteUser';
+import useStyles from './userOptionMenuStyles';
+
 const UserOptionMenu: React.FC = () => {
-	const [openDialogDelete, setOpen] = React.useState(false);
 	const navigation = useNavigate();
 	const { classes } = useStyles();
-	const currentUser = useAppSelector((state) => state.currentUser);
-	const [deleteUserMutation] = useMutation(DELETE_USER);
-	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
 
+	const [openDialogDelete, setOpen] = React.useState(false);
+	const [deleteUserMutation] = useMutation(DELETE_USER);
 
-	const handleQueryMessage = (variant: VariantType) => {
+	const currentUser = useAppSelector((state) => state.currentUser);
+	const dispatch = useDispatch();
+
+	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
-	}
 
-
-	const handleClickOpen = () => {
+	const handleClickOpen = () =>
 		setOpen(true);
-	};
 
-	const handleClose = () => {
+	const handleClose = () =>
 		setOpen(false);
-	};
 
 	const navigateToHome = () => {
 		dispatch(
@@ -63,7 +71,7 @@ const UserOptionMenu: React.FC = () => {
 					currentUser.user?.lastName +
 					'   היי  '}
 			</Typography>
-			<div>
+			<div className={classes.body}>
 				<Button
 					onClick={handleClickOpen}
 					className={classes.btnDelete}
@@ -82,7 +90,6 @@ const UserOptionMenu: React.FC = () => {
 					open={openDialogDelete}
 					keepMounted
 					onClose={handleClose}
-					aria-describedby="alert-dialog-slide-description"
 				>
 					<DialogTitle className={classes.ExitAccountTitle}>
 						{' ?האם אתה בטוח שאתה רוצה למחוק את החשבון'}
@@ -90,7 +97,6 @@ const UserOptionMenu: React.FC = () => {
 
 					<DialogContentText
 						className={classes.ExitAccountHeader}
-						id="alert-dialog-slide-description"
 					>
 						...במידה ותלחץ החשבון ימחק
 					</DialogContentText>
@@ -118,4 +124,5 @@ const UserOptionMenu: React.FC = () => {
 		</div>
 	);
 };
+
 export default UserOptionMenu;

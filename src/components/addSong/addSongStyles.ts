@@ -13,6 +13,12 @@ const useStyles = makeStyles()({
             border: `2px solid rgb(185, 172, 172)`,
         },
     },
+    dialogContainer: {
+        '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+            maxWidth: '800px',
+            flexDirection: 'inherit',
+        },
+    },
     dialog: {
         backgroundColor: `rgb(118, 118, 118)`,
         width: '800px',
@@ -21,12 +27,7 @@ const useStyles = makeStyles()({
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
-    dialogContainer: {
-        '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
-            maxWidth: '800px',
-            flexDirection: 'inherit',
-        },
-    },
+
     header: {
         marginBottom: '2%',
         textAlign: 'center',
@@ -37,50 +38,7 @@ const useStyles = makeStyles()({
         fontWeight: 'bold',
         fontFamily: 'system-ui',
     },
-    menu: {
-        marginLeft: '2%',
-        marginRight: '2%',
-        direction: 'rtl',
-        '& .css-15rasaf-MuiFormLabel-root-MuiInputLabel-root-titleMenu.Mui-focused':
-            {
-                color: 'white',
-            },
-    },
-    menuItem: {
-        direction: 'rtl',
-    },
-    titleMenu: {
-        left: 'inherit',
-        color: `rgb(74, 191, 117)`,
-        '&.Mui-focused': {
-            color: `rgb(74, 191, 117)!important`,
-        },
-    },
-    select: {
-        color: `rgb(255, 255, 255)`,
 
-        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input':
-            {
-                paddingRight: '0px',
-            },
-
-        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus':
-            {
-                backgroundColor: `rgb(118, 118, 118)`,
-            },
-        '::after': {
-            borderBottom: `rgb(74, 191, 117)`,
-        },
-
-        '& .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon': {
-            position: 'unset',
-            color: `rgb(255, 255, 255)`,
-        },
-        '& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon': {
-            position: 'unset',
-            color: `rgb(255, 255, 255)`,
-        },
-    },
     input: {
         marginLeft: '2%',
         marginRight: '2%',
@@ -185,7 +143,62 @@ const useStyles = makeStyles()({
         },
     },
 
-    btn: {
+    menu: {
+        marginLeft: '2%',
+        marginRight: '2%',
+        direction: 'rtl',
+        '& .css-15rasaf-MuiFormLabel-root-MuiInputLabel-root-titleMenu.Mui-focused':
+            {
+                color: 'white',
+            },
+    },
+
+    titleMenu: {
+        left: 'inherit',
+        color: `rgb(74, 191, 117)`,
+        '&.Mui-focused': {
+            color: `rgb(74, 191, 117)!important`,
+        },
+    },
+
+    select: {
+        color: `rgb(255, 255, 255)`,
+
+        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input':
+            {
+                paddingRight: '0px',
+            },
+
+        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus':
+            {
+                backgroundColor: `rgb(118, 118, 118)`,
+            },
+        '::after': {
+            borderBottom: `rgb(74, 191, 117)`,
+        },
+
+        '& .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon': {
+            position: 'unset',
+            color: `rgb(255, 255, 255)`,
+        },
+        '& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon': {
+            position: 'unset',
+            color: `rgb(255, 255, 255)`,
+        },
+    },
+
+    menuItem: {
+        direction: 'rtl',
+    },
+
+    error: {
+        color: ' #ff0000 ',
+        float: 'right',
+        fontWeight: 'bold',
+        fontSize: '14px',
+    },
+
+    submitButton: {
         backgroundColor: `rgb(70, 138, 41)`,
         borderRadius: '30px',
         minWidth: '15%',
@@ -197,12 +210,6 @@ const useStyles = makeStyles()({
         '&:hover': {
             backgroundColor: `rgb(80, 160, 60)`,
         },
-    },
-    error: {
-        color: ' #ff0000 ',
-        float: 'right',
-        fontWeight: 'bold',
-        fontSize: '14px',
     },
 });
 

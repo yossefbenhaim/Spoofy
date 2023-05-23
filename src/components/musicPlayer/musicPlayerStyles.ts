@@ -1,11 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()({
-    slide: {
-        // height: '15%',
-        // backgroundColor: 'blue',
-    },
-
     sliderContainer: {
         width: '100%',
         height: '100%',

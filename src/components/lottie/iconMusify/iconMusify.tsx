@@ -1,35 +1,41 @@
-import React, { useRef, useEffect, useState } from 'react';
-import Lottie from 'lottie-web';
+import React, {
+	useRef,
+	useEffect,
+	useState
+} from 'react';
+
+import Lottie, { AnimationItem } from 'lottie-web';
+
 import IconButton from '@mui/material/IconButton';
-import useStyles from '../likeSong/likeSongStyles';
+import useStyles from '../iconFavoriteSong/iconFavoriteSongStyles';
 
 const IconMusify: React.FC = () => {
-	const container: any = useRef(null);
-	const [isVisible, setIsVisible] = useState<boolean>(true);
 	const { classes } = useStyles();
-	const handleClose = () => {
+	const [isVisible, setIsVisible] = useState<boolean>(true);
+
+	const animationRef = useRef<AnimationItem | undefined>();
+	const container = useRef<HTMLDivElement>(null);
+
+	const handleClose = () =>
 		setIsVisible(!isVisible);
-	};
+
+
 	useEffect(() => {
-		const animation = Lottie.loadAnimation({
-			container: container.current,
+		animationRef.current = Lottie.loadAnimation({
+			container: container.current!,
 			renderer: 'svg',
 			loop: false,
-			autoplay: true,
+			autoplay: false,
 			path: '/src/logoHome.json',
 		});
-		animation.play();
-		return () => {
-			animation.destroy();
-		};
-	}, [isVisible]);
+		return () =>
+			animationRef.current && animationRef.current.play();
+	}, []);
 
 	return (
-		<div>
-			<IconButton className={classes.iconBotton} onClick={handleClose}>
-				<div className={classes.logo} ref={container} />
-			</IconButton>
-		</div>
+		<IconButton className={classes.iconBotton} onClick={handleClose}>
+			<div className={classes.logo} ref={container} />
+		</IconButton>
 	);
 };
 

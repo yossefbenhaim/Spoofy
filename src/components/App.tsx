@@ -1,11 +1,14 @@
 import React from 'react';
 import Login from './login/login';
 import MainPage from './mainPage/mainPage';
+import PathName from 'models/emuns/pathName';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import TableSongs from './tableSongs/tableSongs';
 import TablePlaylist from './tablePlaylist/tablePlaylist';
 import TableFavorites from './tableFavorites/tableFavorites';
-import PathName from 'models/emuns/pathName';
+
 
 const App: React.FC = () => {
 
