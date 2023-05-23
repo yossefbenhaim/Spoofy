@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 import { Typography } from '@mui/material';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
@@ -19,15 +19,11 @@ import Song from 'models/interface/song';
 const MusicPlayer: React.FC = () => {
 	const { classes } = useStyles();
 	const dispatch = useDispatch();
-
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
-
+	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
 	const songs = useAppSelector((state) => state.songs.songs);
-	const currentSongId = useAppSelector(
-		(state) => state.currentSong.id
-	);
-
+	const currentSongId = useAppSelector((state) => state.currentSong.id);
 
 	const currentSong = useMemo(() => {
 		setCurrentTime(0);
@@ -35,24 +31,31 @@ const MusicPlayer: React.FC = () => {
 		return songs?.find((song) => song.id === currentSongId);
 	}, [currentSongId, songs]);
 
-	const currentSongDuration: any = currentSong?.duration; // seconds
+	const currentSongDuration: number = currentSong?.duration as number;
+
+	const createNewIntervalForSlider = () => {
+		if (!intarval.current) {
+			intarval.current = setInterval(() => {
+				setCurrentTime((currentTime) => currentTime + 1);
+			}, 1000);
+		}
+	}
+	const clearIntercal = () => {
+		intarval.current && clearInterval(intarval.current);
+		intarval.current = undefined;
+	}
+	useEffect(() => {
+		isPlaying ?
+			createNewIntervalForSlider() :
+			clearIntercal()
+	}, [isPlaying])
 
 	useEffect(() => {
-		let interval: NodeJS.Timer | undefined = undefined;
-		if (isPlaying) {
-			if (currentTime !== currentSongDuration + 1) {
-				interval = setInterval(() => {
-					setCurrentTime((currentTime) => currentTime + 1);
-				}, 1000);
-			} else {
-				setCurrentTime(0);
-				diractionNextSong(1);
-			}
-		} else {
-			clearInterval(interval);
+		if (currentTime === currentSongDuration + 1) {
+			setCurrentTime(0);
+			diractionNextSong(1);
 		}
-		return () => clearInterval(interval);
-	}, [isPlaying, currentTime]);
+	}, [currentTime])
 
 	const handleClickPlay = () => {
 		setIsPlaying(prev => !prev);
@@ -77,7 +80,6 @@ const MusicPlayer: React.FC = () => {
 			setCurrentTime(0);
 		}
 	};
-
 
 	return (
 		<Slide direction="up" in={Boolean(currentSongId)}>

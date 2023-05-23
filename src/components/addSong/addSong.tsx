@@ -1,54 +1,32 @@
 import React, { useEffect, useState, } from 'react';
-import { Button, MenuItem } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import TextField from '@mui/material/TextField';
-import useStyles from './addSongStyles';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { useQuery } from '@apollo/client';
-import GET_ARTIST from 'queries/query/artists';
-import Select from '@mui/material/Select';
-import Artist from 'models/interface/artist';
-import { useMutation } from '@apollo/client';
-import ADD_SONG from 'queries/mutation/addSong';
+import {
+	Button,
+	TextField,
+	MenuItem,
+	InputLabel,
+	FormHelperText,
+	FormControl,
+	Select,
+	Dialog
+} from '@mui/material';
+import { addSong } from 'redux/slice/songs';
+import { VariantType, useSnackbar } from 'notistack';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import FormHelperText from '@mui/material/FormHelperText';
 import { Dayjs } from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery, useMutation } from '@apollo/client';
+import GET_ARTIST from 'queries/query/artists';
+import ADD_SONG from 'queries/mutation/addSong';
+import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
-import { addSong } from 'redux/slice/songs';
-import { VariantType, useSnackbar } from 'notistack';
+import Artist from 'models/interface/artist';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import DialogFieldsNames from 'models/emuns/dialogFieldsName';
 import ErrorMessageDialogAddSong from 'models/emuns/errorMessage';
+import Schema from './zodSchema';
 import * as z from 'zod';
-
-
-interface FormAddSong {
-	name: string,
-	artist: string,
-	duration: number,
-}
-
-const schema = z.object({
-	[DialogFieldsNames.name]:
-		z.string
-			().nonempty({
-				message: ErrorMessageDialogAddSong.requiredError
-			})
-			.min(2, { message: ErrorMessageDialogAddSong.songNameMin })
-			.max(50, ErrorMessageDialogAddSong.songNameMax)
-	,
-	[DialogFieldsNames.artist]:
-		z.string({ required_error: ErrorMessageDialogAddSong.requiredError }).nonempty({
-			message: ErrorMessageDialogAddSong.requiredError
-		}),
-	[DialogFieldsNames.duration]:
-		z.number({ invalid_type_error: ErrorMessageDialogAddSong.duration })
-			.min(20, { message: ErrorMessageDialogAddSong.duration }),
-})
 
 const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
@@ -57,8 +35,9 @@ const AddSong: React.FC = () => {
 	const [mutationAddSong] = useMutation(ADD_SONG);
 	const { enqueueSnackbar } = useSnackbar();
 	const dispatch = useDispatch();
-	const { handleSubmit, formState: { errors }, reset, control, getValues } = useForm<FormAddSong>({
-		resolver: zodResolver(schema),
+	type FormAddSong = z.infer<typeof Schema>;
+	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
+		resolver: zodResolver(Schema),
 		defaultValues: {
 			[DialogFieldsNames.name]: '',
 			[DialogFieldsNames.artist]: '',
@@ -76,30 +55,36 @@ const AddSong: React.FC = () => {
 		}
 	}, [openDialogAddSong])
 
-
 	const handleQueryMessage = (variant: VariantType) => {
 		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 	}
 
 	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
-		const { name: name, artist, duration } = data;
-		mutationAddSong({
-			variables: {
-				name: name,
-				artistId: artist,
-				duration: duration,
-			},
-		})
-			.then((responsFromMutation) => {
-				dispatch(addSong({
-					id: responsFromMutation.data.createSong.song.id,
-					name: name,
-					duration: duration,
-					artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
-				}))
-				handleQueryMessage('success')
-			})
-			.catch((err) => console.error('Failed to add song: ', err));
+		const { name, artist, duration } = data;
+		try {
+			const song: FormAddSong = Schema.parse(data);
+			if (song) {
+				mutationAddSong({
+					variables: {
+						name: name,
+						artistId: artist,
+						duration: duration,
+					},
+				})
+					.then((responsFromMutation) => {
+						dispatch(addSong({
+							id: responsFromMutation.data.createSong.song.id,
+							name: name,
+							duration: duration,
+							artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
+						}))
+						handleQueryMessage('success')
+					})
+					.catch((err) => console.error('Failed to add song: ', err));
+			}
+		} catch (error) {
+			console.error('Song data is invalid:', error);
+		}
 		handleClose();
 	};
 
