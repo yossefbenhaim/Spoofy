@@ -66,17 +66,11 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			dispatch(deleteFavoriteFrom({ songId: rowSongId }));
 
 		} else {
-			new Promise((resolve) => {
-				animref.current && animref.current.play();
-				setTimeout(resolve, 1000);
-
-			}).then(() => {
+			animref.current && animref.current.play();
+			setTimeout(() => {
 				dispatch(addFavorite({ songId: rowSongId }));
 				heandlAddFavorite();
-
-			}).catch(error => {
-				console.error('Error occurred:', error);
-			});
+			}, 1000);
 		}
 	};
 

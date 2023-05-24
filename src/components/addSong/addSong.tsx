@@ -34,6 +34,14 @@ import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import Schema from './zodSchema';
 import * as z from 'zod';
 
+type FormAddSong = z.infer<typeof Schema>;
+
+const defaultDialogValues = {
+	[DialogFieldsNames.name]: '',
+	[DialogFieldsNames.artist]: '',
+	[DialogFieldsNames.duration]: 0,
+}
+
 const AddSong: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes, cx } = useStyles();
@@ -43,24 +51,16 @@ const AddSong: React.FC = () => {
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
 
-	type FormAddSong = z.infer<typeof Schema>;
-
-	const defaultDialogValue = {
-		[DialogFieldsNames.name]: '',
-		[DialogFieldsNames.artist]: '',
-		[DialogFieldsNames.duration]: 0,
-	}
-
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
 		resolver: zodResolver(Schema),
 		defaultValues: {
-			...defaultDialogValue
+			...defaultDialogValues
 		},
 	});
 
 	useEffect(() => {
 		if (!openDialogAddSong)
-			reset({ ...defaultDialogValue })
+			reset({ ...defaultDialogValues })
 	}, [openDialogAddSong])
 
 	const handleQueryMessage = (variant: VariantType) =>
@@ -68,30 +68,27 @@ const AddSong: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
 		const { name, artist, duration } = data;
-		try {
-			const song: FormAddSong = Schema.parse(data);
-			if (song) {
-				mutationAddSong({
-					variables: {
+		const song: FormAddSong = data;
+		if (song) {
+			mutationAddSong({
+				variables: {
+					name: name,
+					artistId: artist,
+					duration: duration,
+				},
+			})
+				.then((responsFromMutation) => {
+					dispatch(addSong({
+						id: responsFromMutation.data.createSong.song.id,
 						name: name,
-						artistId: artist,
 						duration: duration,
-					},
+						artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
+					}))
+					handleQueryMessage('success')
 				})
-					.then((responsFromMutation) => {
-						dispatch(addSong({
-							id: responsFromMutation.data.createSong.song.id,
-							name: name,
-							duration: duration,
-							artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
-						}))
-						handleQueryMessage('success')
-					})
-					.catch((err) => console.error('Failed to add song: ', err));
-			}
-		} catch (error) {
-			console.error('Song data is invalid:', error);
+				.catch((err) => console.error('Failed to add song: ', err));
 		}
+
 		handleClose();
 	};
 
@@ -188,9 +185,9 @@ const AddSong: React.FC = () => {
 										onChange(formattedTime);
 									}}
 									className={cx(classes.input, {
-										[classes.errorInput]:
-											errors.duration?.message === ErrorMessageDialogAddSong.duration
+										[classes.errorInput]: !!errors.duration
 									})}
+
 									label="Duration"
 									variant="standard"
 									format='mm:ss'

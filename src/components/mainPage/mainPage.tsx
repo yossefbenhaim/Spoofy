@@ -26,7 +26,7 @@ const MainPage: React.FC = () => {
 
 	const { refetch } = useQuery(FAVORITES_BY_USER, {
 		variables: {
-			"userId": currentUser?.id
+			userId: currentUser?.id
 		},
 		onCompleted: (data) =>
 			dispatch(setFavorites(data?.allFavorites.nodes))

@@ -9,6 +9,7 @@ import SliceName from 'models/emuns/sliceName';
 import storage from 'redux-persist/lib/storage';
 import usersReduser from './slice/users';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+
 const persistConfig = {
     key: 'root',
     type: storage,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     [SliceName.songs]: songsReducer,
     [SliceName.users]: usersReduser,
 });
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({

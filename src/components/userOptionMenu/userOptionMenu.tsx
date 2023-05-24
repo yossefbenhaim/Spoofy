@@ -53,6 +53,18 @@ const UserOptionMenu: React.FC = () => {
 		);
 		navigation('/');
 	};
+	const func = () => {
+		return new Promise((res, rej) => {
+			res(1)
+		})
+	}
+
+	const afunc = async () => {
+		return 1;
+	}
+
+	func()
+	afunc()
 
 	const handleDeleteUser = (userId: User | undefined) => {
 		deleteUserMutation({ variables: { id: userId?.id } })

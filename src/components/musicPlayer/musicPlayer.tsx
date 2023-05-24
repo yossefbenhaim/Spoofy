@@ -52,7 +52,7 @@ const MusicPlayer: React.FC = () => {
 	}, [isPlaying])
 
 	useEffect(() => {
-		if (currentTime === currentSongDuration + 1) {
+		if (currentTime > currentSongDuration + 1) {
 			setCurrentTime(0);
 			diractionNextSong(1);
 		}
@@ -66,7 +66,7 @@ const MusicPlayer: React.FC = () => {
 		setCurrentTime(newValue);
 
 
-	const diractionNextSong = (direction: number): void => {
+	const diractionNextSong = (direction: 1 | -1): void => {
 		const currentSongIndex: number | undefined = songs?.findIndex(
 			(song) => song.id === currentSongId
 		);
@@ -74,6 +74,7 @@ const MusicPlayer: React.FC = () => {
 			const firstSong: Song = songs[0];
 			dispatch(setCurrentSongId(firstSong.id));
 			setCurrentTime(0);
+			//useEffect פוטר את איפוס זמן גם פה וגם בתוך ממו
 		} else {
 			const next: Song = songs[currentSongIndex + direction];
 			dispatch(setCurrentSongId(next.id));
