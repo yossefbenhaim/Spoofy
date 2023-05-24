@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from 'redux/store';
 import { useDispatch } from 'react-redux';
-import { setFavorites } from 'redux/slice/favorites';
 import { useQuery } from '@apollo/client';
+import { setFavorites } from 'redux/slice/favorites';
 
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';

@@ -45,7 +45,7 @@ const AddSong: React.FC = () => {
 
 	type FormAddSong = z.infer<typeof Schema>;
 
-	const restartDialog = {
+	const defaultDialogValue = {
 		[DialogFieldsNames.name]: '',
 		[DialogFieldsNames.artist]: '',
 		[DialogFieldsNames.duration]: 0,
@@ -54,19 +54,17 @@ const AddSong: React.FC = () => {
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
 		resolver: zodResolver(Schema),
 		defaultValues: {
-			...restartDialog
+			...defaultDialogValue
 		},
 	});
 
 	useEffect(() => {
 		if (!openDialogAddSong)
-			reset({ ...restartDialog })
-
+			reset({ ...defaultDialogValue })
 	}, [openDialogAddSong])
 
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
-
 
 	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
 		const { name, artist, duration } = data;
@@ -100,10 +98,8 @@ const AddSong: React.FC = () => {
 	const handleClickOpen = () =>
 		setOpenDialogAddSong(true);
 
-
 	const handleClose = () =>
 		setOpenDialogAddSong(false);
-
 
 	useQuery(GET_ARTIST, {
 		onCompleted: (data) => {

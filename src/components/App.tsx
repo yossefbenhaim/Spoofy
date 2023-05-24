@@ -9,7 +9,6 @@ import TableSongs from './tableSongs/tableSongs';
 import TablePlaylist from './tablePlaylist/tablePlaylist';
 import TableFavorites from './tableFavorites/tableFavorites';
 
-
 const App: React.FC = () => {
 
 	return (

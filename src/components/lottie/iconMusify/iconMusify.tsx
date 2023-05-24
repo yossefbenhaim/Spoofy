@@ -19,7 +19,6 @@ const IconMusify: React.FC = () => {
 	const handleClose = () =>
 		setIsVisible(!isVisible);
 
-
 	useEffect(() => {
 		animationRef.current = Lottie.loadAnimation({
 			container: container.current!,

@@ -77,9 +77,7 @@ const TableSongs: React.FC = () => {
 			headerName: '',
 			width: 50,
 			renderCell: () => {
-				return (
-					<MenuRow />
-				);
+				return <MenuRow />
 			},
 		},
 		{

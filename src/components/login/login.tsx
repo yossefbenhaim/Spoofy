@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	MenuItem,
@@ -19,11 +19,11 @@ import { setUsers } from 'redux/slice/users';
 
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import User from 'models/interface/user';
+import PathName from 'models/emuns/pathName';
 
 import AlertUser from 'components/alert/alertUser';
 import GET_USERS from 'queries/query/users';
 import useStyles from './loginStyles';
-
 
 export interface State extends SnackbarOrigin {
 	open: boolean;
@@ -33,6 +33,7 @@ const Login: React.FC = () => {
 	const { classes } = useStyles();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const users = useAppSelector((state) => state.users.users);
+	const [userSelect, setUserSelect] = useState<User | undefined>(undefined)
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
 
@@ -41,6 +42,11 @@ const Login: React.FC = () => {
 		vertical: 'top',
 		horizontal: 'center',
 	});
+
+	useEffect(() => {
+		if (currentUser?.id != '')
+			navigatoin(PathName.firstPage + PathName.songs)
+	}, [currentUser])
 
 	useQuery(GET_USERS, {
 		onCompleted: (data) => {
@@ -54,21 +60,22 @@ const Login: React.FC = () => {
 	});
 
 	const handleClick = (parametrMessage: SnackbarOrigin) => () => {
-		if (currentUser?.id)
-			navigatoin('firstPage/songs');
-		else
+		if (userSelect?.id) {
+			dispatch(
+				setUser({
+					id: userSelect?.id,
+					firstName: userSelect?.firstName,
+					lastName: userSelect?.lastName,
+				})
+			);
+			navigatoin(PathName.firstPage + PathName.songs);
+		} else
 			setState({ open: true, ...parametrMessage });
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
 		const user: User | undefined = users?.find((user) => user.id === event.target.value);
-		dispatch(
-			setUser({
-				id: user?.id,
-				firstName: user?.firstName,
-				lastName: user?.lastName,
-			})
-		);
+		setUserSelect(user)
 	};
 
 	return (
@@ -80,7 +87,7 @@ const Login: React.FC = () => {
 				</InputLabel>
 				<Select
 					className={classes.select}
-					value={currentUser?.id || ''}
+					value={userSelect?.id || ''}
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>

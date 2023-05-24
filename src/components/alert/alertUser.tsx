@@ -17,6 +17,7 @@ const AlertUser: React.FC<Props> = (props) => {
 
 	const { setState, state, massege } = props
 	const { vertical, horizontal, open } = state;
+
 	const AlertPopup = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 		props,
 		ref,
@@ -26,7 +27,6 @@ const AlertUser: React.FC<Props> = (props) => {
 
 	const handleClose = () =>
 		setState({ ...state, open: false });
-
 
 	return (
 		<Snackbar anchorOrigin={{ vertical, horizontal }}
