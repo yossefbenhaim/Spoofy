@@ -24,7 +24,7 @@ const useStyles = makeStyles()({
             outline: 'none',
         },
         '& .MuiDataGrid-iconSeparator': {
-            color: 'gray',
+            color: '#80808000',
         },
         '& .css-jdy3vi-MuiDataGrid-root-dataGride': {
             fontSize: '1.5rem',

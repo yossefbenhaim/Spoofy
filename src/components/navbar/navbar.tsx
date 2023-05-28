@@ -25,8 +25,6 @@ const Navbar: React.FC = () => {
 	const location = useLocation();
 
 	const navigationPage = (path: string) => {
-		if (path != PathName.songs)
-			dispatch(setCurrentSongId(''));
 		navigation(path);
 	}
 
