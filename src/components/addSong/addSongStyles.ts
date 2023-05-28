@@ -44,11 +44,14 @@ const useStyles = makeStyles()({
         marginRight: '2%',
         direction: 'rtl',
         left: 'inherit',
+        color: `rgb(255, 255, 255)`,
 
         '& .css-1x51dt5-MuiInputBase-input-MuiInput-input': {
             direction: 'ltr',
             textAlign: 'end',
+            color: `rgb(255, 255, 255)`,
         },
+
         '& .Mui-focused': {
             left: 'inherit',
             color: `rgb(255, 255, 255)`,
@@ -79,12 +82,14 @@ const useStyles = makeStyles()({
         '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root': {
             left: 'inherit',
             borderBottom: `rgb(74, 191, 117)`,
+            color: `rgb(74, 191, 117)`,
         },
         '& .css-1d1r5q-MuiFormHelperText-root': {
             color: ' #ff0000 ',
         },
         '& .css-v4u5dn-MuiInputBase-root-MuiInput-root.Mui-error:before': {
             borderBottomColor: 'black',
+            color: 'white',
         },
         '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-error': {
             color: `rgb(74, 191, 117)`,

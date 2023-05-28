@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCurrentSongId } from 'redux/slice/currentSongId';
 
 import Button from '@mui/material/Button';
 import useStyles from './navbarStyles';

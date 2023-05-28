@@ -25,21 +25,18 @@ import ADD_SONG from 'queries/mutation/addSong';
 
 import Artist from 'models/interface/artist';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
-import DialogFieldsNames from 'models/emuns/dialogFieldsName';
-import ErrorMessageDialogAddSong from 'models/emuns/errorMessage';
+import FormFieldsNames from 'models/emuns/formFieldsName';
 
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 
-import Schema from './zodSchema';
-import * as z from 'zod';
-
-type FormAddSong = z.infer<typeof Schema>;
+import SchemaValidationAddSong from './validationAddSong';
+import { FormAddSong } from './validationAddSong';
 
 const defaultDialogValues = {
-	[DialogFieldsNames.name]: '',
-	[DialogFieldsNames.artist]: '',
-	[DialogFieldsNames.duration]: 0,
+	[FormFieldsNames.name]: '',
+	[FormFieldsNames.artist]: '',
+	[FormFieldsNames.duration]: 0,
 }
 
 const AddSong: React.FC = () => {
@@ -52,7 +49,7 @@ const AddSong: React.FC = () => {
 	const [mutationAddSong] = useMutation(ADD_SONG);
 
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
-		resolver: zodResolver(Schema),
+		resolver: zodResolver(SchemaValidationAddSong),
 		defaultValues: {
 			...defaultDialogValues
 		},
@@ -122,7 +119,7 @@ const AddSong: React.FC = () => {
 					<div className={classes.dialog}>
 						<Typography className={classes.header}>יצירת שיר</Typography>
 						<Controller
-							name={DialogFieldsNames.name}
+							name={FormFieldsNames.name}
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<TextField
@@ -138,7 +135,7 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={DialogFieldsNames.artist}
+							name={FormFieldsNames.artist}
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<FormControl
@@ -175,7 +172,7 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={DialogFieldsNames.duration}
+							name={FormFieldsNames.duration}
 							control={control}
 							render={({ field: { onChange } }) => (
 								<TimeField

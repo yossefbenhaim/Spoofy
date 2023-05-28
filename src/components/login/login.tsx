@@ -33,18 +33,17 @@ const Login: React.FC = () => {
 	const { classes } = useStyles();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const users = useAppSelector((state) => state.users.users);
-	const [userSelect, setUserSelect] = useState<User | undefined>(undefined)
+	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
 	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
-
-	const [state, setState] = useState<State>({
+	const [openAlert, setOpenAlert] = useState<State>({
 		open: false,
 		vertical: 'top',
 		horizontal: 'center',
-	});
+	})
 
 	useEffect(() => {
-		if (currentUser?.id != '')
+		if (currentUser?.id != undefined)
 			navigatoin(PathName.firstPage + PathName.songs)
 	}, [currentUser])
 
@@ -59,23 +58,19 @@ const Login: React.FC = () => {
 		},
 	});
 
-	const handleClick = (parametrMessage: SnackbarOrigin) => () => {
+	const handleConnect = (parametrMessage: SnackbarOrigin) => () => {
+		const userSelect: User | undefined = users?.find((user) => user.id === userSelectId);
 		if (userSelect?.id) {
 			dispatch(
-				setUser({
-					id: userSelect?.id,
-					firstName: userSelect?.firstName,
-					lastName: userSelect?.lastName,
-				})
+				setUser(userSelect)
 			);
 			navigatoin(PathName.firstPage + PathName.songs);
 		} else
-			setState({ open: true, ...parametrMessage });
+			setOpenAlert({ open: true, ...parametrMessage });
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
-		const user: User | undefined = users?.find((user) => user.id === event.target.value);
-		setUserSelect(user)
+		setUserSelectId(event.target.value)
 	};
 
 	return (
@@ -87,7 +82,7 @@ const Login: React.FC = () => {
 				</InputLabel>
 				<Select
 					className={classes.select}
-					value={userSelect?.id || ''}
+					value={userSelectId || ''}
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>
@@ -101,7 +96,7 @@ const Login: React.FC = () => {
 				</Select>
 			</FormControl>
 			<Button
-				onClick={handleClick({
+				onClick={handleConnect({
 					vertical: 'top',
 					horizontal: 'center',
 				})}
@@ -110,7 +105,7 @@ const Login: React.FC = () => {
 			>
 				התחבר
 			</Button>
-			<AlertUser massege={FeedbackMessage.mustSelectUser} setState={setState} state={state} />
+			<AlertUser massege={FeedbackMessage.mustSelectUser} openAlert={openAlert} setOpenAlert={setOpenAlert} />
 		</div>
 	);
 };

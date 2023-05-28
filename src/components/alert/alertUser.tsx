@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -8,15 +8,16 @@ export interface State extends SnackbarOrigin {
 }
 
 interface Props {
-	setState: (value: React.SetStateAction<State>) => void;
-	state: State
+	setOpenAlert: (value: React.SetStateAction<State>) => void;
+	openAlert: State
 	massege: string
+
 }
 
 const AlertUser: React.FC<Props> = (props) => {
+	const { massege, openAlert, setOpenAlert } = props
 
-	const { setState, state, massege } = props
-	const { vertical, horizontal, open } = state;
+	const { vertical, horizontal, open } = openAlert;
 
 	const AlertPopup = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 		props,
@@ -26,7 +27,7 @@ const AlertUser: React.FC<Props> = (props) => {
 	});
 
 	const handleClose = () =>
-		setState({ ...state, open: false });
+		setOpenAlert({ ...openAlert, open: false });
 
 	return (
 		<Snackbar anchorOrigin={{ vertical, horizontal }}

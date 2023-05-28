@@ -1,23 +1,24 @@
 import * as z from 'zod';
-import DialogFieldsNames from 'models/emuns/dialogFieldsName';
-import ErrorMessageDialogAddSong from 'models/emuns/errorMessage';
+import FormFieldsNames from 'models/emuns/formFieldsName';
+import ErrorMessageDialogAddSong from 'components/addSong/errorMessage';
 
-const Schema = z.object({
-    [DialogFieldsNames.name]: z
+const SchemaValidationAddSong = z.object({
+    [FormFieldsNames.name]: z
         .string()
         .nonempty({
             message: ErrorMessageDialogAddSong.requiredError,
         })
         .min(2, { message: ErrorMessageDialogAddSong.songNameMin })
         .max(50, ErrorMessageDialogAddSong.songNameMax),
-    [DialogFieldsNames.artist]: z
+    [FormFieldsNames.artist]: z
         .string({ required_error: ErrorMessageDialogAddSong.requiredError })
         .nonempty({
             message: ErrorMessageDialogAddSong.requiredError,
         }),
-    [DialogFieldsNames.duration]: z
+    [FormFieldsNames.duration]: z
         .number({ invalid_type_error: ErrorMessageDialogAddSong.duration })
         .min(20, { message: ErrorMessageDialogAddSong.duration }),
 });
 
-export default Schema;
+export type FormAddSong = z.infer<typeof SchemaValidationAddSong>;
+export default SchemaValidationAddSong;

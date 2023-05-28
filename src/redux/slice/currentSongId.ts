@@ -15,8 +15,11 @@ const CurrentSongId = createSlice({
         setCurrentSongId(state, action: PayloadAction<string>) {
             state.id = action.payload;
         },
+        resetCurrentSongId(state) {
+            state.id = '';
+        },
     },
 });
 
-export const { setCurrentSongId } = CurrentSongId.actions;
+export const { setCurrentSongId, resetCurrentSongId } = CurrentSongId.actions;
 export default CurrentSongId.reducer;

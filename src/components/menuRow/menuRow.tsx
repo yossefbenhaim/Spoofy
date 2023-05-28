@@ -9,7 +9,7 @@ const MenuRow: React.FC = () => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const openMenu = Boolean(anchorEl);
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+	const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) =>
 		setAnchorEl(event.currentTarget);
 
 	const handleClose = () =>
@@ -19,7 +19,7 @@ const MenuRow: React.FC = () => {
 		<>
 			<IconButton
 				className={classes.addIcon}
-				onClick={handleClick}
+				onClick={handleMenuClick}
 			>
 				<AddIcon />
 			</IconButton>

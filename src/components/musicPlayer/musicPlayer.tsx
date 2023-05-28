@@ -24,9 +24,12 @@ const MusicPlayer: React.FC = () => {
 	const songs = useAppSelector((state) => state.songs.songs);
 	const currentSongId = useAppSelector((state) => state.currentSong.id);
 
-	const currentSong = useMemo(() => {
+	useEffect(() => {
 		setCurrentTime(0);
 		setIsPlaying(true);
+	}, [currentSongId])
+
+	const currentSong = useMemo(() => {
 		return songs?.find((song) => song.id === currentSongId);
 	}, [currentSongId, songs]);
 
@@ -40,7 +43,7 @@ const MusicPlayer: React.FC = () => {
 		}
 	}
 
-	const clearIntercal = () => {
+	const clearIntervalOfSlider = () => {
 		intarval.current && clearInterval(intarval.current);
 		intarval.current = undefined;
 	}
@@ -48,11 +51,11 @@ const MusicPlayer: React.FC = () => {
 	useEffect(() => {
 		isPlaying ?
 			createNewIntervalForSlider() :
-			clearIntercal()
+			clearIntervalOfSlider()
 	}, [isPlaying])
 
 	useEffect(() => {
-		if (currentTime > currentSongDuration + 1) {
+		if (currentTime === currentSongDuration + 1) {
 			setCurrentTime(0);
 			diractionNextSong(1);
 		}
@@ -73,8 +76,6 @@ const MusicPlayer: React.FC = () => {
 		if (currentSongIndex === songs?.length - 1 || currentSongIndex === 0 && direction == -1) {
 			const firstSong: Song = songs[0];
 			dispatch(setCurrentSongId(firstSong.id));
-			setCurrentTime(0);
-			//useEffect פוטר את איפוס זמן גם פה וגם בתוך ממו
 		} else {
 			const next: Song = songs[currentSongIndex + direction];
 			dispatch(setCurrentSongId(next.id));
@@ -131,9 +132,7 @@ const MusicPlayer: React.FC = () => {
 							{formatDuration(currentTime)}
 						</Typography>
 						<Typography className={classes.tinyText}>
-							{formatDuration(
-								Boolean(currentSongId) ? currentSongDuration - currentTime : currentTime
-							)}
+							{formatDuration(currentSongDuration)}
 						</Typography>
 					</div>
 				</div>

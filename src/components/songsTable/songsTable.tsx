@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSongs } from 'redux/slice/songs';
-import { setCurrentSongId } from 'redux/slice/currentSongId';
+import { setCurrentSongId, resetCurrentSongId } from 'redux/slice/currentSongId';
 import { useQuery } from '@apollo/client';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 import { useAppSelector } from 'redux/store';
@@ -16,9 +16,9 @@ import Song from 'models/interface/song';
 
 import GET_SONGS from 'queries/query/songs';
 import formatDuration from 'utils/formatDuration';
-import useStyles from './tableSongsStyles';
+import useStyles from './songsTableStyles';
 
-const TableSongs: React.FC = () => {
+const SongsTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
 	const songs = useAppSelector((state) => state.songs.songs);
@@ -36,6 +36,13 @@ const TableSongs: React.FC = () => {
 			dispatch(setSongs(songsData));
 		},
 	});
+
+	const updateCurrentSongView = (rowSongId: string | number) => {
+		if (rowSongId === currentSongId)
+			dispatch(resetCurrentSongId());
+		else
+			dispatch(setCurrentSongId(rowSongId.toString()));
+	}
 
 	const rows = useMemo(() => songs.map((item) => ({
 		id: item.id,
@@ -110,12 +117,7 @@ const TableSongs: React.FC = () => {
 				disableColumnResize
 				rowSelectionModel={currentSongId}
 				onRowSelectionModelChange={(selectedRow) => {
-					const test: string | number = selectedRow[0];
-					if (selectedRow[0] !== undefined)
-						dispatch(setCurrentSongId(test.toString()));
-
-					if (selectedRow[0] === currentSongId)
-						dispatch(setCurrentSongId(''));
+					updateCurrentSongView(selectedRow[0]);
 				}}
 			/>
 			<div className={classes.addSongBtnContainer}>
@@ -125,4 +127,4 @@ const TableSongs: React.FC = () => {
 	);
 };
 
-export default TableSongs;
+export default SongsTable;

@@ -13,7 +13,7 @@ import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
-import { setUser } from 'redux/slice/currentUser';
+import { resettUser } from 'redux/slice/currentUser';
 import { VariantType, useSnackbar } from 'notistack';
 import { deleteUser } from 'redux/slice/users';
 
@@ -45,26 +45,11 @@ const UserOptionMenu: React.FC = () => {
 
 	const navigateToHome = () => {
 		dispatch(
-			setUser({
-				id: '',
-				firstName: '',
-				lastName: '',
-			})
+			resettUser()
 		);
 		navigation('/');
 	};
-	const func = () => {
-		return new Promise((res, rej) => {
-			res(1)
-		})
-	}
 
-	const afunc = async () => {
-		return 1;
-	}
-
-	func()
-	afunc()
 
 	const handleDeleteUser = (userId: User | undefined) => {
 		deleteUserMutation({ variables: { id: userId?.id } })

@@ -1,4 +1,4 @@
 interface Favorite {
-    songId?: string;
+    songId: string;
 }
 export default Favorite;
