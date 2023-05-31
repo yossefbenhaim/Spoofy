@@ -13,7 +13,7 @@ import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
-import { resettUser } from 'redux/slice/currentUser';
+import { resetUser } from 'redux/slice/currentUser';
 import { VariantType, useSnackbar } from 'notistack';
 
 import FeedbackMessage from 'models/emuns/feedbackMessage';
@@ -44,7 +44,7 @@ const UserOptionMenu: React.FC = () => {
 
 	const navigateToHome = () => {
 		dispatch(
-			resettUser()
+			resetUser()
 		);
 		navigation('/');
 	};

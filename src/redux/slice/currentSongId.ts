@@ -15,8 +15,8 @@ const CurrentSongId = createSlice({
         setCurrentSongId(state, action: PayloadAction<string>) {
             state.id = action.payload;
         },
-        resetCurrentSongId(state) {
-            state.id = initialState.id;
+        resetCurrentSongId() {
+            return initialState;
         },
     },
 });

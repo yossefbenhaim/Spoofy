@@ -75,6 +75,9 @@ const useStyles = makeStyles()({
         direction: 'rtl',
         left: 'inherit',
 
+        '& .MuiFormLabel-root': {
+            color: 'rgb(255,255,255)',
+        },
         '& .MuiInputBase-input': {
             direction: 'ltr',
             textAlign: 'end',
@@ -142,6 +145,7 @@ const useStyles = makeStyles()({
 
     titleMenu: {
         left: 'inherit',
+        color: 'rgb(255,255,255)',
         '&.Mui-focused': {
             color: `rgb(74, 191, 117)!important`,
         },

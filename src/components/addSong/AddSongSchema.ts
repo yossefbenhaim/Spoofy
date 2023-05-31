@@ -2,7 +2,7 @@ import * as z from 'zod';
 import FormFieldsNames from 'models/emuns/formFieldsName';
 import ErrorMessageDialogAddSong from 'components/addSong/errorMessage';
 
-const SchemaValidationAddSong = z.object({
+const AddSongSchema = z.object({
     [FormFieldsNames.name]: z
         .string()
         .nonempty({
@@ -20,5 +20,5 @@ const SchemaValidationAddSong = z.object({
         .min(20, { message: ErrorMessageDialogAddSong.duration }),
 });
 
-export type FormAddSong = z.infer<typeof SchemaValidationAddSong>;
-export default SchemaValidationAddSong;
+export type AddSongForm = z.infer<typeof AddSongSchema>;
+export default AddSongSchema;

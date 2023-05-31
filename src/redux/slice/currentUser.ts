@@ -17,11 +17,11 @@ const CurrentUser = createSlice({
         setUser(state, action: PayloadAction<User>) {
             state.user = action.payload;
         },
-        resettUser(state) {
-            state.user = initialState.user;
+        resetUser() {
+            return initialState;
         },
     },
 });
 
-export const { setUser, resettUser } = CurrentUser.actions;
+export const { setUser, resetUser } = CurrentUser.actions;
 export default CurrentUser.reducer;

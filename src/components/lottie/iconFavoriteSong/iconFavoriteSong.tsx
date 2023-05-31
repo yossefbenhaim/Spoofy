@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
 
 import { useAppSelector } from 'redux/store';

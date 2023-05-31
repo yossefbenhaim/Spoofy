@@ -30,8 +30,8 @@ import FormFieldsNames from 'models/emuns/formFieldsName';
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 
-import SchemaValidationAddSong from './validationAddSong';
-import { FormAddSong } from './validationAddSong';
+import AddSongSchema from './AddSongSchema';
+import { AddSongForm } from './AddSongSchema';
 
 const defaultDialogValues = {
 	[FormFieldsNames.name]: '',
@@ -48,8 +48,8 @@ const AddSong: React.FC = () => {
 	const [artists, setArtists] = useState<Artist[]>([]);
 	const [mutationAddSong] = useMutation(ADD_SONG);
 
-	const { handleSubmit, formState: { errors }, reset, control } = useForm<FormAddSong>({
-		resolver: zodResolver(SchemaValidationAddSong),
+	const { handleSubmit, formState: { errors }, reset, control } = useForm<AddSongForm>({
+		resolver: zodResolver(AddSongSchema),
 		defaultValues: {
 			...defaultDialogValues
 		},
@@ -63,9 +63,9 @@ const AddSong: React.FC = () => {
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 
-	const onSubmit: SubmitHandler<FormAddSong> = (data) => {
+	const onSubmit: SubmitHandler<AddSongForm> = (data) => {
 		const { name, artist, duration } = data;
-		const song: FormAddSong = data;
+		const song: AddSongForm = data;
 		if (song) {
 			mutationAddSong({
 				variables: {

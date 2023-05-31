@@ -3,13 +3,13 @@ import {
 	Button,
 	MenuItem,
 	Typography,
-	SnackbarOrigin,
 	InputLabel,
 	FormControl,
 	Select,
 	SelectChangeEvent
 } from '@mui/material';
 
+import { VariantType, useSnackbar } from 'notistack';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
@@ -20,30 +20,23 @@ import FeedbackMessage from 'models/emuns/feedbackMessage';
 import User from 'models/interface/user';
 import PathName from 'models/emuns/pathName';
 
-import AlertUser from 'components/alert/alertUser';
 import GET_USERS from 'queries/query/users';
 import useStyles from './loginStyles';
 
-export interface State extends SnackbarOrigin {
-	open: boolean;
-}
-
 const Login: React.FC = () => {
 	const { classes } = useStyles();
-	const navigatoin = useNavigate();
+	const navigation = useNavigate();
 	const dispatch = useDispatch();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const [users, setUsers] = useState<User[] | undefined>([]);
 	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
-	const [openAlert, setOpenAlert] = useState<State>({
-		open: false,
-		vertical: 'top',
-		horizontal: 'center',
-	})
+	const { enqueueSnackbar } = useSnackbar();
+
+
 
 	useEffect(() => {
 		if (currentUser?.id != undefined)
-			navigatoin(PathName.mainPage + PathName.songs)
+			navigation(PathName.mainPage + PathName.songs)
 	}, [currentUser])
 
 	useQuery(GET_USERS, {
@@ -58,13 +51,18 @@ const Login: React.FC = () => {
 		},
 	});
 
-	const handleConnect = (parametrMessage: SnackbarOrigin) => () => {
+	const handleQueryMessage = (variant: VariantType) => {
+		enqueueSnackbar(FeedbackMessage.mustSelectUser, { variant });
+	}
+
+	const handleConnect = () => {
 		const userSelect: User | undefined = users?.find((user) => user.id === userSelectId);
 		if (userSelect?.id) {
 			dispatch(setUser(userSelect))
-			navigatoin(PathName.mainPage + PathName.songs);
+			navigation(PathName.mainPage + PathName.songs);
 		} else
-			setOpenAlert({ open: true, ...parametrMessage });
+			handleQueryMessage('error')
+
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
@@ -94,16 +92,12 @@ const Login: React.FC = () => {
 				</Select>
 			</FormControl>
 			<Button
-				onClick={handleConnect({
-					vertical: 'top',
-					horizontal: 'center',
-				})}
+				onClick={handleConnect}
 				className={classes.btn}
 				variant="contained"
 			>
 				התחבר
 			</Button>
-			<AlertUser massege={FeedbackMessage.mustSelectUser} openAlert={openAlert} setOpenAlert={setOpenAlert} />
 		</div>
 	);
 };
