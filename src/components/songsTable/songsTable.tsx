@@ -61,28 +61,31 @@ const SongsTable: React.FC = () => {
 		{
 			field: RowsFieldsb.song,
 			headerName: 'שיר',
-			width: 250,
+			width: 400,
 			headerClassName: classes.headerDataGridSong,
 			...settingRowGlobal
 		},
 		{
 			field: RowsFieldsb.artist,
 			headerName: 'זמר',
-			width: 200,
+			width: 150,
 			headerClassName: classes.headerDataGridArtistDuration,
 			...settingRowGlobal
 		},
 		{
 			field: RowsFieldsb.duration,
 			headerName: "משך שיר",
-			width: 150,
+			width: 130,
 			headerClassName: classes.headerDataGridArtistDuration,
 			...settingRowGlobal
+
 		},
 		{
 			field: 'menu',
 			headerName: '',
 			width: 50,
+			sortable: false,
+			resizable: false,
 			renderCell: () => {
 				return <MenuRow />
 			},
@@ -90,7 +93,9 @@ const SongsTable: React.FC = () => {
 		{
 			field: 'favorites',
 			headerName: '',
-			width: 70,
+			width: 50,
+			sortable: false,
+			resizable: false,
 			renderCell: (params) => {
 				const rowId: string = params.id.toString()
 				return <IconFavoriteSong rowSongId={rowId} />;
@@ -115,6 +120,11 @@ const SongsTable: React.FC = () => {
 				disableColumnSelector
 				disableColumnReorder
 				disableColumnResize
+				disableColumnFilter
+				disableColumnPinning
+
+
+
 				rowSelectionModel={currentSongId}
 				onRowSelectionModelChange={(selectedRow) => {
 					updateCurrentSongView(selectedRow[0]);

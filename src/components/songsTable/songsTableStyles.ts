@@ -26,18 +26,42 @@ const useStyles = makeStyles()({
         '& .MuiDataGrid-iconSeparator': {
             color: '#80808000',
         },
-        '& .css-jdy3vi-MuiDataGrid-root-dataGride': {
+        '& .MuiDataGrid-root-dataGride': {
             fontSize: '1.5rem',
         },
         '& .MuiDataGrid-main > div:nth-of-type(3)': {
             display: 'none',
         },
-        '& .css-1iyq7zh-MuiDataGrid-columnHeaders': {
+        '& .MuiDataGrid-columnHeaders': {
             fontSize: '20px',
         },
         '& .MuiDataGrid-cell:focus-within': {
             outline: 'none!important',
         },
+        '& *': {
+            '*::-webkit-scrollbar': {
+                backgroundColor: '#7ead7b78',
+                width: '10px',
+                height: '10px',
+                borderRadius: '10px',
+            },
+            '*::-webkit-scrollbar-track': {
+                // background: 'gray',
+            },
+            '*::-webkit-scrollbar-thumb': {
+                borderRadius: '10px',
+                backgroundColor: '#29c029',
+            },
+            '*::-webkit-scrollbar-thumb:hover': {
+                borderRadius: '10px',
+                backgroundColor: '#41dc41',
+            },
+            '*::-webkit-scrollbar-corner': {
+                backgroundColor: 'gray',
+                borderRadius: '10px',
+            },
+        },
+        '& .MuiDataGrid-row': {},
     },
     headerContainer: {
         marginBottom: '2%',

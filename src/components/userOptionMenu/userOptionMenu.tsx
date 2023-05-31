@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 
 import { resettUser } from 'redux/slice/currentUser';
 import { VariantType, useSnackbar } from 'notistack';
-import { deleteUser } from 'redux/slice/users';
 
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import User from 'models/interface/user';
@@ -54,7 +53,6 @@ const UserOptionMenu: React.FC = () => {
 	const handleDeleteUser = (userId: User | undefined) => {
 		deleteUserMutation({ variables: { id: userId?.id } })
 			.then(() => {
-				dispatch(deleteUser(userId))
 				handleQueryMessage('info')
 			})
 			.catch((err) => console.error('Failed to delete user: ', err));

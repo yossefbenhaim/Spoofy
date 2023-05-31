@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
 					variant="contained"
 					className={cx(classes.btnMenu, {
 						[classes.activeBtn]:
-							PathName.firstPage + btn.path === location.pathname,
+							PathName.mainPage + btn.path === location.pathname,
 					})}
 					onClick={() => navigationPage(btn.path)}
 				>

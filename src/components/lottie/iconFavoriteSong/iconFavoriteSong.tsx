@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
 
 import { useAppSelector } from 'redux/store';
@@ -31,12 +31,16 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	const container = useRef<HTMLDivElement>(null);
 	const animref = useRef<AnimationItem | undefined>();
 
+
+
 	const handleQueryMessage = (variant: VariantType) => {
 		if (variant == 'success')
 			enqueueSnackbar(FeedbackMessage.addingSongToFavorite, { variant });
 		if (variant == 'info')
 			enqueueSnackbar(FeedbackMessage.deletingSongToFavorite, { variant });
 	}
+
+
 
 	useEffect(() => {
 		animref.current = Lottie.loadAnimation({
@@ -51,11 +55,12 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId))
-			animref.current && animref.current.goToAndPlay(1000, true);
-		else
+		favoritesLike?.some((favorite) => favorite.songId === rowSongId)
+			?
+			animref.current && animref.current.goToAndPlay(1000, true)
+			:
 			animref.current && animref.current.stop();
-	}, [rowSongId, favoritesLike])
+	}, [rowSongId])
 
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();

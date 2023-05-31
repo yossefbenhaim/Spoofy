@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
-import { setUsers } from 'redux/slice/users';
 
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import User from 'models/interface/user';
@@ -31,11 +30,11 @@ export interface State extends SnackbarOrigin {
 
 const Login: React.FC = () => {
 	const { classes } = useStyles();
-	const currentUser = useAppSelector((state) => state.currentUser.user);
-	const users = useAppSelector((state) => state.users.users);
-	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
-	const dispatch = useDispatch();
 	const navigatoin = useNavigate();
+	const dispatch = useDispatch();
+	const currentUser = useAppSelector((state) => state.currentUser.user);
+	const [users, setUsers] = useState<User[] | undefined>([]);
+	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
 	const [openAlert, setOpenAlert] = useState<State>({
 		open: false,
 		vertical: 'top',
@@ -44,27 +43,26 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (currentUser?.id != undefined)
-			navigatoin(PathName.firstPage + PathName.songs)
+			navigatoin(PathName.mainPage + PathName.songs)
 	}, [currentUser])
 
 	useQuery(GET_USERS, {
+		fetchPolicy: 'network-only',
 		onCompleted: (data) => {
 			const usersData = (data.allUsers.nodes as any[]).map<User>((userDB) => ({
 				id: userDB.id,
 				firstName: userDB.firstName,
 				lastName: userDB.lastName
 			}));
-			dispatch(setUsers(usersData));
+			setUsers(usersData);
 		},
 	});
 
 	const handleConnect = (parametrMessage: SnackbarOrigin) => () => {
 		const userSelect: User | undefined = users?.find((user) => user.id === userSelectId);
 		if (userSelect?.id) {
-			dispatch(
-				setUser(userSelect)
-			);
-			navigatoin(PathName.firstPage + PathName.songs);
+			dispatch(setUser(userSelect))
+			navigatoin(PathName.mainPage + PathName.songs);
 		} else
 			setOpenAlert({ open: true, ...parametrMessage });
 	};
@@ -76,7 +74,7 @@ const Login: React.FC = () => {
 	return (
 		<div className={classes.fieldsContainer}>
 			<Typography className={classes.title}>Musify</Typography>
-			<FormControl className={classes.menu} fullWidth>
+			<FormControl className={classes.formControl} fullWidth >
 				<InputLabel className={classes.titleMenu} >
 					בחר משתמש להתחברות
 				</InputLabel>
@@ -88,7 +86,7 @@ const Login: React.FC = () => {
 				>
 					{users?.map((user) => {
 						return (
-							<MenuItem key={user.id} value={user.id}>
+							<MenuItem className={classes.menuItem} key={user.id} value={user.id}>
 								{user.firstName + ' ' + user.lastName}
 							</MenuItem>
 						);

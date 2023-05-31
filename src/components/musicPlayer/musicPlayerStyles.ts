@@ -34,7 +34,7 @@ const useStyles = makeStyles()({
         marginRight: '2.5%',
         marginBottom: '10px',
 
-        '& .css-1o6dyha-MuiTypography-root': {
+        '& .MuiTypography-root': {
             fontSize: '1rem',
             opacity: '1',
         },

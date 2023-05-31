@@ -2,7 +2,7 @@ enum PathName {
     songs = 'songs',
     favorites = 'favorites',
     playlist = 'playlist',
-    firstPage = '/firstPage/',
+    mainPage = '/mainPage/',
 }
 
 export default PathName;

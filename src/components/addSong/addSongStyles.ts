@@ -14,7 +14,7 @@ const useStyles = makeStyles()({
         },
     },
     dialogContainer: {
-        '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+        '& .MuiPaper-root ': {
             maxWidth: '800px',
             flexDirection: 'inherit',
         },
@@ -38,60 +38,67 @@ const useStyles = makeStyles()({
         fontWeight: 'bold',
         fontFamily: 'system-ui',
     },
+    select: {
+        color: `rgb(255, 255, 255)`,
+        borderBottomColor: '#16b754',
+        '& .MuiInput-input:focus': {
+            backgroundColor: `rgb(118, 118, 118)`,
+        },
+        '&.Mui-focused:after': {
+            borderBottomColor: '#16b754',
+        },
+        '&:before': {
+            borderBottom: '1px solid black',
+        },
+
+        '&:after': {
+            borderBottomColor: '#16b754',
+        },
+        '& .MuiInputLabel-root.Mui-error': {
+            borderBottomColor: 'red',
+            left: 'inherit',
+        },
+
+        '& .MuiSelect-icon': {
+            position: 'unset',
+            color: `rgb(255, 255, 255)`,
+        },
+
+        '& .MuiSelect-select': {
+            paddingRight: '0px!important',
+        },
+    },
 
     input: {
         marginLeft: '2%',
         marginRight: '2%',
         direction: 'rtl',
         left: 'inherit',
-        color: `rgb(255, 255, 255)`,
 
-        '& .css-1x51dt5-MuiInputBase-input-MuiInput-input': {
+        '& .MuiInputBase-input': {
             direction: 'ltr',
             textAlign: 'end',
             color: `rgb(255, 255, 255)`,
         },
-
-        '& .Mui-focused': {
+        '& .MuiInputLabel-root': {
             left: 'inherit',
-            color: `rgb(255, 255, 255)`,
         },
-
-        '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root': {
-            left: 'inherit',
-            color: `rgb(74, 191, 117)`,
+        '& .MuiInput-root:after': {
+            borderBottomColor: '#16b754',
         },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
-            left: 'inherit',
-            color: `rgb(74, 191, 117)`,
-        },
-        '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
-            {
-                left: 'inherit',
-                color: `rgb(74, 191, 117)`,
-            },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
-            {
-                left: 'inherit',
-                color: `rgb(74, 191, 117)`,
-            },
-        '& .css-v4u5dn-MuiInputBase-root-MuiInput-root:after': {
-            left: 'inherit',
-            borderBottom: `rgb(74, 191, 117)`,
-        },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root': {
-            left: 'inherit',
-            borderBottom: `rgb(74, 191, 117)`,
-            color: `rgb(74, 191, 117)`,
-        },
-        '& .css-1d1r5q-MuiFormHelperText-root': {
-            color: ' #ff0000 ',
-        },
-        '& .css-v4u5dn-MuiInputBase-root-MuiInput-root.Mui-error:before': {
+        '& .MuiInput-root:before': {
             borderBottomColor: 'black',
-            color: 'white',
         },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-error': {
+        '& .MuiInput-root.Mui-error:before': {
+            borderBottomColor: 'black',
+        },
+        '& .MuiInputLabel-root.Mui-error': {
+            borderBottomColor: 'black',
+            left: 'inherit',
+        },
+
+        '& .MuiInputLabel-root.Mui-focused': {
+            left: 'inherit',
             color: `rgb(74, 191, 117)`,
         },
     },
@@ -101,50 +108,29 @@ const useStyles = makeStyles()({
         marginRight: '2%',
         direction: 'rtl',
         left: 'inherit',
-
-        '& .css-1x51dt5-MuiInputBase-input-MuiInput-input': {
+        color: '#ff0000',
+        '& .MuiInputLabel-root': {
+            left: 'inherit',
+            color: '#ff0000',
+        },
+        '& .MuiInput-input': {
             direction: 'ltr',
             textAlign: 'end',
-        },
-        '& .Mui-focused': {
-            left: 'inherit',
-            color: ' #ff0000 ',
+            color: `rgb(255, 255, 255)`,
         },
 
-        '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root': {
-            left: 'inherit',
-            color: ' #ff0000 ',
+        '& .MuiInput-root:after': {
+            borderBottomColor: '#16b754',
         },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
-            left: 'inherit',
-            color: ' #ff0000 ',
-        },
-        '& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
-            {
-                left: 'inherit',
-                color: ' #ff0000 ',
-            },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused::after':
-            {
-                left: 'inherit',
-                color: ' #ff0000 ',
-            },
-        '& .css-v4u5dn-MuiInputBase-root-MuiInput-root:after': {
-            left: 'inherit',
-            color: ' #ff0000 ',
-        },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root': {
-            left: 'inherit',
-            color: ' #ff0000 ',
-        },
-        '& .css-1d1r5q-MuiFormHelperText-root': {
-            color: ' #ff0000 ',
-        },
-        '& .css-v4u5dn-MuiInputBase-root-MuiInput-root.Mui-error:before': {
+        '& .MuiInput-root:before': {
             borderBottomColor: 'black',
         },
-        '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-error': {
-            color: ' #ff0000 ',
+        '& .MuiInput-root.Mui-error:before': {
+            borderBottomColor: 'black',
+        },
+        '& .MuiInputLabel-root.Mui-error': {
+            borderBottomColor: 'black',
+            left: 'inherit',
         },
     },
 
@@ -152,43 +138,12 @@ const useStyles = makeStyles()({
         marginLeft: '2%',
         marginRight: '2%',
         direction: 'rtl',
-        '& .css-15rasaf-MuiFormLabel-root-MuiInputLabel-root-titleMenu.Mui-focused':
-            {
-                color: 'white',
-            },
     },
 
     titleMenu: {
         left: 'inherit',
-        color: `rgb(74, 191, 117)`,
         '&.Mui-focused': {
             color: `rgb(74, 191, 117)!important`,
-        },
-    },
-
-    select: {
-        color: `rgb(255, 255, 255)`,
-
-        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input':
-            {
-                paddingRight: '0px',
-            },
-
-        '& .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus':
-            {
-                backgroundColor: `rgb(118, 118, 118)`,
-            },
-        '::after': {
-            borderBottom: `rgb(74, 191, 117)`,
-        },
-
-        '& .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon': {
-            position: 'unset',
-            color: `rgb(255, 255, 255)`,
-        },
-        '& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon': {
-            position: 'unset',
-            color: `rgb(255, 255, 255)`,
         },
     },
 

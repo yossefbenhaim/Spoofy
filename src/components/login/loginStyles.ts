@@ -9,6 +9,9 @@ const useStyles = makeStyles()({
     btn: {
         backgroundColor: `rgb(70, 138, 41)`,
         borderRadius: '10px',
+        '&:hover': {
+            backgroundColor: `rgb(21, 162, 49)`,
+        },
     },
     fieldsContainer: {
         backgroundColor: `rgb(80, 77, 77)`,
@@ -17,43 +20,25 @@ const useStyles = makeStyles()({
         justifyContent: 'center',
         alignItems: 'center',
         height: '705px',
-        '& .css-1tgv085-MuiButtonBase-root-MuiButton-root-btn:hover': {
-            backgroundColor: `rgb(21, 162, 49)`,
-        },
     },
-    menu: {
+    formControl: {
         margin: '40px',
         alignContent: 'center',
         minWidth: 120,
         width: '220px',
         display: 'flex',
         flexDirection: 'row-reverse',
-        '& .css-15rasaf-MuiFormLabel-root-MuiInputLabel-root-titleMenu.Mui-focused':
-            {
-                left: '4px',
-                color: 'white',
-            },
-
-        '& .css-zlbu7s-MuiFormLabel-root-MuiInputLabel-root-titleMenu.Mui-focused':
-            {
-                left: '30px',
-                color: 'white',
-                transformOrigin: 'top right',
-            },
-
-        '& .css-5wednp-MuiFormControl-root-menu': {
-            left: '30px',
-        },
-
-        '& .css-388xio-MuiFormLabel-root-MuiInputLabel-root-titleMenu': {
+        '& .MuiFormLabel-root': {
             transformOrigin: 'top right',
             left: '30px',
+            '&.Mui-focused': {
+                color: 'white',
+                transformOrigin: 'top right',
+                left: '30px',
+            },
         },
-        '& .css-14lo706': {
+        '& .MuiOutlinedInput-notchedOutline legend': {
             marginLeft: '68px',
-        },
-        '& .css-zlbu7s-MuiFormLabel-root-MuiInputLabel-root-titleMenu': {
-            left: '69px',
         },
     },
     titleMenu: {
@@ -65,20 +50,20 @@ const useStyles = makeStyles()({
         backgroundColor: `rgb(112, 106, 106)`,
         borderRadius: '17px',
         color: `rgb(255, 255, 255)`,
-
-        '& .css-gbe0rs-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root-select':
-            {
-                borderRadius: '17px',
-            },
         '& .MuiSelect-icon': {
             left: '7px',
             color: 'white',
         },
+        '& .MuiInputBase-root': {
+            borderRadius: '17px',
+        },
 
-        '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-            {
-                padding: '16.5px 55px',
-            },
+        '& .MuiOutlinedInput-input': {
+            padding: '16.5px 55px',
+        },
+    },
+    menuItem: {
+        direction: 'rtl',
     },
     lottieStyle: {
         width: '200px',

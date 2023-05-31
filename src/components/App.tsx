@@ -15,7 +15,7 @@ const App: React.FC = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route index element={<Login />} />
-				<Route path={PathName.firstPage} element={<MainPage />}>
+				<Route path={PathName.mainPage} element={<MainPage />}>
 					<Route path={PathName.songs} element={<SongsTable />} />
 					<Route path={PathName.playlist} element={<PlaylistTable />} />
 					<Route path={PathName.favorites} element={<FavoritesTable />} />

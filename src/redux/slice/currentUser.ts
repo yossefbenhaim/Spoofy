@@ -18,7 +18,7 @@ const CurrentUser = createSlice({
             state.user = action.payload;
         },
         resettUser(state) {
-            state.user = undefined;
+            state.user = initialState.user;
         },
     },
 });

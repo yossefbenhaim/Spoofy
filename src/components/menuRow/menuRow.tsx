@@ -9,8 +9,10 @@ const MenuRow: React.FC = () => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const openMenu = Boolean(anchorEl);
 
-	const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+	const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.stopPropagation();
 		setAnchorEl(event.currentTarget);
+	}
 
 	const handleClose = () =>
 		setAnchorEl(null);
