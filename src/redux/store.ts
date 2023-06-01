@@ -5,6 +5,7 @@ import songsReducer from './slice/songs';
 import currentSongReducer from './slice/currentSongId';
 import currentUserReducer from './slice/currentUser';
 import favoritesSongReduser from './slice/favorites';
+import PlaylistsReduser from './slice/Playlists';
 import SliceName from 'models/emuns/sliceName';
 import storage from 'redux-persist/lib/storage';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     [SliceName.currentSong]: currentSongReducer,
     [SliceName.favorites]: favoritesSongReduser,
     [SliceName.songs]: songsReducer,
+    [SliceName.playlist]: PlaylistsReduser,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

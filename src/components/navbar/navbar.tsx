@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import Button from '@mui/material/Button';
 import useStyles from './navbarStyles';
@@ -20,7 +19,6 @@ const MENU_BUTTONS: Navbar[] = [
 const Navbar: React.FC = () => {
 	const { classes, cx } = useStyles();
 	const navigation = useNavigate();
-	const dispatch = useDispatch();
 	const location = useLocation();
 
 	const navigationPage = (path: string) => {

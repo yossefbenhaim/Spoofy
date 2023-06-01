@@ -25,9 +25,12 @@ const FavoritesSong = createSlice({
                 (favorite) => favorite.songId !== action.payload.songId
             );
         },
+        resetFavorites: () => {
+            return initialState;
+        },
     },
 });
 
-export const { setFavorites, addFavorite, deleteFavoriteFrom } =
+export const { setFavorites, addFavorite, deleteFavoriteFrom, resetFavorites } =
     FavoritesSong.actions;
 export default FavoritesSong.reducer;

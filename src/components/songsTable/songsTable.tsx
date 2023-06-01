@@ -122,9 +122,6 @@ const SongsTable: React.FC = () => {
 				disableColumnResize
 				disableColumnFilter
 				disableColumnPinning
-
-
-
 				rowSelectionModel={currentSongId}
 				onRowSelectionModelChange={(selectedRow) => {
 					updateCurrentSongView(selectedRow[0]);

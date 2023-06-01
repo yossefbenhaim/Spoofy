@@ -40,8 +40,6 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			enqueueSnackbar(FeedbackMessage.deletingSongToFavorite, { variant });
 	}
 
-
-
 	useEffect(() => {
 		animref.current = Lottie.loadAnimation({
 			container: container.current!,
@@ -55,12 +53,12 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	}, []);
 
 	useEffect(() => {
-		favoritesLike?.some((favorite) => favorite.songId === rowSongId)
-			?
+		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId)) {
 			animref.current && animref.current.goToAndPlay(1000, true)
-			:
+		} else {
 			animref.current && animref.current.stop();
-	}, [rowSongId])
+		}
+	}, [rowSongId, favoritesLike])
 
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
