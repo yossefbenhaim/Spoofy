@@ -7,6 +7,11 @@ const GET_PLAYLIST = gql`
                 id
                 name
                 creatorId
+                playlistsongsByPlaylistId {
+                    nodes {
+                        songId
+                    }
+                }
             }
         }
     }

@@ -14,7 +14,12 @@ const persistConfig = {
     key: 'root',
     type: storage,
     storage,
-    whitelist: [SliceName.currentUser, SliceName.songs, SliceName.favorites],
+    whitelist: [
+        SliceName.currentUser,
+        SliceName.songs,
+        SliceName.favorites,
+        SliceName.playlist,
+    ],
 };
 
 const rootReducer = combineReducers({

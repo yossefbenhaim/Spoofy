@@ -1,18 +1,14 @@
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()({
-    fieldContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-    },
     dataGride: {
         padding: '1.2%',
         direction: 'rtl',
         color: 'white',
         borderColor: `rgb(80, 77, 77)`,
         width: '100%',
-        height: '400px',
+        height: '62.5%',
+        marginRight: '1%',
         backgroundColor: 'gray',
         outline: 'solid #d0130d 0px',
         borderRadius: '20px',
@@ -61,7 +57,6 @@ const useStyles = makeStyles()({
                 borderRadius: '10px',
             },
         },
-        '& .MuiDataGrid-row': {},
     },
     headerContainer: {
         marginBottom: '2%',
