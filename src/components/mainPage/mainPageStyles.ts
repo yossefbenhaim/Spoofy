@@ -31,7 +31,7 @@ const useStyles = makeStyles()({
     },
     navigation: {
         width: '100%',
-        height: '75%',
+        height: '74%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -47,6 +47,7 @@ const useStyles = makeStyles()({
     tableValuse: {
         width: '55%',
         marginLeft: '22.5%',
+        height: '100%',
     },
     musicPlayerContainer: {
         height: '15%',

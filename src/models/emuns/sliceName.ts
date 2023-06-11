@@ -4,6 +4,7 @@ enum SliceName {
     songs = 'songs',
     favorites = 'favorites',
     playlist = 'playlist',
+    filterSongsByTable = 'filterSongsByTable',
 }
 
 export default SliceName;

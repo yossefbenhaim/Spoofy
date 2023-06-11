@@ -4,6 +4,7 @@ import { Slide, Slider, IconButton, Typography } from '@mui/material/';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
+// import { uodateTableId } from 'redux/slice/songs';
 
 import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -13,6 +14,7 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import useStyles from './musicPlayerStyles';
 import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
+import CurrentSpng from 'models/interface/currentSong';
 
 const MusicPlayer: React.FC = () => {
 	const dispatch = useDispatch();
@@ -21,8 +23,17 @@ const MusicPlayer: React.FC = () => {
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
-	const songs = useAppSelector((state) => state.songs.songs);
-	const currentSongId = useAppSelector((state) => state.currentSong.id);
+	const currentSongId = useAppSelector((state) => state.currentSong.songId);
+	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
+	const [tableTest, setTableTest] = useState<string>('');
+
+	const filterSongs = useAppSelector((state) => state.filterSongsByTable.songs);
+
+
+
+	useEffect(() => {
+		setTableTest(currentTableId as string);
+	}, [currentTableId])
 
 	useEffect(() => {
 		setCurrentTime(0);
@@ -30,8 +41,10 @@ const MusicPlayer: React.FC = () => {
 	}, [currentSongId])
 
 	const currentSong = useMemo(() => {
-		return songs?.find((song) => song.id === currentSongId);
-	}, [currentSongId, songs]);
+		return filterSongs?.find((song) => song.id === currentSongId);
+	}, [currentSongId, filterSongs]);
+
+
 
 	const currentSongDuration: number = currentSong?.duration as number;
 
@@ -70,20 +83,25 @@ const MusicPlayer: React.FC = () => {
 
 
 	const diractionNextSong = (direction: 1 | -1): void => {
-		const currentSongIndex: number | undefined = songs?.findIndex(
+		const currentSongIndex: number | undefined = filterSongs?.findIndex(
 			(song) => song.id === currentSongId
 		);
-		if (currentSongIndex === songs?.length - 1 || currentSongIndex === 0 && direction == -1) {
-			const firstSong: Song = songs[0];
+		if (currentSongIndex === filterSongs?.length - 1 || currentSongIndex === 0 && direction == -1) {
+			const firstSong: Song = filterSongs[0];
 			dispatch(setCurrentSongId(firstSong.id));
 		} else {
-			const next: Song = songs[currentSongIndex + direction];
+			const next: Song = filterSongs[currentSongIndex + direction];
+			const clickSong: CurrentSpng = { songId: next.id, tableId: tableTest }
+			console.log('nextSong', next);
+
 			dispatch(setCurrentSongId(next.id));
+
 			setCurrentTime(0);
 		}
 	};
 
 	return (
+
 		<Slide direction="up" in={Boolean(currentSongId)}>
 			<div className={classes.sliderContainer}>
 				<div className={classes.playContainer}>

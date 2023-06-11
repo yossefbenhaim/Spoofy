@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SliceName from 'models/emuns/sliceName';
+
 interface currentSongSlice {
-    id?: string | undefined;
+    songId?: string | undefined;
+    tableId?: string | undefined;
 }
 
 const initialState: currentSongSlice = {
-    id: undefined,
+    songId: undefined,
+    tableId: undefined,
 };
 
 const CurrentSongId = createSlice({
@@ -13,13 +16,18 @@ const CurrentSongId = createSlice({
     initialState,
     reducers: {
         setCurrentSongId(state, action: PayloadAction<string>) {
-            state.id = action.payload;
+            state.songId = action.payload;
         },
-        resetCurrentSongId() {
-            return initialState;
+        setCurrentTableId(state, action: PayloadAction<string>) {
+            state.tableId = action.payload;
+        },
+        resetCurrentSongId(state) {
+            state.songId = '';
+            state.tableId = '';
         },
     },
 });
 
-export const { setCurrentSongId, resetCurrentSongId } = CurrentSongId.actions;
+export const { setCurrentSongId, resetCurrentSongId, setCurrentTableId } =
+    CurrentSongId.actions;
 export default CurrentSongId.reducer;

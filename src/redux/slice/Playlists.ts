@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SliceName from 'models/emuns/sliceName';
-import Playlist from 'models/interface/Playlist';
+import Playlist from 'models/interface/playlist';
 
 interface CurrentSongsSlice {
     playlist: Playlist[];

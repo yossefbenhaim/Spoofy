@@ -1,46 +1,52 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCurrentSongId, resetCurrentSongId } from 'redux/slice/currentSongId';
+import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentSongId';
 import { useAppSelector } from 'redux/store';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-
 import MenuRow from 'components/menuRow/menuRow';
 import IconFavoriteSong from 'components/lottie/iconFavoriteSong/iconFavoriteSong';
-
 import RowsFieldsb from 'models/emuns/rowsField';
 
 import useStyles from './genericTableStyles';
 import formatDuration from 'utils/formatDuration';
-import { logMissingFieldErrors } from '@apollo/client/core/ObservableQuery';
 import Song from 'models/interface/song';
-import SongsId from 'models/interface/songId';
-import songs from 'redux/slice/songs';
+import { setFilterSongs } from 'redux/slice/filterSongsByTable';
 
 interface Props {
-	songs: Song[];
+	genericSongs: Song[];
+	tableId: string;
 }
-
-
 
 const GenericTable: React.FC<Props> = (props) => {
 	const dispatch = useDispatch();
-	const { classes } = useStyles();
-	const { songs } = props
-	const currentSongId = useAppSelector((state) => state.currentSong.id);
+	const { classes, cx } = useStyles();
+	const { genericSongs, tableId } = props
+	const currentSongId = useAppSelector((state) => state.currentSong.songId);
+	const currentTableId = useAppSelector((state) => state.currentSong.tableId)
+	const songs = useAppSelector((state) => state.songs.songs);
+
+
+	const filtersongs: Song[] = songs.filter((song) =>
+		genericSongs.some((songId) => song.id === songId.id))
+
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
-		if (rowSongId === currentSongId)
+		dispatch(setFilterSongs(filtersongs))
+		if (rowSongId === currentSongId && currentTableId === tableId) {
 			dispatch(resetCurrentSongId());
-		else
-			dispatch(setCurrentSongId(rowSongId.toString()));
+		}
+		else {
+			const test: Song | undefined = songs.find((song) => song.id == rowSongId)
+			dispatch(setCurrentSongId(test?.id as string))
+		}
 	}
 
-	const rows = useMemo(() => songs.map((item) => ({
+	const rows = useMemo(() => genericSongs.map((item) => ({
 		id: item.id,
 		song: item.name,
 		duration: formatDuration(item.duration),
 		artist: item.artist,
-	})), [songs]);
+	})), [genericSongs]);
 
 	const settingRowGlobal: Partial<GridColDef> = {
 		sortable: false,
@@ -95,8 +101,9 @@ const GenericTable: React.FC<Props> = (props) => {
 	];
 
 	return (
+
 		<DataGridPro
-			className={classes.dataGride}
+			className={cx(classes.dataGride, { [classes.notCurrentDataGride]: tableId != currentTableId })}
 			disableColumnMenu
 			rows={rows || []}
 			columns={columns}
@@ -110,6 +117,9 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnFilter
 			disableColumnPinning
 			rowSelectionModel={currentSongId}
+			onRowClick={() =>
+				dispatch(setCurrentTableId(tableId))
+			}
 			onRowSelectionModelChange={(selectedRow) => {
 				updateCurrentSongView(selectedRow[0]);
 			}}

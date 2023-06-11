@@ -4,8 +4,8 @@ const useStyles = makeStyles()({
     fieldsContainer: {
         display: 'flex',
         flexDirection: 'row',
-        height: '100%',
-        gap: '5%',
+        height: '75%',
+        gap: '2%',
         overflowY: 'auto',
         flexWrap: 'wrap',
         '::-webkit-scrollbar': {
@@ -29,6 +29,57 @@ const useStyles = makeStyles()({
             backgroundColor: 'gray',
             borderRadius: '10px',
         },
+    },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '77%',
+        width: '99%',
+    },
+    playlistTable: {
+        height: '100%',
+        width: '100%',
+    },
+
+    headerTable: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'end',
+        color: 'white',
+        alignItems: 'center',
+        marginRight: '2%',
+    },
+    namePlaylist: {
+        fontWeight: 'bold',
+    },
+    editBtn: {
+        marginRight: '1%',
+    },
+    headerContainer: {
+        marginBottom: '2%',
+        textAlign: 'center',
+        borderRadius: '15px',
+        height: '10%',
+        backgroundColor: `rgb(74, 191, 117)`,
+        color: 'white',
+        fontFamily: 'system-ui',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+
+    header: {
+        color: 'white',
+        fontSize: '2.8rem',
+        fontWeight: 'bold',
+        marginTop: '-5px',
+    },
+    addSongBtnContainer: {
+        height: '8%',
+        marginBottom: '1%',
+        marginTop: '1%',
+        textAlign: 'center',
     },
 });
 

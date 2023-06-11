@@ -4,7 +4,7 @@ import { setSongs } from 'redux/slice/songs';
 import { useQuery } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
-
+import TablesIds from 'models/emuns/tablesIds';
 import AddSong from 'components/addSong/addSong';
 
 import Song from 'models/interface/song';
@@ -20,6 +20,7 @@ const SongsTable: React.FC = () => {
 	const songs = useAppSelector((state) => state.songs.songs);
 
 	useQuery(GET_SONGS, {
+		fetchPolicy: "network-only",
 		onCompleted: (data) => {
 			const songsData = (data.allSongs.nodes as any[]).map<Song>((songDB) =>
 			({
@@ -37,7 +38,7 @@ const SongsTable: React.FC = () => {
 			<div className={classes.headerContainer}>
 				<Typography className={classes.header}>רשימת השירים</Typography>
 			</div>
-			<GenericTable songs={songs} />
+			<GenericTable tableId={TablesIds.songsIds} genericSongs={songs} />
 			<div className={classes.addSongBtnContainer}>
 				<AddSong />
 			</div>
