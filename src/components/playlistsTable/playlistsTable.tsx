@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setPlaylists } from 'redux/slice/playlists';
 import { useQuery } from '@apollo/client';
@@ -8,7 +8,6 @@ import { Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import useStyles from './playlistsTableStyles';
 import GenericTable from 'components/genericTable/genericTable';
-import TablesIds from 'models/emuns/tablesIds';
 
 import AddPlaylist from 'components/addPlaylist/addPlaylist';
 import Song from 'models/interface/song';

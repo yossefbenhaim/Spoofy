@@ -22,22 +22,25 @@ const GenericTable: React.FC<Props> = (props) => {
 	const { classes, cx } = useStyles();
 	const { genericSongs, tableId } = props
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
+	console.log(currentSongId)
 	const currentTableId = useAppSelector((state) => state.currentSong.tableId)
 	const songs = useAppSelector((state) => state.songs.songs);
 
-
-	const filtersongs: Song[] = songs.filter((song) =>
-		genericSongs.some((songId) => song.id === songId.id))
-
+	const filtersongs = useMemo<Song[]>(() => {
+		return songs.filter((song) =>
+			genericSongs.some((songId) => song.id === songId.id))
+	}, [songs]);
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
 		dispatch(setFilterSongs(filtersongs))
+
 		if (rowSongId === currentSongId && currentTableId === tableId) {
 			dispatch(resetCurrentSongId());
 		}
 		else {
 			const test: Song | undefined = songs.find((song) => song.id == rowSongId)
 			dispatch(setCurrentSongId(test?.id as string))
+			console.log(test?.id)
 		}
 	}
 
@@ -117,11 +120,9 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnFilter
 			disableColumnPinning
 			rowSelectionModel={currentSongId}
-			onRowClick={() =>
+			onRowClick={(row) => {
+				updateCurrentSongView(row.id);
 				dispatch(setCurrentTableId(tableId))
-			}
-			onRowSelectionModelChange={(selectedRow) => {
-				updateCurrentSongView(selectedRow[0]);
 			}}
 		/>
 	);

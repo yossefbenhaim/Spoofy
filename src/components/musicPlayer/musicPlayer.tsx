@@ -4,7 +4,6 @@ import { Slide, Slider, IconButton, Typography } from '@mui/material/';
 import { setCurrentSongId } from 'redux/slice/currentSongId';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
-// import { uodateTableId } from 'redux/slice/songs';
 
 import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -14,7 +13,6 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import useStyles from './musicPlayerStyles';
 import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
-import CurrentSpng from 'models/interface/currentSong';
 
 const MusicPlayer: React.FC = () => {
 	const dispatch = useDispatch();
@@ -25,15 +23,10 @@ const MusicPlayer: React.FC = () => {
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
 	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
-	const [tableTest, setTableTest] = useState<string>('');
+
 
 	const filterSongs = useAppSelector((state) => state.filterSongsByTable.songs);
 
-
-
-	useEffect(() => {
-		setTableTest(currentTableId as string);
-	}, [currentTableId])
 
 	useEffect(() => {
 		setCurrentTime(0);
@@ -44,9 +37,8 @@ const MusicPlayer: React.FC = () => {
 		return filterSongs?.find((song) => song.id === currentSongId);
 	}, [currentSongId, filterSongs]);
 
-
-
 	const currentSongDuration: number = currentSong?.duration as number;
+
 
 	const createNewIntervalForSlider = () => {
 		if (!intarval.current) {
@@ -55,6 +47,9 @@ const MusicPlayer: React.FC = () => {
 			}, 1000);
 		}
 	}
+
+
+
 
 	const clearIntervalOfSlider = () => {
 		intarval.current && clearInterval(intarval.current);
@@ -77,7 +72,6 @@ const MusicPlayer: React.FC = () => {
 	const handleClickPlay = () =>
 		setIsPlaying(prev => !prev);
 
-
 	const handleSliderChange = (newValue: number) =>
 		setCurrentTime(newValue);
 
@@ -91,11 +85,7 @@ const MusicPlayer: React.FC = () => {
 			dispatch(setCurrentSongId(firstSong.id));
 		} else {
 			const next: Song = filterSongs[currentSongIndex + direction];
-			const clickSong: CurrentSpng = { songId: next.id, tableId: tableTest }
-			console.log('nextSong', next);
-
 			dispatch(setCurrentSongId(next.id));
-
 			setCurrentTime(0);
 		}
 	};

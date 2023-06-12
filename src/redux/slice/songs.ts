@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SliceName from 'models/emuns/sliceName';
 import Song from 'models/interface/song';
-import CurrentSpng from 'models/interface/currentSong';
 
 interface CurrentSongsSlice {
     songs: Song[];
@@ -21,15 +20,6 @@ const Songs = createSlice({
         addSong: (state, action: PayloadAction<Song>) => {
             state.songs?.push(action.payload);
         },
-        // uodateTableId: (state, action: PayloadAction<CurrentSpng>) => {
-        //     const { tableId, songId } = action.payload;
-        //     const song = state.songs.find(
-        //         (song) => song.id  === songId
-        //     );
-        //     if (song) {
-        //         song.tableId = tableId;
-        //     }
-        // },
     },
 });
 
