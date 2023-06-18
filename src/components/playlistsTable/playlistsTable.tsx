@@ -45,25 +45,7 @@ const PlaylistsTable: React.FC = () => {
 		return filtersongs
 	}
 
-	useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
-		onSubscriptionData: (data) => {
-			const playlistsInsertData = data.subscriptionData.data.relatedNode;
-			const playlistId = playlistsInsertData.id;
-			const playlistName = playlistsInsertData.name;
-			const creatorId = playlistsInsertData.creatorId;
 
-			dispatch(
-				addPlaylist({
-					id: playlistId,
-					name: playlistName,
-					creatorId: creatorId,
-					songs: [],
-				})
-			);
-
-			console.log(data.subscriptionData.data.relatedNode);
-		},
-	});
 
 	return (
 		<>

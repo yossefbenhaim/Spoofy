@@ -85,9 +85,20 @@ const AddPlaylist: React.FC = () => {
 					name: name,
 					creatorId: currentUser,
 				},
-			})
-			handleQueryMessage('success')
+			}).then((resAddPlaylist) => {
 
+				songs.map((song) => {
+					mutationAddPlaylistSong({
+						variables: {
+							playlistId: resAddPlaylist.data.createPlaylist.playlist.id,
+							songId: song,
+						},
+					})
+				})
+			})
+				.catch((err) => console.error('Failed to add song: ', err));
+
+			handleQueryMessage('success')
 		}
 
 		handleClose();
@@ -97,6 +108,34 @@ const AddPlaylist: React.FC = () => {
 	useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
 		onData: (data) => {
 			console.log(data)
+			const playlistsInsertData = data.data.data.listen.relatedNode;
+			const playlistId = playlistsInsertData.id;
+			const playlistName = playlistsInsertData.name;
+			const creatorId = playlistsInsertData.creatorId;
+
+			dispatch(
+				addPlaylist({
+					id: playlistId,
+					name: playlistName,
+					creatorId: creatorId,
+					songs: [],
+				})
+			);
+
+		},
+	});
+
+
+	useSubscription(ADD_PLAYLIST_SONG_SUBSCRIPTION, {
+		onData: (data) => {
+			const playlistSongInsertData = data.data.data.listen.relatedNode;
+			const playlistId = playlistSongInsertData.playlistId;
+			const songId = playlistSongInsertData.songId;
+
+			dispatch(updateSongsPlaylist({
+				playlistId: playlistId,
+				songsId: songId,
+			}))
 		},
 	});
 

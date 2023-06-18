@@ -32,11 +32,6 @@ const Login: React.FC = () => {
 	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
 	const { enqueueSnackbar } = useSnackbar();
 
-
-
-	console.log(currentUser);
-
-
 	useEffect(() => {
 		if (currentUser?.id != undefined)
 			navigation(PathName.mainPage + PathName.songs)
