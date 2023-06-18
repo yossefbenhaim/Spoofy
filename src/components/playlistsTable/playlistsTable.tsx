@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setPlaylists } from 'redux/slice/playlists';
-import { useQuery } from '@apollo/client';
+import { addPlaylist, setPlaylists } from 'redux/slice/playlists';
+import { useQuery, useSubscription } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
 
@@ -15,11 +15,12 @@ import Playlist from 'models/interface/playlist';
 import GET_PLAYLIST from 'queries/query/playlists';
 import SongsId from 'models/interface/songId';
 import IconButton from '@mui/material/IconButton';
+import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
 
 const PlaylistsTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
-	const playlists = useAppSelector((state) => state.playlist.playlist);
+	const playlists = useAppSelector((state) => state.playlist.playlists);
 	const songs = useAppSelector((state) => state.songs.songs);
 
 	useQuery(GET_PLAYLIST, {
@@ -43,6 +44,26 @@ const PlaylistsTable: React.FC = () => {
 			songsIds.some((songId) => song.id === songId.songId))
 		return filtersongs
 	}
+
+	useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
+		onSubscriptionData: (data) => {
+			const playlistsInsertData = data.subscriptionData.data.relatedNode;
+			const playlistId = playlistsInsertData.id;
+			const playlistName = playlistsInsertData.name;
+			const creatorId = playlistsInsertData.creatorId;
+
+			dispatch(
+				addPlaylist({
+					id: playlistId,
+					name: playlistName,
+					creatorId: creatorId,
+					songs: [],
+				})
+			);
+
+			console.log(data.subscriptionData.data.relatedNode);
+		},
+	});
 
 	return (
 		<>

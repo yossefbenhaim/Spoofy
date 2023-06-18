@@ -25,7 +25,7 @@ import ADD_SONG from 'queries/mutation/addSong';
 
 import Artist from 'models/interface/artist';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
-import FormFieldsNames from 'models/emuns/formFieldsName';
+import AddSongFormFieldsNames from 'models/emuns/formFieldsName';
 
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
@@ -34,9 +34,9 @@ import AddSongSchema from './AddSongSchema';
 import { AddSongForm } from './AddSongSchema';
 
 const defaultDialogValues = {
-	[FormFieldsNames.name]: '',
-	[FormFieldsNames.artist]: '',
-	[FormFieldsNames.duration]: 0,
+	[AddSongFormFieldsNames.name]: '',
+	[AddSongFormFieldsNames.artist]: '',
+	[AddSongFormFieldsNames.duration]: 0,
 }
 
 const AddSong: React.FC = () => {
@@ -119,7 +119,7 @@ const AddSong: React.FC = () => {
 					<div className={classes.dialog}>
 						<Typography className={classes.header}>יצירת שיר</Typography>
 						<Controller
-							name={FormFieldsNames.name}
+							name={AddSongFormFieldsNames.name}
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<TextField
@@ -135,7 +135,7 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={FormFieldsNames.artist}
+							name={AddSongFormFieldsNames.artist}
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<FormControl
@@ -172,7 +172,7 @@ const AddSong: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={FormFieldsNames.duration}
+							name={AddSongFormFieldsNames.duration}
 							control={control}
 							render={({ field: { onChange } }) => (
 								<TimeField

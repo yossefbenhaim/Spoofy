@@ -34,6 +34,9 @@ const Login: React.FC = () => {
 
 
 
+	console.log(currentUser);
+
+
 	useEffect(() => {
 		if (currentUser?.id != undefined)
 			navigation(PathName.mainPage + PathName.songs)

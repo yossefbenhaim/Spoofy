@@ -1,23 +1,19 @@
 import * as z from 'zod';
-import FormFieldsNames from 'models/emuns/formFieldsName';
-import ErrorMessageDialogAddSong from 'components/addSong/errorMessage';
+import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
+import ErrorMessageDialogAddPlaylist from './errorMessage';
+import AddSongSchema from 'components/addSong/AddSongSchema';
 
 const AddPlaylistSchema = z.object({
-    [FormFieldsNames.name]: z
+    [AddPlaylistFormFieldName.name]: z
         .string()
         .nonempty({
-            message: ErrorMessageDialogAddSong.requiredError,
+            message: ErrorMessageDialogAddPlaylist.requiredError,
         })
-        .min(2, { message: ErrorMessageDialogAddSong.songNameMin })
-        .max(50, ErrorMessageDialogAddSong.songNameMax),
-    [FormFieldsNames.artist]: z
-        .string({ required_error: ErrorMessageDialogAddSong.requiredError })
-        .nonempty({
-            message: ErrorMessageDialogAddSong.requiredError,
-        }),
-    [FormFieldsNames.duration]: z
-        .number({ invalid_type_error: ErrorMessageDialogAddSong.duration })
-        .min(20, { message: ErrorMessageDialogAddSong.duration }),
+        .min(2, { message: ErrorMessageDialogAddPlaylist.playlistNameMin })
+        .max(50, ErrorMessageDialogAddPlaylist.playlistNameMax),
+    [AddPlaylistFormFieldName.songs]: z.array(z.string()).nonempty({
+        message: ErrorMessageDialogAddPlaylist.requiredError,
+    }),
 });
 
 export type AddPlaylistForm = z.infer<typeof AddPlaylistSchema>;

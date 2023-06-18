@@ -25,9 +25,12 @@ const MainPage: React.FC = () => {
 		},
 		onCompleted: (data) => {
 			const favoritesData: Favorite[] = data.allFavorites.nodes;
+			console.log(favoritesData);
+
 			dispatch(setFavorites(favoritesData))
 		}
 	})
+
 
 	useEffect(() => {
 		if (!currentUser?.id)

@@ -1,21 +1,21 @@
 import * as z from 'zod';
-import FormFieldsNames from 'models/emuns/formFieldsName';
+import AddSongFormFieldsNames from 'models/emuns/formFieldsName';
 import ErrorMessageDialogAddSong from 'components/addSong/errorMessage';
 
 const AddSongSchema = z.object({
-    [FormFieldsNames.name]: z
+    [AddSongFormFieldsNames.name]: z
         .string()
         .nonempty({
             message: ErrorMessageDialogAddSong.requiredError,
         })
         .min(2, { message: ErrorMessageDialogAddSong.songNameMin })
         .max(50, ErrorMessageDialogAddSong.songNameMax),
-    [FormFieldsNames.artist]: z
+    [AddSongFormFieldsNames.artist]: z
         .string({ required_error: ErrorMessageDialogAddSong.requiredError })
         .nonempty({
             message: ErrorMessageDialogAddSong.requiredError,
         }),
-    [FormFieldsNames.duration]: z
+    [AddSongFormFieldsNames.duration]: z
         .number({ invalid_type_error: ErrorMessageDialogAddSong.duration })
         .min(20, { message: ErrorMessageDialogAddSong.duration }),
 });

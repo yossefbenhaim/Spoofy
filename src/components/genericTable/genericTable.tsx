@@ -26,10 +26,10 @@ const GenericTable: React.FC<Props> = (props) => {
 	const currentTableId = useAppSelector((state) => state.currentSong.tableId)
 	const songs = useAppSelector((state) => state.songs.songs);
 
-	const filtersongs = useMemo<Song[]>(() => {
-		return songs.filter((song) =>
+	const filtersongs = useMemo<Song[]>(() =>
+		songs.filter((song) =>
 			genericSongs.some((songId) => song.id === songId.id))
-	}, [songs]);
+		, [songs]);
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
 		dispatch(setFilterSongs(filtersongs))
@@ -120,8 +120,8 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnFilter
 			disableColumnPinning
 			rowSelectionModel={currentSongId}
-			onRowClick={(row) => {
-				updateCurrentSongView(row.id);
+			onRowSelectionModelChange={(row) => {
+				updateCurrentSongView(row[0]);
 				dispatch(setCurrentTableId(tableId))
 			}}
 		/>

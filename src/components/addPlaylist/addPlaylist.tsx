@@ -1,42 +1,43 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useMemo, useState, } from 'react';
 import {
 	Button,
 	Typography,
 	TextField,
-	MenuItem,
-	InputLabel,
-	FormHelperText,
-	FormControl,
-	Select,
 	Dialog
 } from '@mui/material';
 
-import { addSong } from 'redux/slice/songs';
+import Checkbox from '@mui/material/Checkbox';
+import Autocomplete from '@mui/material/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
 import { VariantType, useSnackbar } from 'notistack';
-import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { Dayjs } from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery, useMutation } from '@apollo/client';
-
-import GET_ARTIST from 'queries/query/artists';
-import ADD_SONG from 'queries/mutation/addSong';
-
-import Artist from 'models/interface/artist';
-import FeedbackMessage from 'models/emuns/feedbackMessage';
-import FormFieldsNames from 'models/emuns/formFieldsName';
-
-import useStyles from './addPlaylistStyles';
-import ConvertToMilliseconds from 'utils/convertToMilliseconds';
-
-import AddPlaylistSchema from './addPlaylistSchema';
+import { useMutation, useSubscription, OnDataOptions } from '@apollo/client';
 import { AddPlaylistForm } from './addPlaylistSchema';
+import { useAppSelector } from 'redux/store';
+import { addPlaylist, updateSongsPlaylist } from 'redux/slice/playlists';
+
+import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/addPlaylistSongSubscription';
+import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
+import ADD_PLAYLIST from 'queries/mutation/addPlaylist';
+import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
+import FeedbackMessage from 'models/emuns/feedbackMessage';
+import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
+import useStyles from './addPlaylistStyles';
+
+import AddPlaylistSong from 'models/interface/addPlaylistSong';
+import AddPlaylistSchema from './addPlaylistSchema';
+import AddSongFormFieldsNames from 'models/emuns/formFieldsName';
+import Song from 'models/interface/song';
 
 const defaultDialogValues = {
-	[FormFieldsNames.name]: '',
-	[FormFieldsNames.artist]: '',
-	[FormFieldsNames.duration]: 0,
+	[AddPlaylistFormFieldName.name]: '',
+	[AddSongFormFieldsNames.name]: '',
+	[AddSongFormFieldsNames.artist]: '',
+	[AddSongFormFieldsNames.duration]: 0,
 }
 
 const AddPlaylist: React.FC = () => {
@@ -44,9 +45,17 @@ const AddPlaylist: React.FC = () => {
 	const { classes, cx } = useStyles();
 	const { enqueueSnackbar } = useSnackbar();
 
+	const songs = useAppSelector((state) => state.songs.songs);
+	const currentUser = useAppSelector((state) => state.currentUser.user?.id);
+
+
 	const [openDialogAddSong, setOpenDialogAddSong] = useState<boolean>(false);
-	const [artists, setArtists] = useState<Artist[]>([]);
-	const [mutationAddSong] = useMutation(ADD_SONG);
+	const [mutationAddSong] = useMutation(ADD_PLAYLIST);
+	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
+
+
+	const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+	const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<AddPlaylistForm>({
 		resolver: zodResolver(AddPlaylistSchema),
@@ -54,6 +63,10 @@ const AddPlaylist: React.FC = () => {
 			...defaultDialogValues
 		},
 	});
+
+	const songsId = useMemo<string[]>(() => {
+		return songs.map((song) => song.id)
+	}, [songs])
 
 	useEffect(() => {
 		if (!openDialogAddSong)
@@ -64,30 +77,34 @@ const AddPlaylist: React.FC = () => {
 		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 
 	const onSubmit: SubmitHandler<AddPlaylistForm> = (data) => {
-		const { name, artist, duration } = data;
-		const song: AddPlaylistForm = data;
-		if (song) {
+		const { name, songs } = data;
+
+		if (name) {
 			mutationAddSong({
 				variables: {
 					name: name,
-					artistId: artist,
-					duration: duration,
+					creatorId: currentUser,
 				},
 			})
-				.then((responsFromMutation) => {
-					dispatch(addSong({
-						id: responsFromMutation.data.createSong.song.id,
-						name: name,
-						duration: duration,
-						artist: responsFromMutation.data.createSong.song.artistByArtistId.name,
-						tableId: ''
-					}))
-					handleQueryMessage('success')
-				})
-				.catch((err) => console.error('Failed to add song: ', err));
+			handleQueryMessage('success')
+
 		}
 
 		handleClose();
+	};
+
+
+	useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
+		onData: (data) => {
+			console.log(data)
+		},
+	});
+
+
+	const findSongById = (songId: string) => {
+		const song: Song | undefined = songs.find((song) => song.id === songId);
+
+		return song?.name;
 	};
 
 	const handleClickOpen = () =>
@@ -96,11 +113,6 @@ const AddPlaylist: React.FC = () => {
 	const handleClose = () =>
 		setOpenDialogAddSong(false);
 
-	useQuery(GET_ARTIST, {
-		onCompleted: (data) => {
-			setArtists(data.allArtists.nodes);
-		},
-	});
 
 	return (
 		<>
@@ -120,7 +132,7 @@ const AddPlaylist: React.FC = () => {
 					<div className={classes.dialog}>
 						<Typography className={classes.header}>יצירת שיר</Typography>
 						<Controller
-							name={FormFieldsNames.name}
+							name={AddPlaylistFormFieldName.name}
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<TextField
@@ -136,65 +148,49 @@ const AddPlaylist: React.FC = () => {
 							)}
 						/>
 						<Controller
-							name={FormFieldsNames.artist}
+							name={AddPlaylistFormFieldName.songs}
 							control={control}
-							render={({ field, fieldState: { error } }) => (
-								<FormControl
-									className={classes.menu}
-									variant="standard"
-								>
-									<InputLabel error={!!error} className={classes.titleMenu} >
-										בחר זמר
-									</InputLabel>
-									<Select
-										variant="standard"
-										{...field}
-										className={classes.select}
-									>
-										{artists.map((artist) => {
-											return (
-												<MenuItem
-													className={classes.menuItem}
-													key={artist.id}
-													value={artist.id}
-												>
-													{artist.name}
-												</MenuItem>
-											);
-										})}
-									</Select>
-									<FormHelperText
-										className={classes.error}>
-										{error &&
-											<span className={classes.error}>
-												{error.message}</span>}
-									</FormHelperText>
-								</FormControl>
-							)}
-						/>
-						<Controller
-							name={FormFieldsNames.duration}
-							control={control}
-							render={({ field: { onChange } }) => (
-								<TimeField
-									onChange={(time: Dayjs | null) => {
-										const formattedTime: number =
-											ConvertToMilliseconds(time?.minute(), time?.second())
-										onChange(formattedTime);
+							render={({ field: { onChange, value }, fieldState: { error } }) => (
+								<Autocomplete
+									multiple
+									fullWidth
+									value={value || []}
+									onChange={(event, selectedSongs) => {
+										onChange(selectedSongs)
 									}}
-									className={cx(classes.input, {
-										[classes.errorInput]: !!errors.duration
-									})}
+									options={songsId}
 
-									label="Duration"
-									variant="standard"
-									format='mm:ss'
-									helperText={errors.duration &&
-										<span className={classes.error}>
-											{errors.duration.message}</span>}
+									getOptionLabel={(option) => findSongById(option) as string}
+									openOnFocus
+									disableCloseOnSelect
+									renderOption={(props, option, { selected }) => (
+										<li {...props} key={option}>
+											<Checkbox
+												icon={icon}
+												checkedIcon={checkedIcon}
+												checked={selected}
+												key={option}
+											/>
+											{findSongById(option)}
+										</li>
+									)}
+									style={{ width: 500 }}
+									renderInput={(params) => (
+										<TextField
+											{...params}
+											error={!!error}
+
+											label="Songs"
+											placeholder="Favorites"
+											helperText={errors.songs && (
+												<span className={classes.error}>{errors.songs.message}</span>
+											)}
+										/>
+									)}
 								/>
 							)}
 						/>
+
 						<Button
 							className={classes.submitButton}
 							variant="contained"
