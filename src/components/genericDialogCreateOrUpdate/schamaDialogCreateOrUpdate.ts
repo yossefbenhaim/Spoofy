@@ -1,9 +1,8 @@
 import * as z from 'zod';
 import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
 import ErrorMessageDialogAddPlaylist from './errorMessage';
-import AddSongSchema from 'components/addSong/AddSongSchema';
 
-const AddPlaylistSchema = z.object({
+const AddOrUpdatePlaylistSchema = z.object({
     [AddPlaylistFormFieldName.name]: z
         .string()
         .nonempty({
@@ -16,5 +15,5 @@ const AddPlaylistSchema = z.object({
     }),
 });
 
-export type AddPlaylistForm = z.infer<typeof AddPlaylistSchema>;
-export default AddPlaylistSchema;
+export type AddOrUpdatePlaylistForm = z.infer<typeof AddOrUpdatePlaylistSchema>;
+export default AddOrUpdatePlaylistSchema;

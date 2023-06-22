@@ -175,6 +175,66 @@ const useStyles = makeStyles()({
             backgroundColor: `rgb(80, 160, 60)`,
         },
     },
+    autocomplete: {
+        width: '100%!important',
+        paddingRight: '0px',
+
+        '& .MuiAutocomplete-endAdornment': {
+            right: 'inherit',
+        },
+
+        '& .MuiInputBase-root': {
+            paddingRight: '0px!important',
+        },
+    },
+    songsInput: {
+        width: '96%',
+        marginLeft: '2%',
+
+        '& .MuiFormLabel-root': {
+            color: 'white',
+            right: '0',
+            left: 'inherit',
+        },
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: 'rgb(74, 191, 117)',
+        },
+        '& .MuiInputBase-input ': {
+            direction: 'rtl',
+        },
+        '& .MuiInputBase-input:focus ': {
+            marginRight: '0px',
+        },
+        '& .MuiInputBase-root': {
+            paddingRight: '0px',
+            flexDirection: 'row-reverse',
+            justifyContent: ' flex-end',
+        },
+        '& .MuiInputBase-root:after': {
+            borderBottom: '2px solid rgb(74, 191, 117)',
+        },
+
+        // '& .MuiAutocomplete-popper': {
+        //     direction: 'rtl',
+        //     backgroundColor: 'red',
+        // },
+        // '& .MuiPopper-root': {
+        //     direction: 'rtl',
+        //     backgroundColor: 'red',
+        // },
+    },
+
+    checkBoxSongs: {
+        direction: 'rtl',
+    },
+    selectedSong: {
+        backgroundColor: 'rgb(75, 218, 128)',
+        marginRight: '0.5%',
+        border: '1px solid black',
+        '& .MuiSvgIcon-root': {
+            color: 'black',
+        },
+    },
 });
 
 export default useStyles;

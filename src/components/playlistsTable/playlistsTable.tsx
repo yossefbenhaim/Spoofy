@@ -1,27 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addPlaylist, setPlaylists } from 'redux/slice/playlists';
-import { useQuery, useSubscription } from '@apollo/client';
+import { setPlaylists } from 'redux/slice/playlists';
+import { useQuery } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
 import useStyles from './playlistsTableStyles';
 import GenericTable from 'components/genericTable/genericTable';
 
-import AddPlaylist from 'components/addPlaylist/addPlaylist';
+import GenericDialogCreateOrUpdate from 'components/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
 import Song from 'models/interface/song';
 import Playlist from 'models/interface/playlist';
 import GET_PLAYLIST from 'queries/query/playlists';
 import SongsId from 'models/interface/songId';
 import IconButton from '@mui/material/IconButton';
-import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
 
 const PlaylistsTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
 	const playlists = useAppSelector((state) => state.playlist.playlists);
 	const songs = useAppSelector((state) => state.songs.songs);
+
 
 	useQuery(GET_PLAYLIST, {
 		fetchPolicy: 'network-only',
@@ -58,7 +58,12 @@ const PlaylistsTable: React.FC = () => {
 					<div key={playlist.id} className={classes.container}>
 						<div className={classes.headerTable}>
 							<IconButton className={classes.editBtn}>
-								<EditIcon />
+								<GenericDialogCreateOrUpdate
+									choseSongs={findPlaylistSong(playlist.songs)}
+									playlistName={playlist.name}
+									titelName='עריכת פלייליסט'
+									playlistId={playlist.id}
+								/>
 							</IconButton>
 							<Typography className={classes.namePlaylist}>{playlist.name}</Typography>
 						</div>
@@ -70,7 +75,13 @@ const PlaylistsTable: React.FC = () => {
 				}
 			</div>
 			<div className={classes.addSongBtnContainer}>
-				<AddPlaylist />
+
+				<GenericDialogCreateOrUpdate
+					choseSongs={[]}
+					playlistName=''
+					titelName='צור פלייליסט'
+					playlistId=''
+				/>
 			</div>
 		</>
 	)

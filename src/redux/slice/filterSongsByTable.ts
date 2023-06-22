@@ -17,8 +17,14 @@ const FilterSongsByTable = createSlice({
         setFilterSongs: (state, action: PayloadAction<Song[]>) => {
             state.songs = action.payload;
         },
+        deleteSongfromFilterSong: (state, action: PayloadAction<string>) => {
+            state.songs = state.songs.filter(
+                (song) => song.id !== action.payload
+            );
+        },
     },
 });
 
-export const { setFilterSongs } = FilterSongsByTable.actions;
+export const { setFilterSongs, deleteSongfromFilterSong } =
+    FilterSongsByTable.actions;
 export default FilterSongsByTable.reducer;

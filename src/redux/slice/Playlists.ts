@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SliceName from 'models/emuns/sliceName';
 import Playlist from 'models/interface/playlist';
-import AddPlaylistSong from 'models/interface/addPlaylistSong';
+import PlaylistSong from 'models/interface/addPlaylistSong';
 
 interface CurrentSongsSlice {
     playlists: Playlist[];
@@ -21,10 +21,17 @@ const Playlists = createSlice({
         addPlaylist: (state, action: PayloadAction<Playlist>) => {
             state.playlists?.push(action.payload);
         },
-        updateSongsPlaylist: (
-            state,
-            action: PayloadAction<AddPlaylistSong>
-        ) => {
+        updatePlaylistName: (state, action: PayloadAction<Playlist>) => {
+            const { id, name } = action.payload;
+            const playlist: Playlist | undefined = state.playlists.find(
+                (playlist) => playlist.id === id
+            );
+
+            if (playlist) {
+                playlist.name = name;
+            }
+        },
+        updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
             const playlist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === playlistId
@@ -34,9 +41,29 @@ const Playlists = createSlice({
                 playlist.songs.push({ songId: songsId });
             }
         },
+        deleteSongsPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
+            const { playlistId, songsId } = action.payload;
+            const playlist: Playlist | undefined = state.playlists.find(
+                (playlist) => playlist.id === playlistId
+            );
+
+            if (playlist) {
+                const index = playlist.songs.findIndex(
+                    (song) => song.songId === songsId
+                );
+                if (index !== -1) {
+                    playlist.songs.splice(index, 1);
+                }
+            }
+        },
     },
 });
 
-export const { addPlaylist, setPlaylists, updateSongsPlaylist } =
-    Playlists.actions;
+export const {
+    addPlaylist,
+    setPlaylists,
+    updatePlaylistSongs,
+    updatePlaylistName,
+    deleteSongsPlaylist,
+} = Playlists.actions;
 export default Playlists.reducer;

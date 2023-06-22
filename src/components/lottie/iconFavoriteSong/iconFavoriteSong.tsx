@@ -10,6 +10,7 @@ import { VariantType, useSnackbar } from 'notistack';
 import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
 
+import { deleteSongfromFilterSong } from 'redux/slice/filterSongsByTable';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconFavoriteSongStyles';
@@ -67,6 +68,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			animref.current && animref.current.stop();
 			heandlDeleteFavorite();
 			dispatch(deleteFavoriteFrom({ songId: rowSongId }));
+			dispatch(deleteSongfromFilterSong(rowSongId))
 
 		} else {
 			animref.current && animref.current.play();
