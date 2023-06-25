@@ -9,10 +9,10 @@ import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import Navbar from 'components/navbar/navbar';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 
-import useStyles from './mainPageStyles';
+import useStyles from './libraryStyles';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
 import Favorite from 'models/interface/favorite';
-const MainPage: React.FC = () => {
+const Library: React.FC = () => {
 	const { classes } = useStyles();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const navigation = useNavigate();
@@ -62,4 +62,4 @@ const MainPage: React.FC = () => {
 	);
 };
 
-export default MainPage;
+export default Library;

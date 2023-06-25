@@ -19,7 +19,13 @@ const Playlists = createSlice({
             state.playlists = action.payload;
         },
         addPlaylist: (state, action: PayloadAction<Playlist>) => {
-            state.playlists?.push(action.payload);
+            1;
+            const test = state.playlists.find(
+                (playlist) => playlist.id === action.payload.id
+            );
+            if (!test) {
+                state.playlists?.push(action.payload);
+            }
         },
         updatePlaylistName: (state, action: PayloadAction<Playlist>) => {
             const { id, name } = action.payload;

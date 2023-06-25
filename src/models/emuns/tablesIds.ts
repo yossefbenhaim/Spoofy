@@ -1,5 +1,5 @@
 enum TablesIds {
-    playlist = '123',
+    favorits = '123456789',
     songsIds = '456',
 }
 

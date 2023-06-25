@@ -10,7 +10,7 @@ import { VariantType, useSnackbar } from 'notistack';
 import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
 
-import { deleteSongfromFilterSong } from 'redux/slice/filterSongsByTable';
+import { deleteSongfromFilterSong } from 'redux/slice/currentSongId';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconFavoriteSongStyles';

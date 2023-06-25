@@ -22,10 +22,8 @@ const MusicPlayer: React.FC = () => {
 
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
+	const filterSongs = useAppSelector((state) => state.currentSong.songs);
 	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
-
-
-	const filterSongs = useAppSelector((state) => state.filterSongsByTable.songs);
 
 
 	useEffect(() => {
@@ -33,9 +31,12 @@ const MusicPlayer: React.FC = () => {
 		setIsPlaying(true);
 	}, [currentSongId])
 
+
+
 	const currentSong = useMemo(() => {
+
 		return filterSongs?.find((song) => song.id === currentSongId);
-	}, [currentSongId, filterSongs]);
+	}, [filterSongs, currentSongId]);
 
 	const currentSongDuration: number = currentSong?.duration as number;
 

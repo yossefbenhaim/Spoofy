@@ -34,7 +34,7 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (currentUser?.id != undefined)
-			navigation(PathName.mainPage + PathName.songs)
+			navigation(PathName.library + PathName.songs)
 	}, [currentUser])
 
 	useQuery(GET_USERS, {
@@ -57,7 +57,7 @@ const Login: React.FC = () => {
 		const userSelect: User | undefined = users?.find((user) => user.id === userSelectId);
 		if (userSelect?.id) {
 			dispatch(setUser(userSelect))
-			navigation(PathName.mainPage + PathName.songs);
+			navigation(PathName.library + PathName.songs);
 		} else
 			handleQueryMessage('error')
 

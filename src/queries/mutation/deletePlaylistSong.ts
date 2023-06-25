@@ -1,20 +1,14 @@
 import { gql } from '@apollo/client';
 
-const ADD_PLAYLIST_SUBSCRIPTION = gql`
-    subscription MySubscription {
-        listen(topic: "new_playlist") {
-            relatedNodeId
-            relatedNode {
-                ... on Playlist {
-                    __typename
-                    id
-                    name
-                    creatorId
-                    createdPlaylist
-                }
-            }
+const DELETE_PLAYLIST_SONG = gql`
+    mutation MyMutation($playlistId: UUID!, $songId: UUID!) {
+        deletePlaylistsongByPlaylistIdAndSongId(
+            input: { playlistId: $playlistId, songId: $songId }
+        ) {
+            clientMutationId
+            deletedPlaylistsongId
         }
     }
 `;
 
-export default ADD_PLAYLIST_SUBSCRIPTION;
+export default DELETE_PLAYLIST_SONG;

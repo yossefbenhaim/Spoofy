@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentSongId';
 import { useAppSelector } from 'redux/store';
@@ -10,7 +10,7 @@ import RowsFieldsb from 'models/emuns/rowsField';
 import useStyles from './genericTableStyles';
 import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
-import { setFilterSongs } from 'redux/slice/filterSongsByTable';
+import { setFilterSongs } from 'redux/slice/currentSongId';
 
 interface Props {
 	genericSongs: Song[];
@@ -22,19 +22,19 @@ const GenericTable: React.FC<Props> = (props) => {
 	const { classes, cx } = useStyles();
 	const { genericSongs, tableId } = props
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
-	const currentTableId = useAppSelector((state) => state.currentSong.tableId)
+	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
+
 	const songs = useAppSelector((state) => state.songs.songs);
 
-
 	const updateCurrentSongView = (rowSongId: string | number) => {
-		dispatch(setFilterSongs(genericSongs))
 
-		if (rowSongId === currentSongId && currentTableId === tableId) {
+
+		if (rowSongId === currentSongId && currentTableId === tableId)
 			dispatch(resetCurrentSongId());
-		}
-		else {
-			const test: Song | undefined = songs.find((song) => song.id == rowSongId)
-			dispatch(setCurrentSongId(test?.id as string))
+
+		else if (currentTableId || rowSongId !== undefined) {
+			const newCurrentSong: Song | undefined = songs.find((song) => song.id == rowSongId)
+			dispatch(setCurrentSongId(newCurrentSong?.id as string))
 		}
 	}
 
@@ -115,9 +115,16 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnFilter
 			disableColumnPinning
 			rowSelectionModel={currentSongId}
-			onRowSelectionModelChange={(row) => {
-				updateCurrentSongView(row[0]);
+			onRowClick={() => {
 				dispatch(setCurrentTableId(tableId))
+				dispatch(setFilterSongs(genericSongs))
+			}}
+			onRowSelectionModelChange={(row) => {
+				if (row[0] !== undefined)
+					updateCurrentSongView(row[0]);
+
+
+
 			}}
 		/>
 	);

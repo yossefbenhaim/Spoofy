@@ -22,7 +22,6 @@ import { useAppSelector } from 'redux/store';
 import { addPlaylist, updatePlaylistSongs, deleteSongsPlaylist, updatePlaylistName } from 'redux/slice/playlists';
 
 import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
 
 import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/addPlaylistSongSubscription';
 import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
@@ -38,12 +37,15 @@ import useStyles from './genericDialogCreateOrUpdateStyles';
 
 import AddOrUpdatePlaylistSchema from './schamaDialogCreateOrUpdate';
 import Song from 'models/interface/song';
-import DELETE_PLAYLIST_SONG from 'queries/mutation/deleteFavorite';
+import DELETE_PLAYLIST_SONG from 'queries/mutation/deletePlaylistSong';
+import SnakbarMessage from './snakbarMessage';
+
+
 
 interface Props {
 	titelName: string,
 	playlistName: string,
-	choseSongs: Song[],
+	choseSongs: Song[] | undefined,
 	playlistId: string,
 }
 
@@ -55,9 +57,27 @@ const AddPlaylist: React.FC<Props> = (props) => {
 	const songs = useAppSelector((state) => state.songs.songs);
 	const [openDialogAddSong, setOpenDialogAddSong] = useState<boolean>(false);
 
+	const indexOfChoseSongs = useMemo<number[] | undefined>(() => {
+		return choseSongs?.map((choseSong) =>
+			songs.findIndex((song) => song.id === choseSong.id)
+		)
+	}, [choseSongs])
+
+	const songsId = useMemo<string[]>(() => {
+		return songs.map((song) => song.id)
+	}, [songs])
+
+
+	const findSongById = (songId: string) => {
+		const song: Song | undefined = songs.find((song) => song.id === songId);
+		return song?.name;
+	};
+
 	const defaultDialogValues = {
+
 		[AddPlaylistFormFieldName.name]: playlistName,
-		[AddPlaylistFormFieldName.songs]: [],
+		[AddPlaylistFormFieldName.songs]: choseSongs ? indexOfChoseSongs?.map((index) =>
+			songsId[index]) : [],
 	}
 
 	const currentUser = useAppSelector((state) => state.currentUser.user?.id);
@@ -76,35 +96,29 @@ const AddPlaylist: React.FC<Props> = (props) => {
 		},
 	});
 
-	const songsId = useMemo<string[]>(() => {
-		return songs.map((song) => song.id)
-	}, [songs])
-
-	const indexOfChoseSongs = useMemo<number[]>(() => {
-		return choseSongs.map((choseSong) =>
-			songs.findIndex((song) => song.id === choseSong.id)
-		)
-	}, [choseSongs])
-
 	useEffect(() => {
 		if (!openDialogAddSong)
 			reset({ ...defaultDialogValues })
 	}, [openDialogAddSong])
 
 	const handleQueryMessage = (variant: VariantType) =>
-		enqueueSnackbar(FeedbackMessage.createdSong, { variant });
+		playlistName ?
+			enqueueSnackbar(SnakbarMessage.UpdatePlaylist, { variant })
+			:
+			enqueueSnackbar(SnakbarMessage.addNewPlaylist, { variant })
+
 
 
 	//  return new songs that not was in chose
 	const newAddedSongs = (newSongs: string[]) => {
 		return newSongs.filter((newSong) =>
-			!choseSongs.some((song) => song.id === newSong)
+			!choseSongs?.some((song) => song.id === newSong)
 		);
 	}
 
 	//  return delete songs
 	const oldSongsToDelete = (newSongs: string[]) => {
-		return choseSongs.filter((song) =>
+		return choseSongs?.filter((song) =>
 			!newSongs.some((newSong) => song.id === newSong)
 		);
 	}
@@ -131,7 +145,6 @@ const AddPlaylist: React.FC<Props> = (props) => {
 				})
 			})
 				.catch((err) => console.error('Failed to add song: ', err));
-			handleQueryMessage('success')
 		}
 
 		else {
@@ -169,7 +182,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 			}
 
 		}
-
+		handleQueryMessage('success')
 		handleClose();
 	};
 
@@ -180,6 +193,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 			const playlistId = playlistsInsertData.id;
 			const playlistName = playlistsInsertData.name;
 			const creatorId = playlistsInsertData.creatorId;
+
 
 			dispatch(
 				addPlaylist({
@@ -221,7 +235,8 @@ const AddPlaylist: React.FC<Props> = (props) => {
 			}))
 		},
 	});
-	// 
+
+
 	useSubscription(UPDATE_PLAYLIST_NAME_SUBSCRIPTION, {
 		onData: (data) => {
 			const playlistSongInsertData = data.data.data.listen.relatedNode;
@@ -239,10 +254,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 	});
 
 
-	const findSongById = (songId: string) => {
-		const song: Song | undefined = songs.find((song) => song.id === songId);
-		return song?.name;
-	};
+
 
 	const handleClickOpen = () =>
 		setOpenDialogAddSong(true);
@@ -292,7 +304,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 						<Controller
 							name={AddPlaylistFormFieldName.songs}
 							control={control}
-							render={({ field: { onChange }, fieldState: { error } }) => (
+							render={({ field: { onChange, value }, fieldState: { error } }) => (
 
 								<Autocomplete
 									multiple
@@ -303,9 +315,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 									options={songsId}
 									className={classes.autocomplete}
 									getOptionLabel={(option) => findSongById(option) as string}
-									defaultValue={indexOfChoseSongs.map((index) =>
-										songsId[index]
-									)}
+									value={value}
 									onChange={(event, selectedSongs) => {
 										onChange(selectedSongs)
 									}}

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setPlaylists } from 'redux/slice/playlists';
 import { useQuery } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import EditIcon from '@mui/icons-material/Edit';
 import useStyles from './playlistsTableStyles';
 import GenericTable from 'components/genericTable/genericTable';
 

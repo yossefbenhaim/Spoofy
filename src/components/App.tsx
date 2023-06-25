@@ -3,7 +3,7 @@ import { LicenseInfo } from '@mui/x-license-pro';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Login from './login/login';
-import MainPage from './mainPage/mainPage';
+import Library from './library/library';
 import PathName from 'models/emuns/pathName';
 
 import SongsTable from './songsTable/songsTable';
@@ -18,7 +18,7 @@ const App: React.FC = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route index element={<Login />} />
-				<Route path={PathName.mainPage} element={<MainPage />}>
+				<Route path={PathName.library} element={<Library />}>
 					<Route path={PathName.songs} element={<SongsTable />} />
 					<Route path={PathName.playlist} element={<PlaylistsTable />} />
 					<Route path={PathName.favorites} element={<FavoritesTable />} />
