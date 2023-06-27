@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import SliceName from 'models/emuns/sliceName';
 import Playlist from 'models/interface/playlist';
 import PlaylistSong from 'models/interface/addPlaylistSong';
@@ -19,47 +20,38 @@ const Playlists = createSlice({
             state.playlists = action.payload;
         },
         addPlaylist: (state, action: PayloadAction<Playlist>) => {
-            1;
-            const test = state.playlists.find(
+            // make shore that function added one playlist with same id
+            const findPlaylistId = state.playlists.find(
                 (playlist) => playlist.id === action.payload.id
             );
-            if (!test) {
-                state.playlists?.push(action.payload);
-            }
+            if (!findPlaylistId) state.playlists?.push(action.payload);
         },
         updatePlaylistName: (state, action: PayloadAction<Playlist>) => {
             const { id, name } = action.payload;
-            const playlist: Playlist | undefined = state.playlists.find(
+            const currentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === id
             );
-
-            if (playlist) {
-                playlist.name = name;
-            }
+            if (currentPlaylist) currentPlaylist.name = name;
         },
         updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
-            const playlist: Playlist | undefined = state.playlists.find(
+            const CurrentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );
-
-            if (playlist) {
-                playlist.songs.push({ songId: songsId });
-            }
+            if (CurrentPlaylist)
+                CurrentPlaylist.songs.push({ songId: songsId });
         },
         deleteSongsPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
-            const playlist: Playlist | undefined = state.playlists.find(
+            const CurrentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );
 
-            if (playlist) {
-                const index = playlist.songs.findIndex(
+            if (CurrentPlaylist) {
+                const index = CurrentPlaylist.songs.findIndex(
                     (song) => song.songId === songsId
                 );
-                if (index !== -1) {
-                    playlist.songs.splice(index, 1);
-                }
+                if (index !== -1) CurrentPlaylist.songs.splice(index, 1);
             }
         },
     },

@@ -20,6 +20,9 @@ import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery, useMutation } from '@apollo/client';
 
+import { AddSongForm } from './AddSongSchema';
+import AddSongSchema from './AddSongSchema';
+
 import GET_ARTIST from 'queries/query/artists';
 import ADD_SONG from 'queries/mutation/addSong';
 
@@ -30,8 +33,6 @@ import AddSongFormFieldsNames from 'models/emuns/formFieldsName';
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 
-import AddSongSchema from './AddSongSchema';
-import { AddSongForm } from './AddSongSchema';
 
 const defaultDialogValues = {
 	[AddSongFormFieldsNames.name]: '',
@@ -66,7 +67,8 @@ const AddSong: React.FC = () => {
 	const onSubmit: SubmitHandler<AddSongForm> = (data) => {
 		const { name, artist, duration } = data;
 		const song: AddSongForm = data;
-		if (song) {
+
+		if (song)
 			mutationAddSong({
 				variables: {
 					name: name,
@@ -84,7 +86,6 @@ const AddSong: React.FC = () => {
 					handleQueryMessage('success')
 				})
 				.catch((err) => console.error('Failed to add song: ', err));
-		}
 
 		handleClose();
 	};

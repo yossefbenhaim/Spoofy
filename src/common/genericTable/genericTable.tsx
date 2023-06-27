@@ -1,16 +1,19 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
+
 import { useDispatch } from 'react-redux';
-import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentSongId';
 import { useAppSelector } from 'redux/store';
+import { setFilterSongs } from 'redux/slice/currentSongId';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentSongId';
+
 import MenuRow from 'components/menuRow/menuRow';
 import IconFavoriteSong from 'components/lottie/iconFavoriteSong/iconFavoriteSong';
+
 import RowsFieldsb from 'models/emuns/rowsField';
+import Song from 'models/interface/song';
 
 import useStyles from './genericTableStyles';
 import formatDuration from 'utils/formatDuration';
-import Song from 'models/interface/song';
-import { setFilterSongs } from 'redux/slice/currentSongId';
 
 interface Props {
 	genericSongs: Song[];
@@ -21,14 +24,12 @@ const GenericTable: React.FC<Props> = (props) => {
 	const dispatch = useDispatch();
 	const { classes, cx } = useStyles();
 	const { genericSongs, tableId } = props
+
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
 	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
-
 	const songs = useAppSelector((state) => state.songs.songs);
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
-
-
 		if (rowSongId === currentSongId && currentTableId === tableId)
 			dispatch(resetCurrentSongId());
 
@@ -122,13 +123,9 @@ const GenericTable: React.FC<Props> = (props) => {
 			onRowSelectionModelChange={(row) => {
 				if (row[0] !== undefined)
 					updateCurrentSongView(row[0]);
-
-
-
 			}}
 		/>
 	);
 };
-
 
 export default GenericTable;

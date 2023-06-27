@@ -55,6 +55,10 @@ const useStyles = makeStyles()({
     },
     editBtn: {
         marginRight: '1%',
+        color: 'white',
+        '&:hover': {
+            color: 'rgb(74, 191, 117)',
+        },
     },
     headerContainer: {
         marginBottom: '2%',

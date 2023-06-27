@@ -25,7 +25,7 @@ const IconMusify: React.FC = () => {
 			renderer: 'svg',
 			loop: false,
 			autoplay: false,
-			path: '/src/logoHome.json',
+			path: '/src/lottieFile/iconHome.json',
 		});
 		return () =>
 			animationRef.current && animationRef.current.play();

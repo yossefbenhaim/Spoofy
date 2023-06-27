@@ -68,6 +68,17 @@ const useStyles = makeStyles()({
     lottieStyle: {
         width: '200px',
     },
+    titleContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '15%',
+    },
+    iconHomeContainer: {
+        width: '100%',
+    },
+    titleNameContainer: {
+        width: '100%',
+    },
 });
 
 export default useStyles;

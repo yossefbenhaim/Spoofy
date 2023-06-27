@@ -6,8 +6,7 @@ import TablesIds from 'models/emuns/tablesIds';
 import Song from 'models/interface/song';
 
 import useStyles from './favoritesTableStyles';
-import GenericTable from 'components/genericTable/genericTable';
-
+import GenericTable from 'common/genericTable/genericTable';
 
 const FavoritesTable: React.FC = () => {
 	const { classes } = useStyles();

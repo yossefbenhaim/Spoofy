@@ -1,16 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
 
-import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
+import { useAppSelector } from 'redux/store';
 import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
 import { VariantType, useSnackbar } from 'notistack';
+import { deleteSongfromFilterSong } from 'redux/slice/currentSongId';
 
 import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
 
-import { deleteSongfromFilterSong } from 'redux/slice/currentSongId';
 import FeedbackMessage from 'models/emuns/feedbackMessage';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconFavoriteSongStyles';
@@ -18,6 +18,7 @@ import useStyles from './iconFavoriteSongStyles';
 interface Props {
 	rowSongId: string;
 }
+
 const IconFavoriteSong: React.FC<Props> = (props) => {
 	const dispatch = useDispatch();
 	const { rowSongId } = props
@@ -32,8 +33,6 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	const container = useRef<HTMLDivElement>(null);
 	const animref = useRef<AnimationItem | undefined>();
 
-
-
 	const handleQueryMessage = (variant: VariantType) => {
 		if (variant == 'success')
 			enqueueSnackbar(FeedbackMessage.addingSongToFavorite, { variant });
@@ -47,7 +46,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			renderer: 'svg',
 			loop: false,
 			autoplay: false,
-			path: '/src/like.json',
+			path: '/src/lottieFile/like.json',
 		});
 		return () =>
 			animref.current && animref.current.destroy();
@@ -59,17 +58,15 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 		} else {
 			animref.current && animref.current.stop();
 		}
-	}, [rowSongId])
+	}, [rowSongId, favoritesLike])
 
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
 		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId)) {
-
 			animref.current && animref.current.stop();
 			heandlDeleteFavorite();
 			dispatch(deleteFavoriteFrom({ songId: rowSongId }));
 			dispatch(deleteSongfromFilterSong(rowSongId))
-
 		} else {
 			animref.current && animref.current.play();
 			setTimeout(() => {

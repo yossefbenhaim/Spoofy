@@ -20,6 +20,7 @@ import FeedbackMessage from 'models/emuns/feedbackMessage';
 import User from 'models/interface/user';
 import PathName from 'models/emuns/pathName';
 
+import IconHome from 'components/lottie/iconHome/iconHome';
 import GET_USERS from 'queries/query/users';
 import useStyles from './loginStyles';
 
@@ -49,9 +50,9 @@ const Login: React.FC = () => {
 		},
 	});
 
-	const handleQueryMessage = (variant: VariantType) => {
+	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.mustSelectUser, { variant });
-	}
+
 
 	const handleConnect = () => {
 		const userSelect: User | undefined = users?.find((user) => user.id === userSelectId);
@@ -60,16 +61,21 @@ const Login: React.FC = () => {
 			navigation(PathName.library + PathName.songs);
 		} else
 			handleQueryMessage('error')
-
 	};
 
-	const handleChange = (event: SelectChangeEvent) => {
+	const handleChange = (event: SelectChangeEvent) =>
 		setUserSelectId(event.target.value)
-	};
 
 	return (
 		<div className={classes.fieldsContainer}>
-			<Typography className={classes.title}>Musify</Typography>
+			<div className={classes.titleContainer}>
+				<div className={classes.iconHomeContainer}>
+					<IconHome />
+				</div>
+				<div className={classes.titleNameContainer}>
+					<Typography className={classes.title}>Musify</Typography>
+				</div>
+			</div>
 			<FormControl className={classes.formControl} fullWidth >
 				<InputLabel className={classes.titleMenu} >
 					בחר משתמש להתחברות

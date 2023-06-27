@@ -21,10 +21,10 @@ const useStyles = makeStyles()({
         flexDirection: 'column',
         justifyContent: 'center',
         height: '50px',
-        marginBottom: '2px',
         backgroundColor: 'gray',
         color: 'white',
         textDecoration: 'underline',
+        borderBottom: '2px solid white',
 
         top: '0',
         position: 'sticky',
@@ -32,11 +32,11 @@ const useStyles = makeStyles()({
     },
     menuContainer: {
         textAlignLast: 'center',
-        height: '35%',
+        height: '32%',
 
         '& .MuiPaper-root': {
             marginRight: '0%',
-            width: '10[%',
+            width: '10%',
             '::-webkit-scrollbar': {
                 backgroundColor: '#7ead7b78',
                 width: '10px',

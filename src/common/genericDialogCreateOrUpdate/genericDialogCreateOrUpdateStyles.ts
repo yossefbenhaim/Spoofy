@@ -195,6 +195,9 @@ const useStyles = makeStyles()({
             color: 'white',
             right: '0',
             left: 'inherit',
+            '&.Mui-error': {
+                color: '#d32f2f',
+            },
         },
         '& .MuiFormLabel-root.Mui-focused': {
             color: 'rgb(74, 191, 117)',
@@ -209,19 +212,21 @@ const useStyles = makeStyles()({
             paddingRight: '0px',
             flexDirection: 'row-reverse',
             justifyContent: ' flex-end',
+            borderBottomColor: 'black',
+
+            '&:before': {
+                borderBottom: '1px solid black',
+            },
+            '&.Mui-error:before': {
+                borderBottom: '1px solid black',
+            },
+            '&.Mui-error:after': {
+                borderBottom: '2px solid #d32f2f',
+            },
         },
         '& .MuiInputBase-root:after': {
             borderBottom: '2px solid rgb(74, 191, 117)',
         },
-
-        // '& .MuiAutocomplete-popper': {
-        //     direction: 'rtl',
-        //     backgroundColor: 'red',
-        // },
-        // '& .MuiPopper-root': {
-        //     direction: 'rtl',
-        //     backgroundColor: 'red',
-        // },
     },
 
     checkBoxSongs: {

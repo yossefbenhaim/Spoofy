@@ -25,14 +25,14 @@ import useStyles from './userOptionMenuStyles';
 
 const UserOptionMenu: React.FC = () => {
 	const navigation = useNavigate();
+	const dispatch = useDispatch();
+	const currentUser = useAppSelector((state) => state.currentUser);
+
 	const { classes } = useStyles();
 	const { enqueueSnackbar } = useSnackbar();
 
 	const [openDialogDelete, setOpen] = React.useState(false);
 	const [deleteUserMutation] = useMutation(DELETE_USER);
-
-	const currentUser = useAppSelector((state) => state.currentUser);
-	const dispatch = useDispatch();
 
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
@@ -49,12 +49,9 @@ const UserOptionMenu: React.FC = () => {
 		navigation('/');
 	};
 
-
 	const handleDeleteUser = (userId: User | undefined) => {
 		deleteUserMutation({ variables: { id: userId?.id } })
-			.then(() => {
-				handleQueryMessage('info')
-			})
+			.then(() => { handleQueryMessage('info') })
 			.catch((err) => console.error('Failed to delete user: ', err));
 	};
 

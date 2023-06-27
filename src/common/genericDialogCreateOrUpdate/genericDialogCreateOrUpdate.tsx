@@ -4,43 +4,34 @@ import {
 	Typography,
 	TextField,
 	Dialog,
-	Chip
+	Chip,
+	Checkbox,
+	Autocomplete
 } from '@mui/material';
-
-import Checkbox from '@mui/material/Checkbox';
-import Autocomplete from '@mui/material/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import { VariantType, useSnackbar } from 'notistack';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useSubscription } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { AddOrUpdatePlaylistForm } from './schamaDialogCreateOrUpdate';
 import { useAppSelector } from 'redux/store';
-import { addPlaylist, updatePlaylistSongs, deleteSongsPlaylist, updatePlaylistName } from 'redux/slice/playlists';
 
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EditIcon from '@mui/icons-material/Edit';
-
-import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/addPlaylistSongSubscription';
-import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
-import DELETE_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/deletePlaylistSongSubscription';
-import UPDATE_PLAYLIST_NAME_SUBSCRIPTION from 'queries/subscription/updatePlaylistNameSubscription';
 
 import ADD_PLAYLIST from 'queries/mutation/addPlaylist';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import UPDATE_PLAYLIST_NAME from 'queries/mutation/updatePlaylistName';
-import FeedbackMessage from 'models/emuns/feedbackMessage';
+import DELETE_PLAYLIST_SONG from 'queries/mutation/deletePlaylistSong';
 import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
-import useStyles from './genericDialogCreateOrUpdateStyles';
+import Song from 'models/interface/song';
 
 import AddOrUpdatePlaylistSchema from './schamaDialogCreateOrUpdate';
-import Song from 'models/interface/song';
-import DELETE_PLAYLIST_SONG from 'queries/mutation/deletePlaylistSong';
 import SnakbarMessage from './snakbarMessage';
 
-
+import findSongNameById from 'utils/findSongById';
+import useStyles from './genericDialogCreateOrUpdateStyles';
 
 interface Props {
 	titelName: string,
@@ -49,13 +40,19 @@ interface Props {
 	playlistId: string,
 }
 
-const AddPlaylist: React.FC<Props> = (props) => {
-	const dispatch = useDispatch();
+const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
 	const { playlistName, choseSongs, titelName, playlistId } = props
 	const { enqueueSnackbar } = useSnackbar();
+
+	const [openDialogAddPlaylist, setOpenDialogAddPlaylist] = useState<boolean>(false);
+	const [mutationAddSong] = useMutation(ADD_PLAYLIST);
+	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
+	const [mutationDeletePlaylistSong] = useMutation(DELETE_PLAYLIST_SONG);
+	const [mutationUpdatePlaylistName] = useMutation(UPDATE_PLAYLIST_NAME);
+
 	const songs = useAppSelector((state) => state.songs.songs);
-	const [openDialogAddSong, setOpenDialogAddSong] = useState<boolean>(false);
+	const currentUser = useAppSelector((state) => state.currentUser.user?.id);
 
 	const indexOfChoseSongs = useMemo<number[] | undefined>(() => {
 		return choseSongs?.map((choseSong) =>
@@ -67,27 +64,16 @@ const AddPlaylist: React.FC<Props> = (props) => {
 		return songs.map((song) => song.id)
 	}, [songs])
 
-
-	const findSongById = (songId: string) => {
-		const song: Song | undefined = songs.find((song) => song.id === songId);
-		return song?.name;
-	};
-
 	const defaultDialogValues = {
-
 		[AddPlaylistFormFieldName.name]: playlistName,
 		[AddPlaylistFormFieldName.songs]: choseSongs ? indexOfChoseSongs?.map((index) =>
 			songsId[index]) : [],
 	}
 
-	const currentUser = useAppSelector((state) => state.currentUser.user?.id);
-	const [mutationAddSong] = useMutation(ADD_PLAYLIST);
-	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
-	const [mutationDeletePlaylistSong] = useMutation(DELETE_PLAYLIST_SONG);
-	const [mutationUpdatePlaylistName] = useMutation(UPDATE_PLAYLIST_NAME);
-
-	const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-	const checkedIcon = <CheckBoxIcon fontSize="small" />;
+	useEffect(() => {
+		if (!openDialogAddPlaylist)
+			reset({ ...defaultDialogValues })
+	}, [openDialogAddPlaylist])
 
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<AddOrUpdatePlaylistForm>({
 		resolver: zodResolver(AddOrUpdatePlaylistSchema),
@@ -96,18 +82,17 @@ const AddPlaylist: React.FC<Props> = (props) => {
 		},
 	});
 
-	useEffect(() => {
-		if (!openDialogAddSong)
-			reset({ ...defaultDialogValues })
-	}, [openDialogAddSong])
-
 	const handleQueryMessage = (variant: VariantType) =>
 		playlistName ?
 			enqueueSnackbar(SnakbarMessage.UpdatePlaylist, { variant })
 			:
 			enqueueSnackbar(SnakbarMessage.addNewPlaylist, { variant })
 
+	const handleClickOpen = () =>
+		setOpenDialogAddPlaylist(true);
 
+	const handleClose = () =>
+		setOpenDialogAddPlaylist(false);
 
 	//  return new songs that not was in chose
 	const newAddedSongs = (newSongs: string[]) => {
@@ -123,10 +108,8 @@ const AddPlaylist: React.FC<Props> = (props) => {
 		);
 	}
 
-
 	const onSubmit: SubmitHandler<AddOrUpdatePlaylistForm> = (data) => {
 		const { name, songs } = data;
-
 		if (name && !playlistId && !playlistName) {
 			mutationAddSong({
 				variables: {
@@ -134,7 +117,6 @@ const AddPlaylist: React.FC<Props> = (props) => {
 					creatorId: currentUser,
 				},
 			}).then((resAddPlaylist) => {
-
 				songs.map((song) => {
 					mutationAddPlaylistSong({
 						variables: {
@@ -146,121 +128,26 @@ const AddPlaylist: React.FC<Props> = (props) => {
 			})
 				.catch((err) => console.error('Failed to add song: ', err));
 		}
-
 		else {
 			const deleteSongs = oldSongsToDelete(songs)
 			const newSongs = newAddedSongs(songs)
 
-			if (deleteSongs) {
+			if (deleteSongs)
 				deleteSongs.map((song) => {
-					mutationDeletePlaylistSong({
-						variables: {
-							playlistId: playlistId,
-							songId: song.id
-						}
-					})
+					mutationDeletePlaylistSong({ variables: { playlistId: playlistId, songId: song.id } })
 				})
-			}
 
-			if (newSongs) {
+			if (newSongs)
 				newSongs.map((song) => {
-					mutationAddPlaylistSong({
-						variables: {
-							playlistId: playlistId,
-							songId: song
-						}
-					})
+					mutationAddPlaylistSong({ variables: { playlistId: playlistId, songId: song } })
 				})
-			}
-			if (name !== playlistName) {
-				mutationUpdatePlaylistName({
-					variables: {
-						id: playlistId,
-						name: name
-					}
-				})
-			}
 
+			if (name !== playlistName)
+				mutationUpdatePlaylistName({ variables: { id: playlistId, name: name } })
 		}
 		handleQueryMessage('success')
 		handleClose();
 	};
-
-
-	useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
-		onData: (data) => {
-			const playlistsInsertData = data.data.data.listen.relatedNode;
-			const playlistId = playlistsInsertData.id;
-			const playlistName = playlistsInsertData.name;
-			const creatorId = playlistsInsertData.creatorId;
-
-
-			dispatch(
-				addPlaylist({
-					id: playlistId,
-					name: playlistName,
-					creatorId: creatorId,
-					songs: [],
-				})
-			);
-
-		},
-	});
-
-	useSubscription(DELETE_PLAYLIST_SONG_SUBSCRIPTION, {
-		onData: (data) => {
-			const decodedText = window.atob(data.data.data.listen.relatedNodeId as string);
-			const parsedData = JSON.parse(decodedText);
-			const playlistId = parsedData[1]
-			const songId = parsedData[2]
-			dispatch(deleteSongsPlaylist({
-				playlistId: playlistId,
-				songsId: songId
-			}))
-
-		},
-	});
-
-
-
-	useSubscription(ADD_PLAYLIST_SONG_SUBSCRIPTION, {
-		onData: (data) => {
-			const playlistSongInsertData = data.data.data.listen.relatedNode;
-			const playlistId = playlistSongInsertData.playlistId;
-			const songId = playlistSongInsertData.songId;
-
-			dispatch(updatePlaylistSongs({
-				playlistId: playlistId,
-				songsId: songId,
-			}))
-		},
-	});
-
-
-	useSubscription(UPDATE_PLAYLIST_NAME_SUBSCRIPTION, {
-		onData: (data) => {
-			const playlistSongInsertData = data.data.data.listen.relatedNode;
-			const id = playlistSongInsertData.id;
-			const name = playlistSongInsertData.name;
-
-			dispatch(updatePlaylistName({
-				id: id,
-				name: name,
-				creatorId: '',
-				songs: []
-
-			}))
-		},
-	});
-
-
-
-
-	const handleClickOpen = () =>
-		setOpenDialogAddSong(true);
-
-	const handleClose = () =>
-		setOpenDialogAddSong(false);
 
 	return (
 		<>
@@ -276,9 +163,8 @@ const AddPlaylist: React.FC<Props> = (props) => {
 						+ צור פלייליסט חדש
 					</Button>
 			}
-
 			<Dialog
-				open={openDialogAddSong}
+				open={openDialogAddPlaylist}
 				onClose={handleClose}
 				className={classes.dialogContainer}
 			>
@@ -305,7 +191,6 @@ const AddPlaylist: React.FC<Props> = (props) => {
 							name={AddPlaylistFormFieldName.songs}
 							control={control}
 							render={({ field: { onChange, value }, fieldState: { error } }) => (
-
 								<Autocomplete
 									multiple
 									fullWidth
@@ -314,7 +199,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 									freeSolo
 									options={songsId}
 									className={classes.autocomplete}
-									getOptionLabel={(option) => findSongById(option) as string}
+									getOptionLabel={(option) => findSongNameById(songs, option) as string}
 									value={value}
 									onChange={(event, selectedSongs) => {
 										onChange(selectedSongs)
@@ -323,7 +208,7 @@ const AddPlaylist: React.FC<Props> = (props) => {
 										value.map((option, index) => (
 											<Chip
 												variant="outlined"
-												label={findSongById(option)}
+												label={findSongNameById(songs, option)}
 												size="small"
 												{...getTagProps({ index })}
 												className={classes.selectedSong}
@@ -334,12 +219,12 @@ const AddPlaylist: React.FC<Props> = (props) => {
 										<li className={classes.checkBoxSongs} {...props} key={option}>
 											<Checkbox
 												className={classes.checkBoxSongs}
-												icon={icon}
-												checkedIcon={checkedIcon}
+												icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+												checkedIcon={<CheckBoxIcon fontSize="small" />}
 												checked={selected}
 												key={option}
 											/>
-											{findSongById(option)}
+											{findSongNameById(songs, option)}
 										</li>
 									)}
 									renderInput={(params) => (
@@ -358,7 +243,6 @@ const AddPlaylist: React.FC<Props> = (props) => {
 								/>
 							)}
 						/>
-
 						<Button
 							className={classes.submitButton}
 							variant="contained"
@@ -373,4 +257,4 @@ const AddPlaylist: React.FC<Props> = (props) => {
 	);
 };
 
-export default AddPlaylist;
+export default GenericDialogCreateOrUpdate;

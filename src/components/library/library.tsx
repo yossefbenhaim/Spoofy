@@ -4,14 +4,18 @@ import { useAppSelector } from 'redux/store';
 import { useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { setFavorites } from 'redux/slice/favorites';
+
+import GetSubscription from 'hooks/getSubscription';
+import useStyles from './libraryStyles';
+import Favorite from 'models/interface/favorite';
+
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import Navbar from 'components/navbar/navbar';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 
-import useStyles from './libraryStyles';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
-import Favorite from 'models/interface/favorite';
+
 const Library: React.FC = () => {
 	const { classes } = useStyles();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
@@ -25,16 +29,15 @@ const Library: React.FC = () => {
 		},
 		onCompleted: (data) => {
 			const favoritesData: Favorite[] = data.allFavorites.nodes;
-
 			dispatch(setFavorites(favoritesData))
 		}
 	})
-
 
 	useEffect(() => {
 		if (!currentUser?.id)
 			navigation('/');
 	}, [currentUser]);
+	GetSubscription();
 
 	return (
 		<div className={classes.fieldsContainer}>

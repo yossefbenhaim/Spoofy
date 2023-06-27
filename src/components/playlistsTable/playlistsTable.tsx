@@ -1,26 +1,26 @@
 import React from 'react';
+
 import { useDispatch } from 'react-redux';
 import { setPlaylists } from 'redux/slice/playlists';
 import { useQuery } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
-import { Typography } from '@mui/material';
+import { Typography, IconButton } from '@mui/material';
 
 import useStyles from './playlistsTableStyles';
-import GenericTable from 'components/genericTable/genericTable';
+import GenericTable from 'common/genericTable/genericTable';
+import GenericDialogCreateOrUpdate from 'common/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
 
-import GenericDialogCreateOrUpdate from 'components/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
 import Song from 'models/interface/song';
 import Playlist from 'models/interface/playlist';
-import GET_PLAYLIST from 'queries/query/playlists';
 import SongsId from 'models/interface/songId';
-import IconButton from '@mui/material/IconButton';
+
+import GET_PLAYLIST from 'queries/query/playlists';
 
 const PlaylistsTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
 	const playlists = useAppSelector((state) => state.playlist.playlists);
 	const songs = useAppSelector((state) => state.songs.songs);
-
 
 	useQuery(GET_PLAYLIST, {
 		fetchPolicy: 'network-only',
@@ -36,7 +36,6 @@ const PlaylistsTable: React.FC = () => {
 		},
 	});
 
-
 	const findPlaylistSong = (items: SongsId[]) => {
 		const songsIds: SongsId[] = items.map((song) => ({ songId: song.songId }));
 		const filtersongs: Song[] = songs.filter((song) =>
@@ -44,11 +43,8 @@ const PlaylistsTable: React.FC = () => {
 		return filtersongs
 	}
 
-
-
 	return (
 		<>
-
 			<div className={classes.headerContainer}>
 				<Typography className={classes.header}>פלייליסטים</Typography>
 			</div>

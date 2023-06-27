@@ -17,29 +17,19 @@ import Song from 'models/interface/song';
 const MusicPlayer: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
+
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
 	const filterSongs = useAppSelector((state) => state.currentSong.songs);
-	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
-
-
-	useEffect(() => {
-		setCurrentTime(0);
-		setIsPlaying(true);
-	}, [currentSongId])
-
-
 
 	const currentSong = useMemo(() => {
-
 		return filterSongs?.find((song) => song.id === currentSongId);
 	}, [filterSongs, currentSongId]);
 
 	const currentSongDuration: number = currentSong?.duration as number;
-
 
 	const createNewIntervalForSlider = () => {
 		if (!intarval.current) {
@@ -49,13 +39,15 @@ const MusicPlayer: React.FC = () => {
 		}
 	}
 
-
-
-
 	const clearIntervalOfSlider = () => {
 		intarval.current && clearInterval(intarval.current);
 		intarval.current = undefined;
 	}
+
+	useEffect(() => {
+		setCurrentTime(0);
+		setIsPlaying(true);
+	}, [currentSongId])
 
 	useEffect(() => {
 		isPlaying ?
@@ -75,7 +67,6 @@ const MusicPlayer: React.FC = () => {
 
 	const handleSliderChange = (newValue: number) =>
 		setCurrentTime(newValue);
-
 
 	const diractionNextSong = (direction: 1 | -1): void => {
 		const currentSongIndex: number | undefined = filterSongs?.findIndex(
