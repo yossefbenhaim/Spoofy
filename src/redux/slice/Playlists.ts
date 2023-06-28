@@ -21,12 +21,18 @@ const Playlists = createSlice({
         },
         addPlaylist: (state, action: PayloadAction<Playlist>) => {
             // make shore that function added one playlist with same id
-            const findPlaylistId = state.playlists.find(
-                (playlist) => playlist.id === action.payload.id
-            );
-            if (!findPlaylistId) state.playlists?.push(action.payload);
+            console.log('test in side function');
+
+            // const findPlaylistId = state.playlists.find(
+            //     (playlist) => playlist.id === action.payload.id
+            // );
+            // if (!findPlaylistId)
+            state.playlists?.push(action.payload);
         },
-        updatePlaylistName: (state, action: PayloadAction<Playlist>) => {
+        updatePlaylistName: (
+            state,
+            action: PayloadAction<Pick<Playlist, 'id' | 'name'>>
+        ) => {
             const { id, name } = action.payload;
             const currentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === id

@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { setPlaylists } from 'redux/slice/playlists';
-import { useQuery } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
 import { Typography, IconButton } from '@mui/material';
 
@@ -10,37 +8,20 @@ import useStyles from './playlistsTableStyles';
 import GenericTable from 'common/genericTable/genericTable';
 import GenericDialogCreateOrUpdate from 'common/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
 
-import Song from 'models/interface/song';
-import Playlist from 'models/interface/playlist';
 import SongsId from 'models/interface/songId';
 
-import GET_PLAYLIST from 'queries/query/playlists';
-
 const PlaylistsTable: React.FC = () => {
-	const dispatch = useDispatch();
 	const { classes } = useStyles();
 	const playlists = useAppSelector((state) => state.playlist.playlists);
 	const songs = useAppSelector((state) => state.songs.songs);
 
-	useQuery(GET_PLAYLIST, {
-		fetchPolicy: 'network-only',
-		onCompleted: (data) => {
-			const playlistsSong = (data.allPlaylists.nodes as any[]).map<Playlist>((songDB) =>
-			({
-				id: songDB.id,
-				name: songDB.name,
-				creatorId: songDB.creatorId,
-				songs: songDB.playlistsongsByPlaylistId.nodes,
-			}));
-			dispatch(setPlaylists(playlistsSong));
-		},
-	});
 
 	const findPlaylistSong = (items: SongsId[]) => {
 		const songsIds: SongsId[] = items.map((song) => ({ songId: song.songId }));
-		const filtersongs: Song[] = songs.filter((song) =>
-			songsIds.some((songId) => song.id === songId.songId))
-		return filtersongs
+		const filteredSongs = songs.filter((song) =>
+			songsIds.some((songId) => song.id === songId.songId));
+
+		return filteredSongs;
 	}
 
 	return (
@@ -70,7 +51,6 @@ const PlaylistsTable: React.FC = () => {
 				}
 			</div>
 			<div className={classes.addSongBtnContainer}>
-
 				<GenericDialogCreateOrUpdate
 					choseSongs={[]}
 					playlistName=''
@@ -78,6 +58,12 @@ const PlaylistsTable: React.FC = () => {
 					playlistId=''
 				/>
 			</div>
+			<GenericDialogCreateOrUpdate
+				choseSongs={[]}
+				playlistName=''
+				titelName='צור פלייליסט'
+				playlistId=''
+			/>
 		</>
 	)
 }

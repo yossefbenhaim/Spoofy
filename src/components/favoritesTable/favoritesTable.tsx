@@ -13,10 +13,11 @@ const FavoritesTable: React.FC = () => {
 	const songs = useAppSelector((state) => state.songs.songs);
 	const favorites = useAppSelector((state) => state.favorites.favorites);
 
-	const filterFavoritesSong = useMemo<Song[]>(() => {
-		return songs.filter((song) =>
-			favorites?.some((favorite) => song.id === favorite.songId))
-	}, [favorites, songs])
+	const filterFavoritesSong = useMemo<Song[]>(() => (
+		songs.filter((song) =>
+			favorites?.some((favorite) => song.id === favorite.songId)
+		)
+	), [favorites, songs])
 
 	return (
 		<div className={classes.fieldContainer}>
@@ -24,6 +25,8 @@ const FavoritesTable: React.FC = () => {
 				<Typography className={classes.header}>מועדפים</Typography>
 			</div>
 			<GenericTable tableId={TablesIds.favorits} genericSongs={filterFavoritesSong} />
+			<div className={classes.spaceDivBettwenSlider}>
+			</div>
 		</div>
 	);
 };

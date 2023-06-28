@@ -109,6 +109,7 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 	}
 
 	const onSubmit: SubmitHandler<AddOrUpdatePlaylistForm> = (data) => {
+
 		const { name, songs } = data;
 		if (name && !playlistId && !playlistName) {
 			mutationAddSong({
@@ -117,10 +118,11 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 					creatorId: currentUser,
 				},
 			}).then((resAddPlaylist) => {
+				const newPlaylistId = resAddPlaylist.data.createPlaylist.playlist.id
 				songs.map((song) => {
 					mutationAddPlaylistSong({
 						variables: {
-							playlistId: resAddPlaylist.data.createPlaylist.playlist.id,
+							playlistId: newPlaylistId,
 							songId: song,
 						},
 					})
@@ -129,6 +131,7 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 				.catch((err) => console.error('Failed to add song: ', err));
 		}
 		else {
+
 			const deleteSongs = oldSongsToDelete(songs)
 			const newSongs = newAddedSongs(songs)
 

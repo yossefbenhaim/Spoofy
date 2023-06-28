@@ -28,6 +28,9 @@ const GenericTable: React.FC<Props> = (props) => {
 	const currentSongId = useAppSelector((state) => state.currentSong.songId);
 	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
 	const songs = useAppSelector((state) => state.songs.songs);
+	const selectionModel = currentTableId === tableId ? currentSongId : undefined
+
+
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
 		if (rowSongId === currentSongId && currentTableId === tableId)
@@ -102,7 +105,7 @@ const GenericTable: React.FC<Props> = (props) => {
 	return (
 
 		<DataGridPro
-			className={cx(classes.dataGride, { [classes.notCurrentDataGride]: tableId != currentTableId })}
+			className={classes.dataGride}
 			disableColumnMenu
 			rows={rows || []}
 			columns={columns}
@@ -115,7 +118,8 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnResize
 			disableColumnFilter
 			disableColumnPinning
-			rowSelectionModel={currentSongId}
+			// rowSelectionModel={currentSongId}
+			rowSelectionModel={selectionModel}
 			onRowClick={() => {
 				dispatch(setCurrentTableId(tableId))
 				dispatch(setFilterSongs(genericSongs))

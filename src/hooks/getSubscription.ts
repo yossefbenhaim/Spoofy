@@ -12,7 +12,7 @@ import UPDATE_PLAYLIST_NAME_SUBSCRIPTION from 'queries/subscription/updatePlayli
 import { useSubscription } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
-const GetSubscription = () => {
+const getSubscription = () => {
     const dispatch = useDispatch();
 
     useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
@@ -21,6 +21,8 @@ const GetSubscription = () => {
             const playlistId = playlistsInsertData.id;
             const playlistName = playlistsInsertData.name;
             const creatorId = playlistsInsertData.creatorId;
+
+            console.log('test');
 
             dispatch(
                 addPlaylist({
@@ -75,12 +77,10 @@ const GetSubscription = () => {
                 updatePlaylistName({
                     id: id,
                     name: name,
-                    creatorId: '',
-                    songs: [],
                 })
             );
         },
     });
 };
 
-export default GetSubscription;
+export default getSubscription;

@@ -25,7 +25,7 @@ const useStyles = makeStyles()({
         fontWeight: 'bold',
         marginTop: '-5px',
     },
-    addSongBtnContainer: {
+    spaceDivBettwenSlider: {
         height: '8%',
         marginBottom: '1%',
         marginTop: '1%',
