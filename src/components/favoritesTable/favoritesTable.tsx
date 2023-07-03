@@ -10,21 +10,14 @@ import GenericTable from 'common/genericTable/genericTable';
 
 const FavoritesTable: React.FC = () => {
 	const { classes } = useStyles();
-	const songs = useAppSelector((state) => state.songs.songs);
 	const favorites = useAppSelector((state) => state.favorites.favorites);
-
-	const filterFavoritesSong = useMemo<Song[]>(() => (
-		songs.filter((song) =>
-			favorites?.some((favorite) => song.id === favorite.songId)
-		)
-	), [favorites, songs])
 
 	return (
 		<div className={classes.fieldContainer}>
 			<div className={classes.headerContainer}>
 				<Typography className={classes.header}>מועדפים</Typography>
 			</div>
-			<GenericTable tableId={TablesIds.favorits} genericSongs={filterFavoritesSong} />
+			<GenericTable tableId={TablesIds.favorits} genericSongs={favorites?.map((favorite) => favorite.songId)} />
 			<div className={classes.spaceDivBettwenSlider}>
 			</div>
 		</div>

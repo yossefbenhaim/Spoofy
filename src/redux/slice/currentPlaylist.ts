@@ -15,8 +15,8 @@ const initialState: currentSongSlice = {
     songs: [],
 };
 
-const CurrentSongId = createSlice({
-    name: SliceName.currentSong,
+const CurrentPlaylist = createSlice({
+    name: SliceName.currentPlaylist,
     initialState,
     reducers: {
         setCurrentSongId(state, action: PayloadAction<string>) {
@@ -29,10 +29,10 @@ const CurrentSongId = createSlice({
             state.songId = undefined;
             state.tableId = undefined;
         },
-        setFilterSongs: (state, action: PayloadAction<Song[]>) => {
+        setSongs: (state, action: PayloadAction<Song[]>) => {
             state.songs = action.payload;
         },
-        deleteSongfromFilterSong: (state, action: PayloadAction<string>) => {
+        deleteSong: (state, action: PayloadAction<string>) => {
             state.songs = state.songs.filter(
                 (song) => song.id !== action.payload
             );
@@ -44,7 +44,7 @@ export const {
     setCurrentSongId,
     resetCurrentSongId,
     setCurrentTableId,
-    setFilterSongs,
-    deleteSongfromFilterSong,
-} = CurrentSongId.actions;
-export default CurrentSongId.reducer;
+    setSongs,
+    deleteSong,
+} = CurrentPlaylist.actions;
+export default CurrentPlaylist.reducer;

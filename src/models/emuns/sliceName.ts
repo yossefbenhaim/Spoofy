@@ -1,6 +1,6 @@
 enum SliceName {
     currentUser = 'currentUser',
-    currentSong = 'currentSong',
+    currentPlaylist = 'currentPlaylist',
     songs = 'songs',
     favorites = 'favorites',
     playlist = 'playlist',

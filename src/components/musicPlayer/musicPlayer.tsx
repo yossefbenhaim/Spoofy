@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 import { Slide, Slider, IconButton, Typography } from '@mui/material/';
-import { setCurrentSongId } from 'redux/slice/currentSongId';
+import { setCurrentSongId } from 'redux/slice/currentPlaylist';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 
@@ -22,8 +22,8 @@ const MusicPlayer: React.FC = () => {
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
-	const currentSongId = useAppSelector((state) => state.currentSong.songId);
-	const filterSongs = useAppSelector((state) => state.currentSong.songs);
+	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
+	const filterSongs = useAppSelector((state) => state.currentPlaylist.songs);
 
 	const currentSong = useMemo(() => {
 		return filterSongs?.find((song) => song.id === currentSongId);

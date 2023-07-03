@@ -18,7 +18,7 @@ const SongsTable: React.FC = () => {
 			<div className={classes.headerContainer}>
 				<Typography className={classes.header}>רשימת השירים</Typography>
 			</div>
-			<GenericTable tableId={TablesIds.songsIds} genericSongs={songs} />
+			<GenericTable tableId={TablesIds.songsIds} genericSongs={songs.map((song) => song.id)} />
 			<div className={classes.addSongBtnContainer}>
 				<AddSong />
 			</div>

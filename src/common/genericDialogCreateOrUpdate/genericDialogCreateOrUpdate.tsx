@@ -32,20 +32,19 @@ import SnakbarMessage from './snakbarMessage';
 
 import findSongNameById from 'utils/findSongById';
 import useStyles from './genericDialogCreateOrUpdateStyles';
+import Playlist from 'models/interface/playlist';
 
 interface Props {
-	titelName: string,
-	playlistName: string,
-	choseSongs: Song[] | undefined,
-	playlistId: string,
+	openDialogAddPlaylist: boolean,
+	currentPlaylist: Playlist | undefined,
+	handleClose: () => void,
 }
 
 const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
-	const { playlistName, choseSongs, titelName, playlistId } = props
-	const { enqueueSnackbar } = useSnackbar();
+	const { currentPlaylist, handleClose, openDialogAddPlaylist } = props
 
-	const [openDialogAddPlaylist, setOpenDialogAddPlaylist] = useState<boolean>(false);
+	const { enqueueSnackbar } = useSnackbar();
 	const [mutationAddSong] = useMutation(ADD_PLAYLIST);
 	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
 	const [mutationDeletePlaylistSong] = useMutation(DELETE_PLAYLIST_SONG);
@@ -54,71 +53,65 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 	const songs = useAppSelector((state) => state.songs.songs);
 	const currentUser = useAppSelector((state) => state.currentUser.user?.id);
 
-	const indexOfChoseSongs = useMemo<number[] | undefined>(() => {
-		return choseSongs?.map((choseSong) =>
-			songs.findIndex((song) => song.id === choseSong.id)
-		)
-	}, [choseSongs])
-
-	const songsId = useMemo<string[]>(() => {
-		return songs.map((song) => song.id)
-	}, [songs])
-
 	const defaultDialogValues = {
-		[AddPlaylistFormFieldName.name]: playlistName,
-		[AddPlaylistFormFieldName.songs]: choseSongs ? indexOfChoseSongs?.map((index) =>
-			songsId[index]) : [],
+		name: currentPlaylist?.name,
+		songs: currentPlaylist?.songs,
 	}
 
-	useEffect(() => {
-		if (!openDialogAddPlaylist)
-			reset({ ...defaultDialogValues })
-	}, [openDialogAddPlaylist])
 
-	const { handleSubmit, formState: { errors }, reset, control } = useForm<AddOrUpdatePlaylistForm>({
+
+	const { handleSubmit, reset, setValue, getValues, control, formState: { errors } } = useForm<AddOrUpdatePlaylistForm>({
 		resolver: zodResolver(AddOrUpdatePlaylistSchema),
 		defaultValues: {
-			...defaultDialogValues
+			name: defaultDialogValues.name,
+			songs: defaultDialogValues.songs
 		},
+
 	});
+	console.log(defaultDialogValues);
+
+	useEffect(() => {
+		// if (!openDialogAddPlaylist) {
+		// 	reset({ name: '', songs: [] })
+		// }
+		reset(defaultDialogValues)
+		// currentPlaylist ? reset(defaultDialogValues) : reset({ name: '', songs: [] })
+	}, [openDialogAddPlaylist, currentPlaylist])
+
 
 	const handleQueryMessage = (variant: VariantType) =>
-		playlistName ?
+		currentPlaylist?.name ?
 			enqueueSnackbar(SnakbarMessage.UpdatePlaylist, { variant })
 			:
 			enqueueSnackbar(SnakbarMessage.addNewPlaylist, { variant })
 
-	const handleClickOpen = () =>
-		setOpenDialogAddPlaylist(true);
 
-	const handleClose = () =>
-		setOpenDialogAddPlaylist(false);
 
 	//  return new songs that not was in chose
 	const newAddedSongs = (newSongs: string[]) => {
 		return newSongs.filter((newSong) =>
-			!choseSongs?.some((song) => song.id === newSong)
+			!currentPlaylist?.songs?.some((song) => song === newSong)
 		);
 	}
 
 	//  return delete songs
 	const oldSongsToDelete = (newSongs: string[]) => {
-		return choseSongs?.filter((song) =>
-			!newSongs.some((newSong) => song.id === newSong)
+		return currentPlaylist?.songs?.filter((song) =>
+			!newSongs.some((newSong) => song === newSong)
 		);
 	}
-
 	const onSubmit: SubmitHandler<AddOrUpdatePlaylistForm> = (data) => {
 
 		const { name, songs } = data;
-		if (name && !playlistId && !playlistName) {
+
+		if (name) {
 			mutationAddSong({
 				variables: {
 					name: name,
 					creatorId: currentUser,
 				},
-			}).then((resAddPlaylist) => {
-				const newPlaylistId = resAddPlaylist.data.createPlaylist.playlist.id
+			}).then((res) => {
+				const newPlaylistId = res.data.createPlaylist.playlist.id
 				songs.map((song) => {
 					mutationAddPlaylistSong({
 						variables: {
@@ -130,50 +123,38 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 			})
 				.catch((err) => console.error('Failed to add song: ', err));
 		}
-		else {
+		// else {
 
-			const deleteSongs = oldSongsToDelete(songs)
-			const newSongs = newAddedSongs(songs)
+		// 	const deleteSongs = oldSongsToDelete(songs)
+		// 	const newSongs = newAddedSongs(songs)
 
-			if (deleteSongs)
-				deleteSongs.map((song) => {
-					mutationDeletePlaylistSong({ variables: { playlistId: playlistId, songId: song.id } })
-				})
+		// 	if (deleteSongs)
+		// 		deleteSongs.map((song) => {
+		// 			mutationDeletePlaylistSong({ variables: { playlistId: currentPlaylist?.id, songId: song } })
+		// 		})
 
-			if (newSongs)
-				newSongs.map((song) => {
-					mutationAddPlaylistSong({ variables: { playlistId: playlistId, songId: song } })
-				})
+		// 	if (newSongs)
+		// 		newSongs.map((song) => {
+		// 			mutationAddPlaylistSong({ variables: { playlistId: currentPlaylist?.id, songId: song } })
+		// 		})
 
-			if (name !== playlistName)
-				mutationUpdatePlaylistName({ variables: { id: playlistId, name: name } })
-		}
+		// 	if (name !== currentPlaylist?.name)
+		// 		mutationUpdatePlaylistName({ variables: { id: currentPlaylist?.id, name: name } })
+		// }
 		handleQueryMessage('success')
 		handleClose();
 	};
 
 	return (
 		<>
-			{
-				Boolean(playlistId) ?
-					<EditIcon onClick={handleClickOpen} />
-					:
-					<Button
-						variant="contained"
-						onClick={handleClickOpen}
-						className={classes.addSongBtn}
-					>
-						+ צור פלייליסט חדש
-					</Button>
-			}
 			<Dialog
 				open={openDialogAddPlaylist}
-				onClose={handleClose}
+				onClose={() => { handleClose() }}
 				className={classes.dialogContainer}
 			>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className={classes.dialog}>
-						<Typography className={classes.header}>{titelName}</Typography>
+						<Typography className={classes.header}>{'titelName'}</Typography>
 						<Controller
 							name={AddPlaylistFormFieldName.name}
 							control={control}
@@ -199,14 +180,12 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 									fullWidth
 									disableCloseOnSelect
 									openOnFocus
-									freeSolo
-									options={songsId}
+									filterSelectedOptions
+									options={songs.map((song) => song.id)}
 									className={classes.autocomplete}
 									getOptionLabel={(option) => findSongNameById(songs, option) as string}
 									value={value}
-									onChange={(event, selectedSongs) => {
-										onChange(selectedSongs)
-									}}
+
 									renderTags={(value, getTagProps) =>
 										value.map((option, index) => (
 											<Chip
@@ -243,6 +222,9 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 											)}
 										/>
 									)}
+									onChange={(_, selectedSongs) =>
+										onChange(selectedSongs)
+									}
 								/>
 							)}
 						/>

@@ -36,7 +36,9 @@ const getUseQuery = () => {
                 id: songDB.id,
                 name: songDB.name,
                 creatorId: songDB.creatorId,
-                songs: songDB.playlistsongsByPlaylistId.nodes,
+                songs: songDB.playlistsongsByPlaylistId.nodes.map(
+                    (song: any) => song.songId
+                ),
             }));
             dispatch(setPlaylists(playlistsSong));
         },

@@ -44,8 +44,7 @@ const Playlists = createSlice({
             const CurrentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );
-            if (CurrentPlaylist)
-                CurrentPlaylist.songs.push({ songId: songsId });
+            if (CurrentPlaylist) CurrentPlaylist.songs.push(songsId);
         },
         deleteSongsPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
@@ -55,7 +54,7 @@ const Playlists = createSlice({
 
             if (CurrentPlaylist) {
                 const index = CurrentPlaylist.songs.findIndex(
-                    (song) => song.songId === songsId
+                    (song) => song === songsId
                 );
                 if (index !== -1) CurrentPlaylist.songs.splice(index, 1);
             }

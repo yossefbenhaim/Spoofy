@@ -3,7 +3,7 @@ interface Playlist {
     id: string;
     name: string;
     creatorId: string;
-    songs: SongsId[];
+    songs: string[];
 }
 
 export default Playlist;

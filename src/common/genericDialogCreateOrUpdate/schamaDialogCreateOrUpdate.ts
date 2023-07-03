@@ -5,9 +5,6 @@ import ErrorMessageDialogAddPlaylist from './errorMessage';
 const AddOrUpdatePlaylistSchema = z.object({
     [AddPlaylistFormFieldName.name]: z
         .string()
-        .nonempty({
-            message: ErrorMessageDialogAddPlaylist.requiredError,
-        })
         .min(2, { message: ErrorMessageDialogAddPlaylist.playlistNameMin })
         .max(50, ErrorMessageDialogAddPlaylist.playlistNameMax),
     [AddPlaylistFormFieldName.songs]: z.array(z.string()).nonempty({

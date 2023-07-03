@@ -22,8 +22,6 @@ const getSubscription = () => {
             const playlistName = playlistsInsertData.name;
             const creatorId = playlistsInsertData.creatorId;
 
-            console.log('test');
-
             dispatch(
                 addPlaylist({
                     id: playlistId,

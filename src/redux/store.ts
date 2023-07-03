@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 
 import songsReducer from './slice/songs';
-import currentSongReducer from './slice/currentSongId';
+import currentSongReducer from './slice/currentPlaylist';
 import currentUserReducer from './slice/currentUser';
 import favoritesSongReduser from './slice/favorites';
 import PlaylistsReduser from './slice/playlists';
@@ -25,7 +25,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     [SliceName.currentUser]: currentUserReducer,
-    [SliceName.currentSong]: currentSongReducer,
+    [SliceName.currentPlaylist]: currentSongReducer,
     [SliceName.favorites]: favoritesSongReduser,
     [SliceName.songs]: songsReducer,
     [SliceName.playlist]: PlaylistsReduser,

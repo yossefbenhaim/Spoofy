@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
 import { VariantType, useSnackbar } from 'notistack';
-import { deleteSongfromFilterSong } from 'redux/slice/currentSongId';
+import { deleteSong } from 'redux/slice/currentPlaylist';
 
 import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
@@ -66,7 +66,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			animref.current && animref.current.stop();
 			heandlDeleteFavorite();
 			dispatch(deleteFavoriteFrom({ songId: rowSongId }));
-			dispatch(deleteSongfromFilterSong(rowSongId))
+			dispatch(deleteSong(rowSongId))
 		} else {
 			animref.current && animref.current.play();
 			setTimeout(() => {

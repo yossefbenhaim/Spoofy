@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
-import { setFilterSongs } from 'redux/slice/currentSongId';
+import { setSongs } from 'redux/slice/currentPlaylist';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
-import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentSongId';
+import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentPlaylist';
 
 import MenuRow from 'components/menuRow/menuRow';
 import IconFavoriteSong from 'components/lottie/iconFavoriteSong/iconFavoriteSong';
@@ -14,23 +14,27 @@ import Song from 'models/interface/song';
 
 import useStyles from './genericTableStyles';
 import formatDuration from 'utils/formatDuration';
+import { generatePath } from 'react-router';
 
 interface Props {
-	genericSongs: Song[];
+	genericSongs: string[];
 	tableId: string;
 }
 
 const GenericTable: React.FC<Props> = (props) => {
 	const dispatch = useDispatch();
-	const { classes, cx } = useStyles();
+	const { classes } = useStyles();
 	const { genericSongs, tableId } = props
 
-	const currentSongId = useAppSelector((state) => state.currentSong.songId);
-	const currentTableId = useAppSelector((state) => state.currentSong.tableId);
+	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
+	const currentTableId = useAppSelector((state) => state.currentPlaylist.tableId);
 	const songs = useAppSelector((state) => state.songs.songs);
 	const selectionModel = currentTableId === tableId ? currentSongId : undefined
 
-
+	const filteredSongs = useMemo(() => {
+		return songs.filter((song) =>
+			genericSongs.some((songTable) => song.id === songTable))
+	}, [genericSongs])
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
 		if (rowSongId === currentSongId && currentTableId === tableId)
@@ -42,7 +46,7 @@ const GenericTable: React.FC<Props> = (props) => {
 		}
 	}
 
-	const rows = useMemo(() => genericSongs.map((item) => ({
+	const rows = useMemo(() => filteredSongs.map((item) => ({
 		id: item.id,
 		song: item.name,
 		duration: formatDuration(item.duration),
@@ -122,7 +126,7 @@ const GenericTable: React.FC<Props> = (props) => {
 			rowSelectionModel={selectionModel}
 			onRowClick={() => {
 				dispatch(setCurrentTableId(tableId))
-				dispatch(setFilterSongs(genericSongs))
+				dispatch(setSongs(filteredSongs))
 			}}
 			onRowSelectionModelChange={(row) => {
 				if (row[0] !== undefined)

@@ -3,11 +3,11 @@ import Favorite from 'models/interface/favorite';
 import SliceName from 'models/emuns/sliceName';
 
 interface currentFavoritesSlice {
-    favorites: Favorite[] | undefined;
+    favorites: Favorite[];
 }
 
 const initialState: currentFavoritesSlice = {
-    favorites: undefined,
+    favorites: [],
 };
 
 const FavoritesSong = createSlice({
