@@ -33,6 +33,7 @@ import SnakbarMessage from './snakbarMessage';
 import findSongNameById from 'utils/findSongById';
 import useStyles from './genericDialogCreateOrUpdateStyles';
 import Playlist from 'models/interface/playlist';
+import { difference } from 'lodash';
 
 interface Props {
 	openDialogAddPlaylist: boolean,
@@ -85,26 +86,11 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 			:
 			enqueueSnackbar(SnakbarMessage.addNewPlaylist, { variant })
 
-
-
-	//  return new songs that not was in chose
-	const newAddedSongs = (newSongs: string[]) => {
-		return newSongs.filter((newSong) =>
-			!currentPlaylist?.songs?.some((song) => song === newSong)
-		);
-	}
-
-	//  return delete songs
-	const oldSongsToDelete = (newSongs: string[]) => {
-		return currentPlaylist?.songs?.filter((song) =>
-			!newSongs.some((newSong) => song === newSong)
-		);
-	}
 	const onSubmit: SubmitHandler<AddOrUpdatePlaylistForm> = (data) => {
 
 		const { name, songs } = data;
 
-		if (name) {
+		if (currentPlaylist === undefined) {
 			mutationAddSong({
 				variables: {
 					name: name,
@@ -123,24 +109,26 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 			})
 				.catch((err) => console.error('Failed to add song: ', err));
 		}
-		// else {
 
-		// 	const deleteSongs = oldSongsToDelete(songs)
-		// 	const newSongs = newAddedSongs(songs)
+		else {
 
-		// 	if (deleteSongs)
-		// 		deleteSongs.map((song) => {
-		// 			mutationDeletePlaylistSong({ variables: { playlistId: currentPlaylist?.id, songId: song } })
-		// 		})
+			const deleteSongs = difference(defaultDialogValues.songs, songs)
+			const newSongs = difference(songs, defaultDialogValues.songs as string[])
 
-		// 	if (newSongs)
-		// 		newSongs.map((song) => {
-		// 			mutationAddPlaylistSong({ variables: { playlistId: currentPlaylist?.id, songId: song } })
-		// 		})
+			if (deleteSongs)
+				deleteSongs.map((song) => {
+					mutationDeletePlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
+				})
 
-		// 	if (name !== currentPlaylist?.name)
-		// 		mutationUpdatePlaylistName({ variables: { id: currentPlaylist?.id, name: name } })
-		// }
+			if (newSongs)
+				newSongs.map((song) => {
+					mutationAddPlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
+				})
+
+			if (name !== currentPlaylist?.name)
+				mutationUpdatePlaylistName({ variables: { id: currentPlaylist.id, name: name } })
+		}
+
 		handleQueryMessage('success')
 		handleClose();
 	};
