@@ -20,13 +20,6 @@ const Playlists = createSlice({
             state.playlists = action.payload;
         },
         addPlaylist: (state, action: PayloadAction<Playlist>) => {
-            // make shore that function added one playlist with same id
-            console.log('test in side function');
-
-            // const findPlaylistId = state.playlists.find(
-            //     (playlist) => playlist.id === action.payload.id
-            // );
-            // if (!findPlaylistId)
             state.playlists?.push(action.payload);
         },
         updatePlaylistName: (
@@ -41,10 +34,11 @@ const Playlists = createSlice({
         },
         updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
-            const CurrentPlaylist: Playlist | undefined = state.playlists.find(
+            const currentPlaylist = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );
-            if (CurrentPlaylist) CurrentPlaylist.songs.push(songsId);
+
+            if (currentPlaylist) currentPlaylist.songs.push(songsId);
         },
         deleteSongsPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;

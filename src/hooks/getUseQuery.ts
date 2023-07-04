@@ -10,7 +10,6 @@ import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
 import { useAppSelector } from 'redux/store';
 import Favorite from 'models/interface/favorite';
 import { setFavorites } from 'redux/slice/favorites';
-import GET_ARTIST from 'queries/query/artists';
 
 const getUseQuery = () => {
     const dispatch = useDispatch();

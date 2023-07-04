@@ -69,7 +69,7 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 		},
 
 	});
-	console.log(defaultDialogValues);
+
 
 	useEffect(() => {
 		// if (!openDialogAddPlaylist) {
@@ -115,15 +115,22 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 			const deleteSongs = difference(defaultDialogValues.songs, songs)
 			const newSongs = difference(songs, defaultDialogValues.songs as string[])
 
-			if (deleteSongs)
-				deleteSongs.map((song) => {
-					mutationDeletePlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
-				})
 
-			if (newSongs)
-				newSongs.map((song) => {
-					mutationAddPlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
-				})
+
+
+			if (deleteSongs.length > 0)
+				console.log('delete', deleteSongs);
+
+			deleteSongs.map((song) => {
+				mutationDeletePlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
+			})
+
+			if (newSongs.length > 0)
+				console.log("new", newSongs);
+
+			newSongs.map((song) => {
+				mutationAddPlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
+			})
 
 			if (name !== currentPlaylist?.name)
 				mutationUpdatePlaylistName({ variables: { id: currentPlaylist.id, name: name } })

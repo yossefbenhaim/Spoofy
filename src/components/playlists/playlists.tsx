@@ -1,19 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
-import EditIcon from '@mui/icons-material/Edit';
 import { useAppSelector } from 'redux/store';
-import { Typography, IconButton, Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 
 import useStyles from './playlistsTableStyles';
-import GenericTable from 'common/genericTable/genericTable';
 import GenericDialogCreateOrUpdate from 'common/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
-import { setCurrentTableId } from 'redux/slice/currentPlaylist';
-import SongsId from 'models/interface/songId';
-import Song from 'models/interface/song';
 import Playlist from 'models/interface/playlist';
-import { useDispatch } from 'react-redux';
-import PlaylistTable from './playlistTable';
-import playlists from 'redux/slice/playlists';
+import PlaylistsTables from './playlistsTables';
 
 enum VariablesDialogAddPlaylist {
 	create = 'צור פלייליסט',
@@ -36,7 +29,6 @@ const Playlists: React.FC = () => {
 		setOpenDialogAddPlaylist(true);
 	}
 
-	console.log('current', currentPlaylist);
 
 	const handleClose = () => setOpenDialogAddPlaylist(false);
 
@@ -46,7 +38,7 @@ const Playlists: React.FC = () => {
 				<Typography className={classes.header}>פלייליסטים</Typography>
 			</div>
 			<div className={classes.fieldsContainer}>
-				<PlaylistTable playlists={playlists} handleClickOpen={handleClickOpen} />
+				<PlaylistsTables playlists={playlists} handleClickOpen={handleClickOpen} />
 			</div>
 			<div className={classes.addSongBtnContainer}>
 				<Button
