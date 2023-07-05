@@ -4,8 +4,8 @@ import SliceName from 'models/emuns/sliceName';
 import Song from 'models/interface/song';
 
 interface currentSongSlice {
-    songId?: string | undefined;
-    tableId?: string | undefined;
+    songId: string | undefined;
+    tableId: string | undefined;
     songs: Song[];
 }
 

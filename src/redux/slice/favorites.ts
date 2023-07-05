@@ -18,10 +18,10 @@ const FavoritesSong = createSlice({
             state.favorites = action.payload;
         },
         addFavorite: (state, action: PayloadAction<Favorite>) => {
-            state.favorites?.push(action.payload);
+            state.favorites.push(action.payload);
         },
         deleteFavoriteFrom: (state, action: PayloadAction<Favorite>) => {
-            state.favorites = state.favorites?.filter(
+            state.favorites = state.favorites.filter(
                 (favorite) => favorite.songId !== action.payload.songId
             );
         },

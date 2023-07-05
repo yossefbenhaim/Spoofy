@@ -17,14 +17,14 @@ import formatDuration from 'utils/formatDuration';
 import { generatePath } from 'react-router';
 
 interface Props {
-	genericSongs: string[];
+	songsId: string[];
 	tableId: string;
 }
 
 const GenericTable: React.FC<Props> = (props) => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
-	const { genericSongs, tableId } = props
+	const { songsId, tableId } = props
 
 	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 	const currentTableId = useAppSelector((state) => state.currentPlaylist.tableId);
@@ -33,8 +33,8 @@ const GenericTable: React.FC<Props> = (props) => {
 
 	const filteredSongs = useMemo(() => {
 		return songs.filter((song) =>
-			genericSongs.some((songTable) => song.id === songTable))
-	}, [genericSongs])
+			songsId.some((songTable) => song.id === songTable))
+	}, [songsId])
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
 		if (rowSongId === currentSongId && currentTableId === tableId)
@@ -51,7 +51,7 @@ const GenericTable: React.FC<Props> = (props) => {
 		song: item.name,
 		duration: formatDuration(item.duration),
 		artist: item.artist,
-	})), [genericSongs]);
+	})), [songsId]);
 
 	const settingRowGlobal: Partial<GridColDef> = {
 		sortable: false,
@@ -111,7 +111,7 @@ const GenericTable: React.FC<Props> = (props) => {
 		<DataGridPro
 			className={classes.dataGride}
 			disableColumnMenu
-			rows={rows || []}
+			rows={rows}
 			columns={columns}
 			hideFooter
 			hideFooterRowCount
@@ -122,7 +122,6 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnResize
 			disableColumnFilter
 			disableColumnPinning
-			// rowSelectionModel={currentSongId}
 			rowSelectionModel={selectionModel}
 			onRowClick={() => {
 				dispatch(setCurrentTableId(tableId))

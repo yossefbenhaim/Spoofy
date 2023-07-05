@@ -3,7 +3,8 @@ enum SliceName {
     currentPlaylist = 'currentPlaylist',
     songs = 'songs',
     favorites = 'favorites',
-    playlist = 'playlist',
+    playlists = 'playlists',
+    users = 'users',
 }
 
 export default SliceName;

@@ -26,7 +26,7 @@ const MusicPlayer: React.FC = () => {
 	const filterSongs = useAppSelector((state) => state.currentPlaylist.songs);
 
 	const currentSong = useMemo(() => {
-		return filterSongs?.find((song) => song.id === currentSongId);
+		return filterSongs.find((song) => song.id === currentSongId);
 	}, [filterSongs, currentSongId]);
 
 	const currentSongDuration: number = currentSong?.duration as number;
@@ -69,10 +69,10 @@ const MusicPlayer: React.FC = () => {
 		setCurrentTime(newValue);
 
 	const diractionNextSong = (direction: 1 | -1): void => {
-		const currentSongIndex: number | undefined = filterSongs?.findIndex(
+		const currentSongIndex: number | undefined = filterSongs.findIndex(
 			(song) => song.id === currentSongId
 		);
-		if (currentSongIndex === filterSongs?.length - 1 || currentSongIndex === 0 && direction == -1) {
+		if (currentSongIndex === filterSongs.length - 1 || currentSongIndex === 0 && direction == -1) {
 			const firstSong: Song = filterSongs[0];
 			dispatch(setCurrentSongId(firstSong.id));
 		} else {

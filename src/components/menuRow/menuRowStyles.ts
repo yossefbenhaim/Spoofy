@@ -37,6 +37,9 @@ const useStyles = makeStyles()({
         '& .MuiPaper-root': {
             marginRight: '0%',
             width: '10%',
+            backgroundColor: 'gray',
+            direction: 'rtl',
+
             '::-webkit-scrollbar': {
                 backgroundColor: '#7ead7b78',
                 width: '10px',
@@ -45,6 +48,7 @@ const useStyles = makeStyles()({
             },
             '::-webkit-scrollbar-track': {
                 background: 'rgb(142 146 143)',
+                borderRadius: '10px',
             },
             '::-webkit-scrollbar-thumb': {
                 borderRadius: '10px',

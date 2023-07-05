@@ -15,17 +15,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@apollo/client';
 import { AddOrUpdatePlaylistForm } from './schamaDialogCreateOrUpdate';
 import { useAppSelector } from 'redux/store';
+import { difference } from 'lodash';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import EditIcon from '@mui/icons-material/Edit';
 
 import ADD_PLAYLIST from 'queries/mutation/addPlaylist';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import UPDATE_PLAYLIST_NAME from 'queries/mutation/updatePlaylistName';
 import DELETE_PLAYLIST_SONG from 'queries/mutation/deletePlaylistSong';
 import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
-import Song from 'models/interface/song';
 
 import AddOrUpdatePlaylistSchema from './schamaDialogCreateOrUpdate';
 import SnakbarMessage from './snakbarMessage';
@@ -33,8 +32,7 @@ import SnakbarMessage from './snakbarMessage';
 import findSongNameById from 'utils/findSongById';
 import useStyles from './genericDialogCreateOrUpdateStyles';
 import Playlist from 'models/interface/playlist';
-import { difference } from 'lodash';
-
+import useStylesCommon from 'common/comonStyles';
 interface Props {
 	openDialogAddPlaylist: boolean,
 	currentPlaylist: Playlist | undefined,
@@ -43,16 +41,19 @@ interface Props {
 
 const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
+	const { classes: classesCommon } = useStylesCommon();
+
 	const { currentPlaylist, handleClose, openDialogAddPlaylist } = props
 
 	const { enqueueSnackbar } = useSnackbar();
-	const [mutationAddSong] = useMutation(ADD_PLAYLIST);
+	const [mutationAddPlaylist] = useMutation(ADD_PLAYLIST);
 	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
 	const [mutationDeletePlaylistSong] = useMutation(DELETE_PLAYLIST_SONG);
 	const [mutationUpdatePlaylistName] = useMutation(UPDATE_PLAYLIST_NAME);
 
 	const songs = useAppSelector((state) => state.songs.songs);
 	const currentUser = useAppSelector((state) => state.currentUser.user?.id);
+	const IS_EDIT = Boolean(currentPlaylist)
 
 	const defaultDialogValues = {
 		name: currentPlaylist?.name,
@@ -81,63 +82,68 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 
 
 	const handleQueryMessage = (variant: VariantType) =>
-		currentPlaylist?.name ?
+		IS_EDIT ?
 			enqueueSnackbar(SnakbarMessage.UpdatePlaylist, { variant })
 			:
 			enqueueSnackbar(SnakbarMessage.addNewPlaylist, { variant })
 
-	const onSubmit: SubmitHandler<AddOrUpdatePlaylistForm> = (data) => {
+	const onSubmit: SubmitHandler<AddOrUpdatePlaylistForm> = async (data) => {
+		try {
+			const { name, songs } = data;
 
-		const { name, songs } = data;
+			if (!IS_EDIT) {
+				console.log('add');
 
-		if (currentPlaylist === undefined) {
-			mutationAddSong({
-				variables: {
-					name: name,
-					creatorId: currentUser,
-				},
-			}).then((res) => {
-				const newPlaylistId = res.data.createPlaylist.playlist.id
-				songs.map((song) => {
-					mutationAddPlaylistSong({
+				const res = await mutationAddPlaylist({
+					variables: {
+						name: name,
+						creatorId: currentUser,
+					},
+				});
+
+				const newPlaylistId = res.data.createPlaylist.playlist.id;
+
+				songs.map(async (song) => {
+					await mutationAddPlaylistSong({
 						variables: {
 							playlistId: newPlaylistId,
 							songId: song,
 						},
-					})
-				})
-			})
-				.catch((err) => console.error('Failed to add song: ', err));
+					});
+				});
+			} else {
+				console.log('update');
+
+				const deleteSongs = difference(defaultDialogValues.songs, songs);
+				const newSongs = difference(songs, defaultDialogValues.songs as string[]);
+
+				if (deleteSongs.length > 0)
+
+					deleteSongs.map(async (song) => {
+						await mutationDeletePlaylistSong({
+							variables: { playlistId: currentPlaylist?.id, songId: song },
+						});
+					});
+
+				if (newSongs.length > 0)
+
+					newSongs.map(async (song) => {
+						await mutationAddPlaylistSong({
+							variables: { playlistId: currentPlaylist?.id, songId: song },
+						});
+					});
+
+				if (name !== currentPlaylist?.name)
+					await mutationUpdatePlaylistName({
+						variables: { id: currentPlaylist?.id, name: name },
+					});
+			}
+
+			handleQueryMessage('success');
+			handleClose();
+		} catch (err) {
+			console.error('Failed to add or update playlist: ', err);
 		}
-
-		else {
-
-			const deleteSongs = difference(defaultDialogValues.songs, songs)
-			const newSongs = difference(songs, defaultDialogValues.songs as string[])
-
-
-
-
-			if (deleteSongs.length > 0)
-				console.log('delete', deleteSongs);
-
-			deleteSongs.map((song) => {
-				mutationDeletePlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
-			})
-
-			if (newSongs.length > 0)
-				console.log("new", newSongs);
-
-			newSongs.map((song) => {
-				mutationAddPlaylistSong({ variables: { playlistId: currentPlaylist.id, songId: song } })
-			})
-
-			if (name !== currentPlaylist?.name)
-				mutationUpdatePlaylistName({ variables: { id: currentPlaylist.id, name: name } })
-		}
-
-		handleQueryMessage('success')
-		handleClose();
 	};
 
 	return (
@@ -155,7 +161,7 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<TextField
-									className={classes.input}
+									className={classesCommon.input}
 									label="שם הפלייליסט"
 									variant="standard"
 									{...field}
@@ -175,7 +181,6 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 									fullWidth
 									disableCloseOnSelect
 									openOnFocus
-									filterSelectedOptions
 									options={songs.map((song) => song.id)}
 									className={classes.autocomplete}
 									getOptionLabel={(option) => findSongNameById(songs, option) as string}
@@ -213,7 +218,11 @@ const GenericDialogCreateOrUpdate: React.FC<Props> = (props) => {
 											label="שירים"
 											placeholder="Favorites"
 											helperText={errors.songs && (
-												<span className={classes.error}>{errors.songs.message}</span>
+												<span
+													className={classes.error}
+												>
+													{errors.songs.message}
+												</span>
 											)}
 										/>
 									)}

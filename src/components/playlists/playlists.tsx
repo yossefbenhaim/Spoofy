@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useAppSelector } from 'redux/store';
 import { Typography, Button } from '@mui/material';
 
+import useStylesCommon from 'common/comonStyles';
 import useStyles from './playlistsTableStyles';
 import GenericDialogCreateOrUpdate from 'common/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
 import Playlist from 'models/interface/playlist';
@@ -15,9 +16,11 @@ enum VariablesDialogAddPlaylist {
 
 const Playlists: React.FC = () => {
 	const { classes } = useStyles();
+	const { classes: classesCommon } = useStylesCommon();
+
 	const [openDialogAddPlaylist, setOpenDialogAddPlaylist] = useState<boolean>(false);
 	const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | undefined>();
-	const playlists = useAppSelector((state) => state.playlist.playlists);
+	const playlists = useAppSelector((state) => state.playlists.playlists);
 
 	const handleClickOpen = (newCurrentPlaylist: Playlist | undefined) => {
 
@@ -34,8 +37,8 @@ const Playlists: React.FC = () => {
 
 	return (
 		<>
-			<div className={classes.headerContainer}>
-				<Typography className={classes.header}>פלייליסטים</Typography>
+			<div className={classesCommon.headerContainer}>
+				<Typography className={classesCommon.header}>פלייליסטים</Typography>
 			</div>
 			<div className={classes.fieldsContainer}>
 				<PlaylistsTables playlists={playlists} handleClickOpen={handleClickOpen} />

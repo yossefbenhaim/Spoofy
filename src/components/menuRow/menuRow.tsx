@@ -23,7 +23,7 @@ const MenuRow: React.FC<Props> = (props) => {
 	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
 
 	const openMenu = Boolean(anchorEl);
-	const playlists = useAppSelector((state) => state.playlist.playlists);
+	const playlists = useAppSelector((state) => state.playlists.playlists);
 	const songs = useAppSelector((state) => state.songs.songs);
 	const { enqueueSnackbar } = useSnackbar();
 

@@ -13,14 +13,23 @@ const initialState: CurrentSongsSlice = {
 };
 
 const Playlists = createSlice({
-    name: SliceName.songs,
+    name: SliceName.playlists,
     initialState,
     reducers: {
         setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
             state.playlists = action.payload;
         },
-        addPlaylist: (state, action: PayloadAction<Playlist>) => {
-            state.playlists?.push(action.payload);
+        addPlaylist: (
+            state,
+            action: PayloadAction<Pick<Playlist, 'id' | 'name' | 'creatorId'>>
+        ) => {
+            const newPlaylist: Playlist = {
+                id: action.payload.id,
+                name: action.payload.name,
+                creatorId: action.payload.creatorId,
+                songs: [],
+            };
+            state.playlists.push(newPlaylist);
         },
         updatePlaylistName: (
             state,

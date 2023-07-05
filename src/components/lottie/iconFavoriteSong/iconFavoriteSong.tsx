@@ -53,7 +53,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId)) {
+		if (favoritesLike.some((favorite) => favorite.songId === rowSongId)) {
 			animref.current && animref.current.goToAndPlay(1000, true)
 		} else {
 			animref.current && animref.current.stop();
@@ -62,7 +62,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
-		if (favoritesLike?.some((favorite) => favorite.songId === rowSongId)) {
+		if (favoritesLike.some((favorite) => favorite.songId === rowSongId)) {
 			animref.current && animref.current.stop();
 			heandlDeleteFavorite();
 			dispatch(deleteFavoriteFrom({ songId: rowSongId }));

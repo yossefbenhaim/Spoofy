@@ -8,7 +8,6 @@ const useStyles = makeStyles()({
         borderColor: `rgb(80, 77, 77)`,
         width: '100%',
         height: '100%',
-        marginRight: '1%',
         backgroundColor: 'gray',
         outline: 'solid #d0130d 0px',
         borderRadius: '20px',
@@ -43,7 +42,8 @@ const useStyles = makeStyles()({
                 borderRadius: '10px',
             },
             '*::-webkit-scrollbar-track': {
-                background: 'gray',
+                background: 'rgb(142 146 143)',
+                borderRadius: '10px',
             },
             '*::-webkit-scrollbar-thumb': {
                 borderRadius: '10px',
@@ -60,25 +60,6 @@ const useStyles = makeStyles()({
         },
     },
 
-    headerContainer: {
-        marginBottom: '2%',
-        textAlign: 'center',
-        borderRadius: '15px',
-        height: '10%',
-        backgroundColor: `rgb(74, 191, 117)`,
-        color: 'white',
-        fontFamily: 'system-ui',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
-
-    header: {
-        color: 'white',
-        fontSize: '2.8rem',
-        fontWeight: 'bold',
-        marginTop: '-5px',
-    },
     addSongBtnContainer: {
         height: '8%',
         marginBottom: '1%',

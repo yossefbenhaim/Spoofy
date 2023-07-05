@@ -27,7 +27,6 @@ const getSubscription = () => {
                     id: playlistId,
                     name: playlistName,
                     creatorId: creatorId,
-                    songs: [],
                 })
             );
         },

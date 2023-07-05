@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Playlist from "models/interface/playlist";
 import isEqual from "lodash/isEqual";
 import React from "react";
+import { useAppSelector } from "redux/store";
 
 interface Props {
 	handleClickOpen: (playlistId: Playlist | undefined) => void;
@@ -16,10 +17,12 @@ const PlaylistTable: React.FC<Props> = (props) => {
 
 	const { handleClickOpen, playlist } = props;
 	const { classes } = useStyles();
+	const users = useAppSelector((state) => state.users.users);
 
-	console.log('PlaylistTablel render');
-
-
+	const findCreatorName = (creator: string) => {
+		const creatorName = users.find((user) => user.id === creator)
+		return (creatorName?.firstName + " " + creatorName?.lastName)
+	}
 
 	return (
 		<div key={playlist.id} className={classes.container}>
@@ -30,10 +33,13 @@ const PlaylistTable: React.FC<Props> = (props) => {
 					}>
 					<EditIcon />
 				</IconButton>
-				<Typography className={classes.namePlaylist}>{playlist.name}</Typography>
+				<div className={classes.namePlaylistContainer}>
+					<Typography className={classes.namePlaylist}>{playlist.name}</Typography>
+					<Typography className={classes.nameCreator}>{findCreatorName(playlist.creatorId)}</Typography>
+				</div>
 			</div>
 			<div className={classes.playlistTable}>
-				<GenericTable tableId={playlist.id} genericSongs={playlist.songs.map((song) => song)} />
+				<GenericTable tableId={playlist.id} songsId={playlist.songs.map((song) => song)} />
 			</div>
 		</div>
 	)

@@ -1,8 +1,8 @@
 import React from "react";
-import useStyles from './playlistsTableStyles';
 import Playlist from "models/interface/playlist";
 import isEqual from "lodash/isEqual";
 import PlaylistTable from "./playlistTable";
+
 interface Props {
 	handleClickOpen: (playlistId: Playlist | undefined) => void;
 	playlists: Playlist[];
@@ -10,6 +10,7 @@ interface Props {
 
 const PlaylistsTables: React.FC<Props> = (props) => {
 	const { handleClickOpen, playlists } = props;
+
 
 	return (
 		<>

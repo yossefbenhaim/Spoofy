@@ -8,7 +8,6 @@ const useStyles = makeStyles()({
         flexDirection: 'column',
     },
     header: {
-        marginBottom: '1%',
         width: '100%',
         height: '10%',
     },

@@ -19,7 +19,7 @@ const Songs = createSlice({
             state.songs = action.payload;
         },
         addSong: (state, action: PayloadAction<Song>) => {
-            state.songs?.push(action.payload);
+            state.songs.push(action.payload);
         },
     },
 });

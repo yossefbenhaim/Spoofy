@@ -26,19 +26,21 @@ const getUseQuery = () => {
         },
     });
 
+    const parse_playlist = (playlistDB: any) => ({
+        id: playlistDB.id,
+        name: playlistDB.name,
+        creatorId: playlistDB.creatorId,
+        songs: playlistDB.playlistsongsByPlaylistId.nodes.map(
+            (song: any) => song.songId
+        ),
+    });
+
     useQuery(GET_PLAYLIST, {
         fetchPolicy: 'network-only',
         onCompleted: (data) => {
             const playlistsSong = (
                 data.allPlaylists.nodes as any[]
-            ).map<Playlist>((songDB) => ({
-                id: songDB.id,
-                name: songDB.name,
-                creatorId: songDB.creatorId,
-                songs: songDB.playlistsongsByPlaylistId.nodes.map(
-                    (song: any) => song.songId
-                ),
-            }));
+            ).map<Playlist>(parse_playlist);
             dispatch(setPlaylists(playlistsSong));
         },
     });

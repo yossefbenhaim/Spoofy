@@ -32,7 +32,7 @@ import AddSongFormFieldsNames from 'models/emuns/formFieldsName';
 
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
-
+import useStylesCommon from 'common/comonStyles';
 
 const defaultDialogValues = {
 	[AddSongFormFieldsNames.name]: '',
@@ -43,6 +43,8 @@ const defaultDialogValues = {
 const AddSong: React.FC = () => {
 	const dispatch = useDispatch();
 	const { classes, cx } = useStyles();
+
+	const { classes: classesCommon } = useStylesCommon();
 	const { enqueueSnackbar } = useSnackbar();
 
 	const [openDialogAddSong, setOpenDialogAddSong] = useState<boolean>(false);
@@ -124,7 +126,7 @@ const AddSong: React.FC = () => {
 							control={control}
 							render={({ field, fieldState: { error } }) => (
 								<TextField
-									className={classes.input}
+									className={classesCommon.input}
 									label="שם השיר"
 									variant="standard"
 									{...field}
@@ -182,8 +184,8 @@ const AddSong: React.FC = () => {
 											ConvertToMilliseconds(time?.minute(), time?.second())
 										onChange(formattedTime);
 									}}
-									className={cx(classes.input, {
-										[classes.errorInput]: !!errors.duration
+									className={cx(classesCommon.input, {
+										[classesCommon.errorInput]: !!errors.duration
 									})}
 
 									label="Duration"

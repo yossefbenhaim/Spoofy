@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 
 import { VariantType, useSnackbar } from 'notistack';
-import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slice/currentUser';
 import { useDispatch } from 'react-redux';
@@ -21,34 +20,25 @@ import User from 'models/interface/user';
 import PathName from 'models/emuns/pathName';
 
 import IconHome from 'components/lottie/iconHome/iconHome';
-import GET_USERS from 'queries/query/users';
 import useStyles from './loginStyles';
-
+import usersQueary from './useLogin';
 const Login: React.FC = () => {
+	usersQueary();
 	const { classes } = useStyles();
+	const { enqueueSnackbar } = useSnackbar();
+
+	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
+
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
+
+	const users = useAppSelector((state) => state.users.users);
 	const currentUser = useAppSelector((state) => state.currentUser.user);
-	const [users, setUsers] = useState<User[] | undefined>([]);
-	const [userSelectId, setUserSelectId] = useState<string | undefined>(undefined)
-	const { enqueueSnackbar } = useSnackbar();
 
 	useEffect(() => {
 		if (currentUser?.id != undefined)
 			navigation(PathName.library + PathName.songs)
 	}, [currentUser])
-
-	useQuery(GET_USERS, {
-		fetchPolicy: 'network-only',
-		onCompleted: (data) => {
-			const usersData = (data.allUsers.nodes as any[]).map<User>((userDB) => ({
-				id: userDB.id,
-				firstName: userDB.firstName,
-				lastName: userDB.lastName
-			}));
-			setUsers(usersData);
-		},
-	});
 
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.mustSelectUser, { variant });

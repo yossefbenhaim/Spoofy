@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 
+import usersReduser from './slice/users';
 import songsReducer from './slice/songs';
 import currentSongReducer from './slice/currentPlaylist';
 import currentUserReducer from './slice/currentUser';
@@ -19,7 +20,8 @@ const persistConfig = {
         SliceName.currentUser,
         SliceName.songs,
         SliceName.favorites,
-        SliceName.playlist,
+        SliceName.playlists,
+        SliceName.users,
     ],
 };
 
@@ -28,7 +30,8 @@ const rootReducer = combineReducers({
     [SliceName.currentPlaylist]: currentSongReducer,
     [SliceName.favorites]: favoritesSongReduser,
     [SliceName.songs]: songsReducer,
-    [SliceName.playlist]: PlaylistsReduser,
+    [SliceName.users]: usersReduser,
+    [SliceName.playlists]: PlaylistsReduser,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

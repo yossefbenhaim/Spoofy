@@ -5,9 +5,11 @@ const useStyles = makeStyles()({
         display: 'flex',
         flexDirection: 'row',
         height: '75%',
-        gap: '2%',
+        gap: '3%',
         overflowY: 'auto',
         flexWrap: 'wrap',
+        direction: 'rtl',
+
         '::-webkit-scrollbar': {
             backgroundColor: '#7ead7b78',
             width: '10px',
@@ -15,7 +17,8 @@ const useStyles = makeStyles()({
             borderRadius: '10px',
         },
         '::-webkit-scrollbar-track': {
-            background: 'gray',
+            background: 'rgb(142 146 143)',
+            borderRadius: '10px',
         },
         '::-webkit-scrollbar-thumb': {
             borderRadius: '10px',
@@ -33,12 +36,17 @@ const useStyles = makeStyles()({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: '77%',
+        justifyContent: 'flex-start',
+        height: '100%',
         width: '99%',
     },
+    namePlaylistContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        direction: 'rtl',
+    },
     playlistTable: {
-        height: '100%',
+        height: '336px',
         width: '100%',
     },
 
@@ -49,10 +57,12 @@ const useStyles = makeStyles()({
         color: 'white',
         alignItems: 'center',
         marginRight: '2%',
+        direction: 'ltr',
     },
     namePlaylist: {
         fontWeight: 'bold',
     },
+    nameCreator: {},
     editBtn: {
         marginRight: '1%',
         color: 'white',
@@ -60,25 +70,7 @@ const useStyles = makeStyles()({
             color: 'rgb(74, 191, 117)',
         },
     },
-    headerContainer: {
-        marginBottom: '2%',
-        textAlign: 'center',
-        borderRadius: '15px',
-        height: '10%',
-        backgroundColor: `rgb(74, 191, 117)`,
-        color: 'white',
-        fontFamily: 'system-ui',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
 
-    header: {
-        color: 'white',
-        fontSize: '2.8rem',
-        fontWeight: 'bold',
-        marginTop: '-5px',
-    },
     addSongBtnContainer: {
         height: '8%',
         marginBottom: '1%',
