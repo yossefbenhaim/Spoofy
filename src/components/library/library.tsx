@@ -17,7 +17,6 @@ const Library: React.FC = () => {
 	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const navigation = useNavigate();
 
-
 	useEffect(() => {
 		if (!currentUser?.id)
 			navigation('/');
@@ -25,6 +24,8 @@ const Library: React.FC = () => {
 
 	getSubscription();
 	getUseQuery();
+	console.log('library');
+
 	return (
 		<div className={classes.fieldsContainer}>
 			<div className={classes.header}>

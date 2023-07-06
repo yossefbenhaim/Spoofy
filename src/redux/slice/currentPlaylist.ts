@@ -29,6 +29,9 @@ const CurrentPlaylist = createSlice({
             state.songId = undefined;
             state.tableId = undefined;
         },
+        addSong: (state, action: PayloadAction<Song>) => {
+            state.songs.push(action.payload);
+        },
         setSongs: (state, action: PayloadAction<Song[]>) => {
             state.songs = action.payload;
         },
@@ -46,5 +49,6 @@ export const {
     setCurrentTableId,
     setSongs,
     deleteSong,
+    addSong,
 } = CurrentPlaylist.actions;
 export default CurrentPlaylist.reducer;

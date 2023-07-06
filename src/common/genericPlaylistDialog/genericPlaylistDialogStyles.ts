@@ -98,7 +98,7 @@ const useStyles = makeStyles()({
         backgroundColor: `rgb(70, 138, 41)`,
         borderRadius: '30px',
         minWidth: '15%',
-        width: '15%',
+        width: '16%',
         marginLeft: '44%',
         marginBottom: '3%',
         fontSize: '1rem',

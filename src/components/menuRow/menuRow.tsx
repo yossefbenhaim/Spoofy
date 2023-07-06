@@ -54,7 +54,7 @@ const MenuRow: React.FC<Props> = (props) => {
 				handleQueryMessage('success', songName as string, playlistName)
 			},
 			onError: () => {
-				handleQueryMessage('info', songName as string, playlistName)
+				handleQueryMessage('error', songName as string, playlistName)
 			}
 		})
 		handleClose();

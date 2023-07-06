@@ -2,7 +2,7 @@ import * as z from 'zod';
 import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
 import ErrorMessageDialogAddPlaylist from './errorMessage';
 
-const AddOrUpdatePlaylistSchema = z.object({
+const GenericPlaylistDialogSchema = z.object({
     [AddPlaylistFormFieldName.name]: z
         .string()
         .min(2, { message: ErrorMessageDialogAddPlaylist.playlistNameMin })
@@ -12,5 +12,7 @@ const AddOrUpdatePlaylistSchema = z.object({
     }),
 });
 
-export type AddOrUpdatePlaylistForm = z.infer<typeof AddOrUpdatePlaylistSchema>;
-export default AddOrUpdatePlaylistSchema;
+export type GenericPlaylistDialogForm = z.infer<
+    typeof GenericPlaylistDialogSchema
+>;
+export default GenericPlaylistDialogSchema;

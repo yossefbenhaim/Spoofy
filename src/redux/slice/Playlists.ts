@@ -49,7 +49,10 @@ const Playlists = createSlice({
 
             if (currentPlaylist) currentPlaylist.songs.push(songsId);
         },
-        deleteSongsPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
+        deleteSongFromPlaylist: (
+            state,
+            action: PayloadAction<PlaylistSong>
+        ) => {
             const { playlistId, songsId } = action.payload;
             const CurrentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === playlistId
@@ -70,6 +73,6 @@ export const {
     setPlaylists,
     updatePlaylistSongs,
     updatePlaylistName,
-    deleteSongsPlaylist,
+    deleteSongFromPlaylist,
 } = Playlists.actions;
 export default Playlists.reducer;

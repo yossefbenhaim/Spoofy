@@ -5,14 +5,9 @@ import { Typography, Button } from '@mui/material';
 
 import useStylesCommon from 'common/comonStyles';
 import useStyles from './playlistsTableStyles';
-import GenericDialogCreateOrUpdate from 'common/genericDialogCreateOrUpdate/genericDialogCreateOrUpdate';
+import GenericPlaylistDialog from 'common/genericPlaylistDialog/genericPlaylistDialog';
 import Playlist from 'models/interface/playlist';
 import PlaylistsTables from './playlistsTables';
-
-enum VariablesDialogAddPlaylist {
-	create = 'צור פלייליסט',
-	update = 'עדכן פלייליסט',
-}
 
 const Playlists: React.FC = () => {
 	const { classes } = useStyles();
@@ -52,7 +47,7 @@ const Playlists: React.FC = () => {
 					+ צור פלייליסט חדש
 				</Button>
 			</div>
-			<GenericDialogCreateOrUpdate
+			<GenericPlaylistDialog
 				openDialogAddPlaylist={openDialogAddPlaylist}
 				handleClose={handleClose}
 				currentPlaylist={currentPlaylist}

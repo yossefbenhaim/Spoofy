@@ -32,7 +32,7 @@ const useStyles = makeStyles()({
     },
     menuContainer: {
         textAlignLast: 'center',
-        height: '32%',
+        height: '41%',
 
         '& .MuiPaper-root': {
             marginRight: '0%',

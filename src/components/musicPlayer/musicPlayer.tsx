@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 import { Slide, Slider, IconButton, Typography } from '@mui/material/';
-import { setCurrentSongId } from 'redux/slice/currentPlaylist';
+import { resetCurrentSongId, setCurrentSongId } from 'redux/slice/currentPlaylist';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 
@@ -15,6 +15,8 @@ import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
 
 const MusicPlayer: React.FC = () => {
+	console.log('renering');
+
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
 
@@ -45,20 +47,29 @@ const MusicPlayer: React.FC = () => {
 	}
 
 	useEffect(() => {
-		setCurrentTime(0);
-		setIsPlaying(true);
+		if (!currentSongId) {
+			setCurrentTime(0)
+			setIsPlaying(false)
+		}
+		else {
+			setIsPlaying(true)
+			setCurrentTime(0)
+		}
+
 	}, [currentSongId])
 
 	useEffect(() => {
 		isPlaying ?
-			createNewIntervalForSlider() :
+			createNewIntervalForSlider()
+			:
 			clearIntervalOfSlider()
 	}, [isPlaying])
 
 	useEffect(() => {
 		if (currentTime === currentSongDuration + 1) {
 			setCurrentTime(0);
-			diractionNextSong(1);
+			if (currentTime == 0)
+				diractionNextSong(1);
 		}
 	}, [currentTime])
 
@@ -141,4 +152,4 @@ const MusicPlayer: React.FC = () => {
 	);
 };
 
-export default MusicPlayer;
+export default React.memo(MusicPlayer);

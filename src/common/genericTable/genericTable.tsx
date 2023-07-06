@@ -14,7 +14,6 @@ import Song from 'models/interface/song';
 
 import useStyles from './genericTableStyles';
 import formatDuration from 'utils/formatDuration';
-import { generatePath } from 'react-router';
 
 interface Props {
 	songsId: string[];
@@ -29,7 +28,7 @@ const GenericTable: React.FC<Props> = (props) => {
 	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 	const currentTableId = useAppSelector((state) => state.currentPlaylist.tableId);
 	const songs = useAppSelector((state) => state.songs.songs);
-	const selectionModel = currentTableId === tableId ? currentSongId : undefined
+	let selectionModel = currentTableId === tableId ? currentSongId : ''
 
 	const filteredSongs = useMemo(() => {
 		return songs.filter((song) =>

@@ -46,7 +46,6 @@ const PlaylistTable: React.FC<Props> = (props) => {
 }
 
 export default React.memo(PlaylistTable, (prevProps, nextProps) => {
-	console.log("isequal", isEqual(prevProps.playlist.songs, nextProps.playlist.songs));
 	return isEqual(prevProps.playlist.songs, nextProps.playlist.songs);
 }
 );

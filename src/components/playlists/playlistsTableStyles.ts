@@ -46,7 +46,7 @@ const useStyles = makeStyles()({
         direction: 'rtl',
     },
     playlistTable: {
-        height: '336px',
+        height: '338px',
         width: '100%',
     },
 
