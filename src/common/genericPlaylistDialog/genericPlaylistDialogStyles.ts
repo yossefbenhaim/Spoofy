@@ -94,12 +94,18 @@ const useStyles = makeStyles()({
         fontSize: '14px',
     },
 
+    submitButtonContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     submitButton: {
         backgroundColor: `rgb(70, 138, 41)`,
         borderRadius: '30px',
         minWidth: '15%',
         width: '16%',
-        marginLeft: '44%',
         marginBottom: '3%',
         fontSize: '1rem',
         padding: '3px 16px',

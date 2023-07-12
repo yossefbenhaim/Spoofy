@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from 'redux/store';
-import { useDispatch } from 'react-redux';
-
+import { Typography } from '@mui/material';
 import getSubscription from 'hooks/getSubscription';
 import useStyles from './libraryStyles';
 
@@ -24,7 +23,6 @@ const Library: React.FC = () => {
 
 	getSubscription();
 	getUseQuery();
-	console.log('library');
 
 	return (
 		<div className={classes.fieldsContainer}>
@@ -33,7 +31,7 @@ const Library: React.FC = () => {
 					<UserOptionMenu />
 					<div className={classes.logoContainer}>
 						<IconMusify />
-						<div>musify </div>
+						<Typography>musify </Typography>
 					</div>
 				</div>
 			</div>

@@ -41,6 +41,8 @@ const getUseQuery = () => {
             const playlistsSong = (
                 data.allPlaylists.nodes as any[]
             ).map<Playlist>(parse_playlist);
+            console.log(playlistsSong);
+
             dispatch(setPlaylists(playlistsSong));
         },
     });

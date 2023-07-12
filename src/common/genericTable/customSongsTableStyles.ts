@@ -78,6 +78,14 @@ const useStyles = makeStyles()({
         color: 'white',
         fontSize: '1.8rem',
     },
+    iconEmptyRows: {
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
 });
 
 export default useStyles;

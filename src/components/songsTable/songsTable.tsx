@@ -7,8 +7,9 @@ import useStyles from './songsTableStyles';
 import AddSong from 'components/addSong/addSong';
 import TablesIds from 'models/emuns/tablesIds';
 
-import GenericTable from 'common/genericTable/genericTable';
+import CustomSongsTable from 'common/genericTable/customSongsTable';
 import useStylesCommon from 'common/comonStyles';
+import Song from 'models/interface/song';
 
 const SongsTable: React.FC = () => {
 	const { classes } = useStyles();
@@ -21,7 +22,7 @@ const SongsTable: React.FC = () => {
 			<div className={classesCommon.headerContainer}>
 				<Typography className={classesCommon.header}>רשימת השירים</Typography>
 			</div>
-			<GenericTable tableId={TablesIds.songsIds} songsId={songs.map((song) => song.id)} />
+			<CustomSongsTable tableId={TablesIds.songsIds} tableSongs={songs.map((song: Song) => song.id)} />
 			<div className={classes.addSongBtnContainer}>
 				<AddSong />
 			</div>

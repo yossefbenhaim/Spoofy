@@ -10,6 +10,7 @@ import findSongNameById from 'utils/findSongById';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import AddIcon from '@mui/icons-material/Add';
 import useStyles from './menuRowStyles';
+import Playlist from 'models/interface/playlist';
 
 interface Props {
 	rowId: string
@@ -75,7 +76,7 @@ const MenuRow: React.FC<Props> = (props) => {
 				className={classes.menuContainer}
 			>
 				<Typography className={classes.menuTitle}>הוסף לפלייליסט</Typography>
-				{playlists.map((playlist) =>
+				{playlists.map((playlist: Playlist) =>
 					<MenuItem
 						divider
 						className={classes.item}

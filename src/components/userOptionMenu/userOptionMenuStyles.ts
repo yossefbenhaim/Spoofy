@@ -14,7 +14,6 @@ const useStyles = makeStyles()({
         marginTop: '0.5%',
         border: '2px solid white',
         borderRadius: '8px',
-        height: '57px',
         width: '235px',
         display: 'flex',
         flexDirection: 'column',

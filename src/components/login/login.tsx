@@ -45,7 +45,7 @@ const Login: React.FC = () => {
 
 
 	const handleConnect = () => {
-		const userSelect: User | undefined = users?.find((user) => user.id === userSelectId);
+		const userSelect: User | undefined = users?.find((user: User) => user.id === userSelectId);
 		if (userSelect?.id) {
 			dispatch(setUser(userSelect))
 			navigation(PathName.library + PathName.songs);
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
 					label="בחר משתמש להתחברות"
 					onChange={handleChange}
 				>
-					{users?.map((user) => {
+					{users?.map((user: User) => {
 						return (
 							<MenuItem className={classes.menuItem} key={user.id} value={user.id}>
 								{user.firstName + ' ' + user.lastName}

@@ -152,6 +152,7 @@ const AddSong: React.FC = () => {
 										variant="standard"
 										{...field}
 										className={classes.select}
+										onChange={(event) => field.onChange(event.target.value)}
 									>
 										{artists.map((artist) => {
 											return (

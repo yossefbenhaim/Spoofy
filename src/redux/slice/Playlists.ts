@@ -17,11 +17,13 @@ const Playlists = createSlice({
     initialState,
     reducers: {
         setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
+            console.log(action.payload);
+
             state.playlists = action.payload;
         },
         addPlaylist: (
             state,
-            action: PayloadAction<Pick<Playlist, 'id' | 'name' | 'creatorId'>>
+            action: PayloadAction<Omit<Playlist, 'songs'>>
         ) => {
             const newPlaylist: Playlist = {
                 id: action.payload.id,
@@ -36,13 +38,20 @@ const Playlists = createSlice({
             action: PayloadAction<Pick<Playlist, 'id' | 'name'>>
         ) => {
             const { id, name } = action.payload;
-            const currentPlaylist: Playlist | undefined = state.playlists.find(
+
+            const currentPlaylist: Playlist = state.playlists.find(
                 (playlist) => playlist.id === id
-            );
-            if (currentPlaylist) currentPlaylist.name = name;
+            )!;
+
+            if (currentPlaylist) {
+                currentPlaylist.name = name;
+                console.log(currentPlaylist.name);
+            }
         },
         updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
+            console.log(state.playlists);
+
             const currentPlaylist = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );
@@ -54,15 +63,16 @@ const Playlists = createSlice({
             action: PayloadAction<PlaylistSong>
         ) => {
             const { playlistId, songsId } = action.payload;
-            const CurrentPlaylist: Playlist | undefined = state.playlists.find(
+            const currentPlaylist: Playlist | undefined = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );
 
-            if (CurrentPlaylist) {
-                const index = CurrentPlaylist.songs.findIndex(
+            if (currentPlaylist) {
+                const index = currentPlaylist.songs.findIndex(
                     (song) => song === songsId
                 );
-                if (index !== -1) CurrentPlaylist.songs.splice(index, 1);
+
+                if (index !== -1) currentPlaylist.songs.splice(index, 1);
             }
         },
     },

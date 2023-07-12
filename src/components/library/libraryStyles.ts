@@ -49,7 +49,7 @@ const useStyles = makeStyles()({
         height: '100%',
     },
     musicPlayerContainer: {
-        height: '15%',
+        height: '16%',
     },
 });
 

@@ -24,6 +24,8 @@ import useStyles from './genericPlaylistDialogStyles';
 import Playlist from 'models/interface/playlist';
 import useStylesCommon from 'common/comonStyles';
 import useGenericDialogPlaylist from './useGenericDialogPlaylist';
+import VariablesDialogPlaylist from 'models/emuns/variablesDialogPlaylist';
+import Song from 'models/interface/song';
 
 interface Props {
 	openDialogAddPlaylist: boolean,
@@ -31,10 +33,6 @@ interface Props {
 	handleClose: () => void,
 }
 
-enum VariablesDialogPlaylist {
-	create = 'צור פלייליסט',
-	update = 'עדכן פלייליסט',
-}
 
 const GenericPlaylistDialog: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
@@ -76,12 +74,13 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 						<Controller
 							name={AddPlaylistFormFieldName.name}
 							control={control}
-							render={({ field, fieldState: { error } }) => (
+							render={({ field: { value, onChange }, fieldState: { error } }) => (
 								<TextField
 									className={classesCommon.input}
 									label="שם הפלייליסט"
 									variant="standard"
-									{...field}
+									value={value || ''}
+									onChange={onChange}
 									error={!!error}
 									helperText={errors.name &&
 										<span className={classes.error}>
@@ -98,10 +97,10 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 									fullWidth
 									disableCloseOnSelect
 									openOnFocus
-									options={songs.map((song) => song.id)}
+									options={songs.map((song: Song) => song.id)}
 									className={classes.autocomplete}
 									getOptionLabel={(option) => findSongNameById(songs, option) as string}
-									value={value}
+									value={value || []}
 
 									renderTags={(value, getTagProps) =>
 										value.map((option, index) => (
@@ -143,22 +142,24 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 										/>
 									)}
 									onChange={(_, selectedSongs) =>
-										onChange(selectedSongs)
+										onChange(selectedSongs as [string, ...string[]])
 									}
 								/>
 							)}
 						/>
-						<Button
-							className={classes.submitButton}
-							variant="contained"
-							type="submit"
-						>
-							{IS_EDIT ?
-								VariablesDialogPlaylist.update
-								:
-								VariablesDialogPlaylist.create
-							}
-						</Button>
+						<div className={classes.submitButtonContainer}>
+							<Button
+								className={classes.submitButton}
+								variant="contained"
+								type="submit"
+							>
+								{IS_EDIT ?
+									VariablesDialogPlaylist.update
+									:
+									VariablesDialogPlaylist.create
+								}
+							</Button>
+						</div>
 					</div>
 				</form>
 			</Dialog>

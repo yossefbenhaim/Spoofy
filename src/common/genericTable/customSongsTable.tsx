@@ -12,45 +12,50 @@ import IconFavoriteSong from 'components/lottie/iconFavoriteSong/iconFavoriteSon
 import RowsFieldsb from 'models/emuns/rowsField';
 import Song from 'models/interface/song';
 
-import useStyles from './genericTableStyles';
+import useStyles from './customSongsTableStyles';
 import formatDuration from 'utils/formatDuration';
-
+import IconEmptyRows from 'components/lottie/emptyRowsScrean/icomEmptyRows';
 interface Props {
-	songsId: string[];
+	tableSongs: string[];
 	tableId: string;
 }
 
-const GenericTable: React.FC<Props> = (props) => {
+const CustomSongsTable: React.FC<Props> = (props) => {
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
-	const { songsId, tableId } = props
+	const { tableSongs, tableId } = props
 
 	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 	const currentTableId = useAppSelector((state) => state.currentPlaylist.tableId);
 	const songs = useAppSelector((state) => state.songs.songs);
-	let selectionModel = currentTableId === tableId ? currentSongId : ''
+	const selectionModel = currentTableId === tableId ? currentSongId : ''
 
-	const filteredSongs = useMemo(() => {
-		return songs.filter((song) =>
-			songsId.some((songTable) => song.id === songTable))
-	}, [songsId])
+	const filteredSongs = useMemo<Song[]>(() => (
+		tableSongs.map((tableSong) => songs.find((song: Song) => song.id === tableSong)!)
+	), [tableSongs]);
 
 	const updateCurrentSongView = (rowSongId: string | number) => {
 		if (rowSongId === currentSongId && currentTableId === tableId)
 			dispatch(resetCurrentSongId());
 
 		else if (currentTableId || rowSongId !== undefined) {
-			const newCurrentSong: Song | undefined = songs.find((song) => song.id == rowSongId)
+			const newCurrentSong: Song | undefined = songs.find((song: Song) => song.id == rowSongId)
 			dispatch(setCurrentSongId(newCurrentSong?.id as string))
 		}
 	}
+
+	const CustomNoRowsOverlay = () => (
+		<div className={classes.iconEmptyRows}>
+			<IconEmptyRows />
+		</div>
+	);
 
 	const rows = useMemo(() => filteredSongs.map((item) => ({
 		id: item.id,
 		song: item.name,
 		duration: formatDuration(item.duration),
 		artist: item.artist,
-	})), [songsId]);
+	})), [tableSongs]);
 
 	const settingRowGlobal: Partial<GridColDef> = {
 		sortable: false,
@@ -121,6 +126,9 @@ const GenericTable: React.FC<Props> = (props) => {
 			disableColumnResize
 			disableColumnFilter
 			disableColumnPinning
+			components={{
+				NoRowsOverlay: CustomNoRowsOverlay,
+			}}
 			rowSelectionModel={selectionModel}
 			onRowClick={() => {
 				dispatch(setCurrentTableId(tableId))
@@ -134,4 +142,4 @@ const GenericTable: React.FC<Props> = (props) => {
 	);
 };
 
-export default GenericTable;
+export default CustomSongsTable;

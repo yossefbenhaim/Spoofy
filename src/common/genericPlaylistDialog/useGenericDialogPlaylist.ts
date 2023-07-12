@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
 import { VariantType, useSnackbar } from 'notistack';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { GenericPlaylistDialogForm } from './schamaGenericPlaylistDialog';
 import { useAppSelector } from 'redux/store';
@@ -13,7 +12,6 @@ import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import UPDATE_PLAYLIST_NAME from 'queries/mutation/updatePlaylistName';
 import DELETE_PLAYLIST_SONG from 'queries/mutation/deletePlaylistSong';
 
-import GenericPlaylistDialogSchema from './schamaGenericPlaylistDialog';
 import SnakbarMessage from './snakbarMessage';
 import Playlist from 'models/interface/playlist';
 

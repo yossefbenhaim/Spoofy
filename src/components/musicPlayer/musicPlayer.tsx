@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 import { Slide, Slider, IconButton, Typography } from '@mui/material/';
-import { resetCurrentSongId, setCurrentSongId } from 'redux/slice/currentPlaylist';
+import { setCurrentSongId } from 'redux/slice/currentPlaylist';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 
@@ -14,8 +14,9 @@ import useStyles from './musicPlayerStyles';
 import formatDuration from 'utils/formatDuration';
 import Song from 'models/interface/song';
 
+
 const MusicPlayer: React.FC = () => {
-	console.log('renering');
+
 
 	const dispatch = useDispatch();
 	const { classes } = useStyles();
@@ -24,11 +25,11 @@ const MusicPlayer: React.FC = () => {
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
 	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
-	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 	const filterSongs = useAppSelector((state) => state.currentPlaylist.songs);
+	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 
 	const currentSong = useMemo(() => {
-		return filterSongs.find((song) => song.id === currentSongId);
+		return filterSongs.find((song: Song) => song.id === currentSongId);
 	}, [filterSongs, currentSongId]);
 
 	const currentSongDuration: number = currentSong?.duration as number;
@@ -47,6 +48,11 @@ const MusicPlayer: React.FC = () => {
 	}
 
 	useEffect(() => {
+
+	}, [])
+
+
+	useEffect(() => {
 		if (!currentSongId) {
 			setCurrentTime(0)
 			setIsPlaying(false)
@@ -55,7 +61,6 @@ const MusicPlayer: React.FC = () => {
 			setIsPlaying(true)
 			setCurrentTime(0)
 		}
-
 	}, [currentSongId])
 
 	useEffect(() => {
@@ -68,8 +73,7 @@ const MusicPlayer: React.FC = () => {
 	useEffect(() => {
 		if (currentTime === currentSongDuration + 1) {
 			setCurrentTime(0);
-			if (currentTime == 0)
-				diractionNextSong(1);
+			diractionNextSong(1);
 		}
 	}, [currentTime])
 
@@ -80,9 +84,9 @@ const MusicPlayer: React.FC = () => {
 		setCurrentTime(newValue);
 
 	const diractionNextSong = (direction: 1 | -1): void => {
-		const currentSongIndex: number | undefined = filterSongs.findIndex(
-			(song) => song.id === currentSongId
-		);
+		const currentSongIndex: number = filterSongs.findIndex(
+			(song: Song) => song.id === currentSongId
+		)!;
 		if (currentSongIndex === filterSongs.length - 1 || currentSongIndex === 0 && direction == -1) {
 			const firstSong: Song = filterSongs[0];
 			dispatch(setCurrentSongId(firstSong.id));
@@ -94,7 +98,6 @@ const MusicPlayer: React.FC = () => {
 	};
 
 	return (
-
 		<Slide direction="up" in={Boolean(currentSongId)}>
 			<div className={classes.sliderContainer}>
 				<div className={classes.playContainer}>

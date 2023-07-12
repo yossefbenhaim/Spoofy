@@ -5,7 +5,8 @@ import { Typography } from '@mui/material';
 import TablesIds from 'models/emuns/tablesIds';
 import useStyles from './favoritesTableStyles';
 import useStylesCommon from 'common/comonStyles';
-import GenericTable from 'common/genericTable/genericTable';
+import CustomSongsTable from 'common/genericTable/customSongsTable';
+import Favorite from 'models/interface/favorite';
 
 const FavoritesTable: React.FC = () => {
 	const { classes } = useStyles();
@@ -18,9 +19,9 @@ const FavoritesTable: React.FC = () => {
 				<Typography className={classesCommon.header}>מועדפים</Typography>
 			</div>
 			<div className={classes.dataGridContainer}>
-				<GenericTable
+				<CustomSongsTable
 					tableId={TablesIds.favorits}
-					songsId={favorites.map((favorite) => favorite.songId)} />
+					tableSongs={favorites.map((favorite: Favorite) => favorite.songId)} />
 			</div>
 		</div>
 	);
