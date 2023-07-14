@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import TablesIds from 'models/emuns/tablesIds';
 import useStyles from './favoritesTableStyles';
 import useStylesCommon from 'common/comonStyles';
-import CustomSongsTable from 'common/genericTable/customSongsTable';
+import CustomSongsTable from 'common/customSongsTable/customSongsTable';
 import Favorite from 'models/interface/favorite';
 
 const FavoritesTable: React.FC = () => {

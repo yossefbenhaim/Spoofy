@@ -3,7 +3,9 @@ import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 import { setSongs } from 'redux/slice/currentPlaylist';
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import {
+	DataGridPro, GridColDef
+} from '@mui/x-data-grid-pro';
 import { setCurrentSongId, resetCurrentSongId, setCurrentTableId } from 'redux/slice/currentPlaylist';
 
 import MenuRow from 'components/menuRow/menuRow';
@@ -15,6 +17,7 @@ import Song from 'models/interface/song';
 import useStyles from './customSongsTableStyles';
 import formatDuration from 'utils/formatDuration';
 import IconEmptyRows from 'components/lottie/emptyRowsScrean/icomEmptyRows';
+import RowsGroup from 'common/rowsGroup/rowsGroup';
 interface Props {
 	tableSongs: string[];
 	tableId: string;
@@ -110,8 +113,9 @@ const CustomSongsTable: React.FC<Props> = (props) => {
 		},
 	];
 
-	return (
 
+
+	return (<>
 		<DataGridPro
 			className={classes.dataGride}
 			disableColumnMenu
@@ -126,8 +130,10 @@ const CustomSongsTable: React.FC<Props> = (props) => {
 			disableColumnResize
 			disableColumnFilter
 			disableColumnPinning
-			components={{
-				NoRowsOverlay: CustomNoRowsOverlay,
+
+			slots={{
+				toolbar: RowsGroup,
+				noRowsOverlay: CustomNoRowsOverlay,
 			}}
 			rowSelectionModel={selectionModel}
 			onRowClick={() => {
@@ -139,6 +145,7 @@ const CustomSongsTable: React.FC<Props> = (props) => {
 					updateCurrentSongView(row[0]);
 			}}
 		/>
+	</>
 	);
 };
 

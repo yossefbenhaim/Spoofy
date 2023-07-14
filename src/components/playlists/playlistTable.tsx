@@ -1,7 +1,7 @@
 import React from "react";
 
 import { IconButton, Typography } from "@mui/material";
-import CustomSongsTable from "common/genericTable/customSongsTable";
+import CustomSongsTable from "common/customSongsTable/customSongsTable";
 import useStyles from './playlistsTableStyles';
 import EditIcon from '@mui/icons-material/Edit';
 import Playlist from "models/interface/playlist";

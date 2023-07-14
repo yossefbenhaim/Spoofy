@@ -7,7 +7,7 @@ import useStyles from './songsTableStyles';
 import AddSong from 'components/addSong/addSong';
 import TablesIds from 'models/emuns/tablesIds';
 
-import CustomSongsTable from 'common/genericTable/customSongsTable';
+import CustomSongsTable from 'common/customSongsTable/customSongsTable';
 import useStylesCommon from 'common/comonStyles';
 import Song from 'models/interface/song';
 
