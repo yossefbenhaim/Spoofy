@@ -13,6 +13,7 @@ const useStylesCommon = makeStyles()({
         flexDirection: 'column',
         justifyContent: 'center',
     },
+
     header: {
         color: 'white',
         fontSize: '2.8rem',
@@ -50,7 +51,6 @@ const useStylesCommon = makeStyles()({
             borderBottomColor: 'black',
             left: 'inherit',
         },
-
         '& .MuiInputLabel-root.Mui-focused': {
             left: 'inherit',
             color: `rgb(74, 191, 117)`,
@@ -63,6 +63,7 @@ const useStylesCommon = makeStyles()({
         direction: 'rtl',
         left: 'inherit',
         color: '#ff0000',
+
         '& .MuiInputLabel-root': {
             left: 'inherit',
             color: '#ff0000',
@@ -72,7 +73,6 @@ const useStylesCommon = makeStyles()({
             textAlign: 'end',
             color: `rgb(255, 255, 255)`,
         },
-
         '& .MuiInput-root:after': {
             borderBottomColor: '#16b754',
         },
@@ -85,6 +85,31 @@ const useStylesCommon = makeStyles()({
         '& .MuiInputLabel-root.Mui-error': {
             borderBottomColor: 'black',
             left: 'inherit',
+        },
+    },
+
+    scrollbar: {
+        '*::-webkit-scrollbar': {
+            backgroundColor: '#7ead7b78',
+            width: '10px',
+            height: '10px',
+            borderRadius: '10px',
+        },
+        '*::-webkit-scrollbar-track': {
+            background: 'rgb(142 146 143)',
+            borderRadius: '10px',
+        },
+        '*::-webkit-scrollbar-thumb': {
+            borderRadius: '10px',
+            backgroundColor: '#29c029',
+        },
+        '*::-webkit-scrollbar-thumb:hover': {
+            borderRadius: '10px',
+            backgroundColor: '#41dc41',
+        },
+        '*::-webkit-scrollbar-corner': {
+            backgroundColor: 'gray',
+            borderRadius: '10px',
         },
     },
 });

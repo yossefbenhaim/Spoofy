@@ -22,10 +22,12 @@ const useStyles = makeStyles()({
             marginLeft: '300px',
         },
     },
+
     titleMenu: {
         left: '38px',
         color: 'white',
     },
+
     select: {
         width: '220px',
         backgroundColor: 'gray',
@@ -62,6 +64,7 @@ const useStyles = makeStyles()({
             fontSize: '2.5rem',
         },
     },
+
     menuItem: {
         direction: 'rtl',
     },

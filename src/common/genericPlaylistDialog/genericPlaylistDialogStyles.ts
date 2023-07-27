@@ -7,18 +7,21 @@ const useStyles = makeStyles()({
         borderRadius: '20px',
         border: `2px solid rgb(185,172,172)`,
         backgroundColor: `rgb(185, 172, 172)`,
+
         '&:hover': {
             backgroundColor: 'white',
             color: `rgb(185, 172, 172)`,
             border: `2px solid rgb(185, 172, 172)`,
         },
     },
+
     dialogContainer: {
         '& .MuiPaper-root ': {
             maxWidth: '800px',
             flexDirection: 'inherit',
         },
     },
+
     dialog: {
         backgroundColor: `rgb(118, 118, 118)`,
         width: '800px',
@@ -38,6 +41,7 @@ const useStyles = makeStyles()({
         fontWeight: 'bold',
         fontFamily: 'system-ui',
     },
+
     select: {
         color: `rgb(255, 255, 255)`,
         borderBottomColor: '#16b754',
@@ -109,6 +113,7 @@ const useStyles = makeStyles()({
         marginBottom: '3%',
         fontSize: '1rem',
         padding: '3px 16px',
+
         '&:hover': {
             backgroundColor: `rgb(80, 160, 60)`,
         },
@@ -120,11 +125,11 @@ const useStyles = makeStyles()({
         '& .MuiAutocomplete-endAdornment': {
             right: 'inherit',
         },
-
         '& .MuiInputBase-root': {
             paddingRight: '0px!important',
         },
     },
+
     songsInput: {
         width: '96%',
         marginLeft: '2%',
@@ -170,6 +175,7 @@ const useStyles = makeStyles()({
     checkBoxSongs: {
         direction: 'rtl',
     },
+
     selectedSong: {
         backgroundColor: 'rgb(75, 218, 128)',
         marginRight: '0.5%',

@@ -1,4 +1,4 @@
-enum SliceName {
+export enum SliceName {
     currentUser = 'currentUser',
     currentPlaylist = 'currentPlaylist',
     songs = 'songs',
@@ -6,5 +6,3 @@ enum SliceName {
     playlists = 'playlists',
     users = 'users',
 }
-
-export default SliceName;

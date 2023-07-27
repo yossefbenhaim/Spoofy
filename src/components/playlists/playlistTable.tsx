@@ -1,13 +1,14 @@
 import React from "react";
 
 import { IconButton, Typography } from "@mui/material";
+import { useAppSelector } from "redux/store";
+import { Playlist } from "models/interface/playlist";
+import { User } from "models/interface/user";
+
 import CustomSongsTable from "common/customSongsTable/customSongsTable";
 import useStyles from './playlistsTableStyles';
 import EditIcon from '@mui/icons-material/Edit';
-import Playlist from "models/interface/playlist";
 import isEqual from "lodash/isEqual";
-import { useAppSelector } from "redux/store";
-import User from "models/interface/user";
 
 interface Props {
 	handleClickOpen: (playlistId: Playlist | undefined) => void;

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import SliceName from 'models/emuns/sliceName';
-import User from 'models/interface/user';
+import { SliceName } from 'models/emuns/sliceName';
+import { User } from 'models/interface/user';
 
 interface CurrentUserSlice {
     user: User | undefined;

@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import SliceName from 'models/emuns/sliceName';
-import Playlist from 'models/interface/playlist';
-import PlaylistSong from 'models/interface/addPlaylistSong';
+import { PlaylistSong } from 'models/interface/addPlaylistSong';
+import { SliceName } from 'models/emuns/sliceName';
+import { Playlist } from 'models/interface/playlist';
 
 interface CurrentSongsSlice {
     playlists: Playlist[];
@@ -17,8 +16,6 @@ const Playlists = createSlice({
     initialState,
     reducers: {
         setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
-            console.log(action.payload);
-
             state.playlists = action.payload;
         },
         addPlaylist: (
@@ -45,13 +42,10 @@ const Playlists = createSlice({
 
             if (currentPlaylist) {
                 currentPlaylist.name = name;
-                console.log(currentPlaylist.name);
             }
         },
         updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
             const { playlistId, songsId } = action.payload;
-            console.log(state.playlists);
-
             const currentPlaylist = state.playlists.find(
                 (playlist) => playlist.id === playlistId
             );

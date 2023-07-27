@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { VariablsRowsGroup } from "models/emuns/variablsRowsGroup";
+
 import useStyles from "./rowsGroupStyles";
-enum VariablsRowsGroup {
-	group = 'מקובץ לפי זמר',
-	ungroup = 'ללא קיבוץ'
+
+interface Props {
+	setGroupingRows: React.Dispatch<React.SetStateAction<boolean>>
+	groupingRows: boolean
 }
 
-const RowsGroup: React.FC = () => {
+const RowsGroup: React.FC<Props> = (props) => {
+	const { setGroupingRows, groupingRows } = props
 	const { classes } = useStyles();
-	const [selected, setSelected] = React.useState(VariablsRowsGroup.ungroup as string);
+	const [selected] = useState<string>(groupingRows ? VariablsRowsGroup.ungroup : VariablsRowsGroup.group);
 
 	const handleChange = (event: SelectChangeEvent) => {
-		setSelected(event.target.value as string);
+		VariablsRowsGroup.group === event.target.value as string
+			?
+			setGroupingRows(false)
+			:
+			setGroupingRows(true)
 	};
-
 
 	return (
 		<FormControl className={classes.formControl} fullWidth>
-
 			<Select
 				className={classes.select}
 				labelId="demo-simple-select-label"
@@ -27,11 +33,20 @@ const RowsGroup: React.FC = () => {
 				label="Age"
 				onChange={handleChange}
 			>
-				<MenuItem className={classes.menuItem} value={VariablsRowsGroup.group}>{VariablsRowsGroup.group}</MenuItem>
-				<MenuItem className={classes.menuItem} value={VariablsRowsGroup.ungroup}>{VariablsRowsGroup.ungroup}</MenuItem>
+				<MenuItem
+					className={classes.menuItem}
+					value={VariablsRowsGroup.group}>
+					{VariablsRowsGroup.group}
+				</MenuItem>
+				<MenuItem
+					className={classes.menuItem}
+					value={VariablsRowsGroup.ungroup}>
+					{VariablsRowsGroup.ungroup}
+				</MenuItem>
 			</Select>
 		</FormControl>
 	);
 };
 
-export default RowsGroup;
+export default React.memo(RowsGroup)
+

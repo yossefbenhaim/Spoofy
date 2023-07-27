@@ -1,9 +1,6 @@
-import SongsId from './songId';
-interface Playlist {
+export interface Playlist {
     id: string;
     name: string;
     creatorId: string;
     songs: string[];
 }
-
-export default Playlist;

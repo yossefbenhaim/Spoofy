@@ -1,9 +1,4 @@
-import React, {
-	useRef,
-	useEffect,
-	useState
-} from 'react';
-
+import React, { useRef, useEffect, useState } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
 
 import IconButton from '@mui/material/IconButton';

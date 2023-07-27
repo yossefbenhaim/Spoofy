@@ -8,17 +8,15 @@ import {
 	Typography
 } from '@mui/material/';
 
-import { useNavigate } from 'react-router-dom';
+import { VariantType, useSnackbar } from 'notistack';
+import { FeedbackMessage } from 'models/emuns/feedbackMessage';
 import { useAppSelector } from 'redux/store';
+import { resetFavorites } from 'redux/slice/favorites';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-
-import { resetFavorites } from 'redux/slice/favorites';
 import { resetUser } from 'redux/slice/currentUser';
-import { VariantType, useSnackbar } from 'notistack';
-
-import FeedbackMessage from 'models/emuns/feedbackMessage';
-import User from 'models/interface/user';
+import { User } from 'models/interface/user';
 
 import DELETE_USER from 'queries/mutation/deleteUser';
 import useStyles from './userOptionMenuStyles';
@@ -82,26 +80,21 @@ const UserOptionMenu: React.FC = () => {
 					open={openDialogDelete}
 					keepMounted
 					onClose={handleClose}
+					className={classes.exitAccountContainer}
 				>
-					<DialogTitle className={classes.ExitAccountTitle}>
-						{' ?האם אתה בטוח שאתה רוצה למחוק את החשבון'}
+					<DialogTitle className={classes.exitAccountTitle}>
+						<Typography> ?האם אתה בטוח שאתה רוצה למחוק את החשבון</Typography>
 					</DialogTitle>
 
-					<DialogContentText
-						className={classes.ExitAccountHeader}
-					>
-						...במידה ותלחץ החשבון ימחק
-					</DialogContentText>
-
-					<DialogActions className={classes.ExitAccountContent}>
+					<DialogActions className={classes.exitAccountContent}>
 						<Button
 							onClick={handleClose}
-							className={classes.ExitBtn}
+							className={classes.exitBtn}
 						>
 							לא
 						</Button>
 						<Button
-							className={classes.ExitBtn}
+							className={classes.exitBtn}
 							onClick={() => {
 								handleClose();
 								navigateToHome();

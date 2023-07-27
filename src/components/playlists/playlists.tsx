@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { useAppSelector } from 'redux/store';
 import { Typography, Button } from '@mui/material';
+import { Playlist } from 'models/interface/playlist';
 
 import useStylesCommon from 'common/comonStyles';
 import useStyles from './playlistsTableStyles';
 import GenericPlaylistDialog from 'common/genericPlaylistDialog/genericPlaylistDialog';
-import Playlist from 'models/interface/playlist';
 import PlaylistsTables from './playlistsTables';
 
 const Playlists: React.FC = () => {

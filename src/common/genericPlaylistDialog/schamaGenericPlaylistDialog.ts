@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
+import { AddPlaylistFormFieldName } from 'models/emuns/addPlaylistFormFieldName';
 import ErrorMessageDialogAddPlaylist from './errorMessage';
 
 const GenericPlaylistDialogSchema = z.object({

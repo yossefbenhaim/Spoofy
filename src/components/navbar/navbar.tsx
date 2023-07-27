@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
+import { PathName } from 'models/emuns/pathName';
 
 import Button from '@mui/material/Button';
 import useStyles from './navbarStyles';
-import PathName from 'models/emuns/pathName';
 
 interface Navbar {
 	item: string,

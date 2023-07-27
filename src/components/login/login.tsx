@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import {
 	Button,
 	MenuItem,
@@ -10,18 +11,17 @@ import {
 } from '@mui/material';
 
 import { VariantType, useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
-import { setUser } from 'redux/slice/currentUser';
-import { useDispatch } from 'react-redux';
+import { FeedbackMessage } from 'models/emuns/feedbackMessage';
 import { useAppSelector } from 'redux/store';
-
-import FeedbackMessage from 'models/emuns/feedbackMessage';
-import User from 'models/interface/user';
-import PathName from 'models/emuns/pathName';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { PathName } from 'models/emuns/pathName';
+import { setUser } from 'redux/slice/currentUser';
+import { User } from 'models/interface/user';
 
 import IconHome from 'components/lottie/iconHome/iconHome';
 import useStyles from './loginStyles';
-import usersQueary from './useLogin';
+import usersQueary from './usersQueary';
 const Login: React.FC = () => {
 	usersQueary();
 	const { classes } = useStyles();

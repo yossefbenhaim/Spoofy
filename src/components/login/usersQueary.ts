@@ -1,7 +1,8 @@
+import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { setUsers } from 'redux/slice/users';
-import { useDispatch } from 'react-redux';
-import User from 'models/interface/user';
+import { User } from 'models/interface/user';
+
 import GET_USERS from 'queries/query/users';
 
 const usersQueary = () => {

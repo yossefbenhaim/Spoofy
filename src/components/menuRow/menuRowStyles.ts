@@ -39,29 +39,6 @@ const useStyles = makeStyles()({
             width: '10%',
             backgroundColor: 'gray',
             direction: 'rtl',
-
-            '::-webkit-scrollbar': {
-                backgroundColor: '#7ead7b78',
-                width: '10px',
-                height: '10px',
-                borderRadius: '10px',
-            },
-            '::-webkit-scrollbar-track': {
-                background: 'rgb(142 146 143)',
-                borderRadius: '10px',
-            },
-            '::-webkit-scrollbar-thumb': {
-                borderRadius: '10px',
-                backgroundColor: '#29c029',
-            },
-            '::-webkit-scrollbar-thumb:hover': {
-                borderRadius: '10px',
-                backgroundColor: '#41dc41',
-            },
-            '::-webkit-scrollbar-corner': {
-                backgroundColor: 'gray',
-                borderRadius: '10px',
-            },
         },
         '& .MuiList-root': {
             paddingTop: '0px',

@@ -1,7 +1,8 @@
-import { persistStore, persistReducer } from 'redux-persist';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
 import { combineReducers } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import { SliceName } from 'models/emuns/sliceName';
 
 import usersReduser from './slice/users';
 import songsReducer from './slice/songs';
@@ -9,7 +10,6 @@ import currentSongReducer from './slice/currentPlaylist';
 import currentUserReducer from './slice/currentUser';
 import favoritesSongReduser from './slice/favorites';
 import PlaylistsReduser from './slice/playlists';
-import SliceName from 'models/emuns/sliceName';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {

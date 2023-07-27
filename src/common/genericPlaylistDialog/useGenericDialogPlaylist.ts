@@ -1,28 +1,24 @@
-import { useEffect } from 'react';
-
+import { GenericPlaylistDialogForm } from './schamaGenericPlaylistDialog';
 import { VariantType, useSnackbar } from 'notistack';
+import { SnakbarMessage } from './snakbarMessage';
+import { useAppSelector } from 'redux/store';
 import { SubmitHandler } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
-import { GenericPlaylistDialogForm } from './schamaGenericPlaylistDialog';
-import { useAppSelector } from 'redux/store';
 import { difference } from 'lodash';
+import { Playlist } from 'models/interface/playlist';
 
 import ADD_PLAYLIST from 'queries/mutation/addPlaylist';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import UPDATE_PLAYLIST_NAME from 'queries/mutation/updatePlaylistName';
 import DELETE_PLAYLIST_SONG from 'queries/mutation/deletePlaylistSong';
 
-import SnakbarMessage from './snakbarMessage';
-import Playlist from 'models/interface/playlist';
-
 interface Props {
-    openDialogAddPlaylist: boolean;
     currentPlaylist: Playlist | undefined;
     handleClose: () => void;
 }
 
 const useGenericDialogPlaylist = (props: Props) => {
-    const { currentPlaylist, handleClose, openDialogAddPlaylist } = props;
+    const { currentPlaylist, handleClose } = props;
     const { enqueueSnackbar } = useSnackbar();
 
     const [mutationAddPlaylist] = useMutation(ADD_PLAYLIST);
@@ -55,7 +51,6 @@ const useGenericDialogPlaylist = (props: Props) => {
                     },
                 });
                 const newPlaylistId = res.data.createPlaylist.playlist.id;
-
                 songs.map(async (song) => {
                     await mutationAddPlaylistSong({
                         variables: {

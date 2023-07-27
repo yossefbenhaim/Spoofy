@@ -2,14 +2,14 @@ import React from 'react';
 
 import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
+import { TablesIds } from 'models/emuns/tablesIds';
+import { Song } from 'models/interface/song';
 
 import useStyles from './songsTableStyles';
 import AddSong from 'components/addSong/addSong';
-import TablesIds from 'models/emuns/tablesIds';
 
 import CustomSongsTable from 'common/customSongsTable/customSongsTable';
 import useStylesCommon from 'common/comonStyles';
-import Song from 'models/interface/song';
 
 const SongsTable: React.FC = () => {
 	const { classes } = useStyles();

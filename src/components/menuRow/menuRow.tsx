@@ -1,16 +1,17 @@
 import React from 'react';
 
 import { Menu, MenuItem, IconButton, Typography } from '@mui/material';
-import { useAppSelector } from 'redux/store';
-import { useMutation } from '@apollo/client';
 import { VariantType, useSnackbar } from 'notistack';
+import { useAppSelector } from 'redux/store';
+import { ErrorMessage } from './errorMassege';
+import { useMutation } from '@apollo/client';
+import { Playlist } from 'models/interface/playlist';
 
-import ErrorMessage from './errorMassege';
 import findSongNameById from 'utils/findSongById';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import AddIcon from '@mui/icons-material/Add';
 import useStyles from './menuRowStyles';
-import Playlist from 'models/interface/playlist';
+import useStylesCommon from 'common/comonStyles';
 
 interface Props {
 	rowId: string
@@ -18,6 +19,7 @@ interface Props {
 
 const MenuRow: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
+	const { classes: classesCommon } = useStylesCommon();
 	const { rowId } = props
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -73,7 +75,7 @@ const MenuRow: React.FC<Props> = (props) => {
 				anchorEl={anchorEl}
 				open={openMenu}
 				onClose={handleClose}
-				className={classes.menuContainer}
+				className={`${classes.menuContainer} ${classesCommon.scrollbar}`}
 			>
 				<Typography className={classes.menuTitle}>הוסף לפלייליסט</Typography>
 				{playlists.map((playlist: Playlist) =>

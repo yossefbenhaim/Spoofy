@@ -1,9 +1,6 @@
-import React, {
-	useRef,
-	useEffect,
-} from 'react';
-
+import React, { useRef, useEffect, } from 'react';
 import Lottie, { AnimationItem } from 'lottie-web';
+
 import useStyles from './iconHomeStyles';
 
 const IconHome: React.FC = () => {

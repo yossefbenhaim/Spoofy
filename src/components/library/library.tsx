@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
+
 import getSubscription from 'hooks/getSubscription';
 import useStyles from './libraryStyles';
 
@@ -31,7 +33,7 @@ const Library: React.FC = () => {
 					<UserOptionMenu />
 					<div className={classes.logoContainer}>
 						<IconMusify />
-						<Typography>musify </Typography>
+						<Typography className={classes.textLogo}>musify </Typography>
 					</div>
 				</div>
 			</div>

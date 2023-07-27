@@ -11,16 +11,15 @@ import {
     resetCurrentSongId,
 } from 'redux/slice/currentPlaylist';
 
+import { useSubscription } from '@apollo/client';
+import { useAppSelector } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { Song } from 'models/interface/song';
+
 import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/addPlaylistSongSubscription';
 import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
 import DELETE_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/deletePlaylistSongSubscription';
 import UPDATE_PLAYLIST_NAME_SUBSCRIPTION from 'queries/subscription/updatePlaylistNameSubscription';
-
-import { useSubscription } from '@apollo/client';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from 'redux/store';
-
-import Song from 'models/interface/song';
 
 const getSubscription = () => {
     const dispatch = useDispatch();

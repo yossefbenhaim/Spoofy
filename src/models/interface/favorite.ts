@@ -1,4 +1,3 @@
-interface Favorite {
+export interface Favorite {
     songId: string;
 }
-export default Favorite;

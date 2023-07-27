@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Favorite from 'models/interface/favorite';
-import SliceName from 'models/emuns/sliceName';
+import { Favorite } from 'models/interface/favorite';
+import { SliceName } from 'models/emuns/sliceName';
 
 interface currentFavoritesSlice {
     favorites: Favorite[];

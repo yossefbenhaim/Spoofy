@@ -7,10 +7,12 @@ const useStyles = makeStyles()({
         textShadow: '2px 2px 2px black',
     },
     btn: {
-        backgroundColor: `rgb(70, 138, 41)`,
+        backgroundImage: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
         borderRadius: '10px',
+        backgroundSize: '200%',
+        transition: '0.6s',
         '&:hover': {
-            backgroundColor: `rgb(21, 162, 49)`,
+            backgroundPosition: 'right',
         },
     },
     fieldsContainer: {

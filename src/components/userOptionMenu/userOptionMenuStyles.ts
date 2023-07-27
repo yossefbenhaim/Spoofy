@@ -46,17 +46,41 @@ const useStyles = makeStyles()({
             backgroundColor: 'white',
         },
     },
-    ExitAccountTitle: {
+    exitAccountContainer: {
+        '& .MuiPaper-root': {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            width: '50%',
+            height: '20%',
+            backgroundColor: 'gray',
+        },
+    },
+    exitAccountTitle: {
+        color: 'white',
+        textAlign: 'right',
+        backgroundColor: 'rgb(74, 191, 117)',
+    },
+    exitAccountContent: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+
+    exitBtn: {
+        padding: '3px 10px',
+        margin: '5px',
+        borderRadius: '20px',
+        minWidth: '106px',
+        lineHeight: '1',
+        border: `2px solid white`,
         backgroundColor: `rgb(74, 191, 117)`,
-    },
-    ExitAccountContent: { backgroundColor: `rgb(130, 130, 124)` },
-    ExitAccountHeader: {
-        backgroundColor: `rgb(130, 130, 124)`,
-        textAlign: 'end',
-        paddingRight: '22px',
-    },
-    ExitBtn: {
-        color: `rgb(74, 191, 117)`,
+        color: 'white',
+        '&:hover': {
+            backgroundColor: 'white',
+            color: `rgb(74, 191, 117)`,
+            border: `2px solid rgb(74, 191, 117)`,
+        },
     },
 });
 

@@ -1,11 +1,11 @@
-import { StyledEngineProvider } from '@mui/material';
-import { Provider } from 'react-redux';
 import { store, persistodStore } from 'redux/store';
-import { ApolloProvider } from '@apollo/client';
+import { StyledEngineProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import { SnackbarProvider } from 'notistack';
+import { ApolloProvider } from '@apollo/client';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { PersistGate } from 'redux-persist/integration/react';
-import { SnackbarProvider } from 'notistack';
+import { Provider } from 'react-redux';
 
 import ReactDOM from 'react-dom/client';
 import App from './components/App';

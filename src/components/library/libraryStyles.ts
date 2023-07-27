@@ -28,6 +28,9 @@ const useStyles = makeStyles()({
     logo: {
         marginRight: '4px',
     },
+    textLogo: {
+        fontSize: '30px',
+    },
     navigation: {
         width: '100%',
         height: '74%',

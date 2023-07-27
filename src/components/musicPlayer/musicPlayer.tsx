@@ -2,8 +2,9 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 import { Slide, Slider, IconButton, Typography } from '@mui/material/';
 import { setCurrentSongId } from 'redux/slice/currentPlaylist';
-import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { Song } from 'models/interface/song';
 
 import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -12,7 +13,6 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 
 import useStyles from './musicPlayerStyles';
 import formatDuration from 'utils/formatDuration';
-import Song from 'models/interface/song';
 
 
 const MusicPlayer: React.FC = () => {

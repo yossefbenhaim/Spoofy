@@ -33,30 +33,16 @@ const useStyles = makeStyles()({
         '& .MuiDataGrid-cell:focus-within': {
             outline: 'none!important',
         },
-
-        '& *': {
-            '*::-webkit-scrollbar': {
-                backgroundColor: '#7ead7b78',
-                width: '10px',
-                height: '10px',
-                borderRadius: '10px',
-            },
-            '*::-webkit-scrollbar-track': {
-                background: 'rgb(142 146 143)',
-                borderRadius: '10px',
-            },
-            '*::-webkit-scrollbar-thumb': {
-                borderRadius: '10px',
-                backgroundColor: '#29c029',
-            },
-            '*::-webkit-scrollbar-thumb:hover': {
-                borderRadius: '10px',
-                backgroundColor: '#41dc41',
-            },
-            '*::-webkit-scrollbar-corner': {
-                backgroundColor: 'gray',
-                borderRadius: '10px',
-            },
+        '& .MuiDataGrid-groupingCriteriaCell ': {
+            direction: 'ltr',
+        },
+        '& .MuiButtonBase-root svg': {
+            color: 'white',
+            fontSize: '1.5rem',
+            transform: 'rotate(90deg)',
+        },
+        '& .MuiDataGrid-groupingCriteriaCell span 3 ': {
+            display: 'none',
         },
     },
 

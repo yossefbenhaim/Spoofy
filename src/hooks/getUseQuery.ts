@@ -1,15 +1,17 @@
 import GET_SONGS from 'queries/query/songs';
+
+import { useAppSelector } from 'redux/store';
+import { setPlaylists } from 'redux/slice/playlists';
+import { setFavorites } from 'redux/slice/favorites';
+import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { setSongs } from 'redux/slice/songs';
-import { useDispatch } from 'react-redux';
-import Song from 'models/interface/song';
+import { Favorite } from 'models/interface/favorite';
+import { Playlist } from 'models/interface/playlist';
+import { Song } from 'models/interface/song';
+
 import GET_PLAYLIST from 'queries/query/playlists';
-import { setPlaylists } from 'redux/slice/playlists';
-import Playlist from 'models/interface/playlist';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
-import { useAppSelector } from 'redux/store';
-import Favorite from 'models/interface/favorite';
-import { setFavorites } from 'redux/slice/favorites';
 
 const getUseQuery = () => {
     const dispatch = useDispatch();
@@ -41,7 +43,6 @@ const getUseQuery = () => {
             const playlistsSong = (
                 data.allPlaylists.nodes as any[]
             ).map<Playlist>(parse_playlist);
-            console.log(playlistsSong);
 
             dispatch(setPlaylists(playlistsSong));
         },

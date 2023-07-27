@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+
 import {
 	Button,
 	Typography,
@@ -9,23 +10,23 @@ import {
 	Autocomplete
 } from '@mui/material';
 
+import { GenericPlaylistDialogForm } from './schamaGenericPlaylistDialog';
+import { AddPlaylistFormFieldName } from 'models/emuns/addPlaylistFormFieldName';
+import { VariablesDialogPlaylist } from 'models/emuns/variablesDialogPlaylist';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GenericPlaylistDialogForm } from './schamaGenericPlaylistDialog';
+import { Playlist } from 'models/interface/playlist';
+import { Song } from 'models/interface/song';
 
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import AddPlaylistFormFieldName from 'models/emuns/addPlaylistFormFieldName';
 import GenericPlaylistDialogSchema from './schamaGenericPlaylistDialog';
 
 import findSongNameById from 'utils/findSongById';
 import useStyles from './genericPlaylistDialogStyles';
-import Playlist from 'models/interface/playlist';
 import useStylesCommon from 'common/comonStyles';
 import useGenericDialogPlaylist from './useGenericDialogPlaylist';
-import VariablesDialogPlaylist from 'models/emuns/variablesDialogPlaylist';
-import Song from 'models/interface/song';
 
 interface Props {
 	openDialogAddPlaylist: boolean,
@@ -33,12 +34,16 @@ interface Props {
 	handleClose: () => void,
 }
 
-
 const GenericPlaylistDialog: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
 	const { currentPlaylist, handleClose, openDialogAddPlaylist } = props
-	const { defaultDialogValues, onSubmit, IS_EDIT, songs } = useGenericDialogPlaylist({ currentPlaylist, handleClose, openDialogAddPlaylist })
+	const {
+		defaultDialogValues,
+		onSubmit,
+		IS_EDIT,
+		songs
+	} = useGenericDialogPlaylist({ currentPlaylist, handleClose })
 
 	const { handleSubmit, reset, control, formState: { errors } } = useForm<GenericPlaylistDialogForm>({
 		resolver: zodResolver(GenericPlaylistDialogSchema),
@@ -46,7 +51,6 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 			name: defaultDialogValues.name,
 			songs: defaultDialogValues.songs
 		},
-
 	});
 
 	useEffect(() => {
