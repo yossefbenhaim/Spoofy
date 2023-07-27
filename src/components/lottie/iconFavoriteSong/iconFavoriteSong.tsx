@@ -59,7 +59,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 		} else {
 			animref.current && animref.current.stop();
 		}
-	}, [rowSongId, favoritesLike])
+	}, [rowSongId, favoritesLike.length > 0])
 
 	const handleClikeOnLike = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();

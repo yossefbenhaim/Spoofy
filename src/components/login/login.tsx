@@ -22,6 +22,7 @@ import { User } from 'models/interface/user';
 import IconHome from 'components/lottie/iconHome/iconHome';
 import useStyles from './loginStyles';
 import usersQueary from './usersQueary';
+
 const Login: React.FC = () => {
 	usersQueary();
 	const { classes } = useStyles();

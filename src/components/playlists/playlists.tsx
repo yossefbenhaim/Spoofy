@@ -18,7 +18,6 @@ const Playlists: React.FC = () => {
 	const playlists = useAppSelector((state) => state.playlists.playlists);
 
 	const handleClickOpen = (newCurrentPlaylist: Playlist | undefined) => {
-
 		if (newCurrentPlaylist !== undefined) {
 			setCurrentPlaylist(newCurrentPlaylist)
 		} else {
