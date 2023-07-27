@@ -9,7 +9,7 @@ import useStyles from './songsTableStyles';
 import AddSong from 'components/addSong/addSong';
 
 import CustomSongsTable from 'common/customSongsTable/customSongsTable';
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 
 const SongsTable: React.FC = () => {
 	const { classes } = useStyles();

@@ -93,24 +93,6 @@ const useStyles = makeStyles()({
         fontWeight: 'bold',
         fontSize: '14px',
     },
-
-    submitButton: {
-        backgroundColor: `rgb(70, 138, 41)`,
-        borderRadius: '30px',
-        minWidth: '15%',
-        width: '15%',
-        marginLeft: '44%',
-        marginBottom: '3%',
-        fontSize: '1rem',
-        padding: '3px 16px',
-        border: '1px solid white',
-
-        '&:hover': {
-            backgroundColor: `white`,
-            color: 'rgb(70, 138, 41)',
-            border: '1px solid rgb(70, 138, 41)',
-        },
-    },
 });
 
 export default useStyles;

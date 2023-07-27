@@ -11,7 +11,7 @@ import MenuRow from 'components/menuRow/menuRow';
 import IconFavoriteSong from 'components/lottie/iconFavoriteSong/iconFavoriteSong';
 
 import useStyles from './customSongsTableStyles';
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 import formatDuration from 'utils/formatDuration';
 import IconEmptyRows from 'components/lottie/emptyRowsScrean/icomEmptyRows';
 import RowsGroup from 'common/rowsGroup/rowsGroup';

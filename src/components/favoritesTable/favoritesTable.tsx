@@ -5,7 +5,7 @@ import { TablesIds } from 'models/emuns/tablesIds';
 import { Favorite } from 'models/interface/favorite';
 
 import useStyles from './favoritesTableStyles';
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 import CustomSongsTable from 'common/customSongsTable/customSongsTable';
 
 const FavoritesTable: React.FC = () => {

@@ -25,7 +25,7 @@ import GenericPlaylistDialogSchema from './schamaGenericPlaylistDialog';
 
 import findSongNameById from 'utils/findSongById';
 import useStyles from './genericPlaylistDialogStyles';
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 import useGenericDialogPlaylist from './useGenericDialogPlaylist';
 
 interface Props {
@@ -151,9 +151,9 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 								/>
 							)}
 						/>
-						<div className={classes.submitButtonContainer}>
+						<div className={classesCommon.submitButtonContainer}>
 							<Button
-								className={classes.submitButton}
+								className={classesCommon.submitButton}
 								variant="contained"
 								type="submit"
 							>

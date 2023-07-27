@@ -11,7 +11,7 @@ import findSongNameById from 'utils/findSongById';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import AddIcon from '@mui/icons-material/Add';
 import useStyles from './menuRowStyles';
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 
 interface Props {
 	rowId: string

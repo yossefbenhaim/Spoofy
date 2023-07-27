@@ -23,7 +23,7 @@ import AddSongSchema from './AddSongSchema';
 import GET_ARTIST from 'queries/query/artists';
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 import useAddSong from './useAddSong';
 
 const AddSong: React.FC = () => {
@@ -151,13 +151,16 @@ const AddSong: React.FC = () => {
 								/>
 							)}
 						/>
-						<Button
-							className={classes.submitButton}
-							variant="contained"
-							type="submit"
-						>
-							צור שיר
-						</Button>
+						<div className={classesCommon.submitButtonContainer}>
+							<Button
+								className={classesCommon.submitButton}
+								variant="contained"
+								type="submit"
+							>
+								צור שיר
+							</Button>
+						</div>
+
 					</div>
 				</form>
 			</Dialog>

@@ -4,7 +4,7 @@ import { useAppSelector } from 'redux/store';
 import { Typography, Button } from '@mui/material';
 import { Playlist } from 'models/interface/playlist';
 
-import useStylesCommon from 'common/comonStyles';
+import useStylesCommon from 'common/commonStyles';
 import useStyles from './playlistsTableStyles';
 import GenericPlaylistDialog from 'common/genericPlaylistDialog/genericPlaylistDialog';
 import PlaylistsTables from './playlistsTables';
