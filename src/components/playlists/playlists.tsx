@@ -40,7 +40,7 @@ const Playlists: React.FC = () => {
 			<div className={classes.addSongBtnContainer}>
 				<Button
 					variant="contained"
-					className={classes.addSongBtn}
+					className={classesCommon.addButton}
 					onClick={() => { handleClickOpen(undefined) }}
 				>
 					+ צור פלייליסט חדש

@@ -121,16 +121,30 @@ const useStylesCommon = makeStyles()({
     },
 
     submitButton: {
-        backgroundColor: `rgb(70, 138, 41)`,
         borderRadius: '30px',
         minWidth: '15%',
-        width: '16%',
+        width: '18%',
         marginBottom: '3%',
         fontSize: '1rem',
         padding: '3px 16px',
-
+        backgroundImage: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
+        backgroundSize: '200%',
+        transition: '0.6s',
         '&:hover': {
-            backgroundColor: `rgb(80, 160, 60)`,
+            backgroundPosition: 'right',
+        },
+    },
+
+    addButton: {
+        marginTop: '4px',
+        padding: '2px 18px',
+        borderRadius: '20px',
+        backgroundImage:
+            'linear-gradient(to left, rgb(185, 172, 172),gray,rgb(185, 172, 172))',
+        backgroundSize: '200%',
+        transition: '0.6s',
+        '&:hover': {
+            backgroundPosition: 'right',
         },
     },
 });

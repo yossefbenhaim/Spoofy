@@ -62,7 +62,6 @@ const useStyles = makeStyles()({
     namePlaylist: {
         fontWeight: 'bold',
     },
-    nameCreator: {},
     editBtn: {
         marginRight: '1%',
         color: 'white',
@@ -76,18 +75,6 @@ const useStyles = makeStyles()({
         marginBottom: '1%',
         marginTop: '1%',
         textAlign: 'center',
-    },
-    addSongBtn: {
-        marginTop: '4px',
-        padding: '2px 18px',
-        borderRadius: '20px',
-        border: `2px solid rgb(185,172,172)`,
-        backgroundColor: `rgb(185, 172, 172)`,
-        '&:hover': {
-            backgroundColor: 'white',
-            color: `rgb(185, 172, 172)`,
-            border: `2px solid rgb(185, 172, 172)`,
-        },
     },
 });
 

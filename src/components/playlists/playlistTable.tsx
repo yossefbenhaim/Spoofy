@@ -35,7 +35,7 @@ const PlaylistTable: React.FC<Props> = (props) => {
 				</IconButton>
 				<div className={classes.namePlaylistContainer}>
 					<Typography className={classes.namePlaylist}>{playlist.name}</Typography>
-					<Typography className={classes.nameCreator}>{findCreatorName(playlist.creatorId)}</Typography>
+					<Typography >{findCreatorName(playlist.creatorId)}</Typography>
 				</div>
 			</div>
 			<div className={classes.playlistTable}>

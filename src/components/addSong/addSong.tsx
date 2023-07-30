@@ -63,7 +63,7 @@ const AddSong: React.FC = () => {
 			<Button
 				variant="contained"
 				onClick={handleClickOpen}
-				className={classes.addSongBtn}
+				className={classesCommon.addButton}
 			>
 				+ צור שיר
 			</Button>
@@ -157,7 +157,7 @@ const AddSong: React.FC = () => {
 								variant="contained"
 								type="submit"
 							>
-								צור שיר
+								🎵 צור שיר
 							</Button>
 						</div>
 

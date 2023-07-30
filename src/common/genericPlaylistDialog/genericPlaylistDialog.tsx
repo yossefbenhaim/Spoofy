@@ -158,9 +158,9 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 								type="submit"
 							>
 								{IS_EDIT ?
-									VariablesDialogPlaylist.update
+									'✔ ' + VariablesDialogPlaylist.update
 									:
-									VariablesDialogPlaylist.create
+									'🎧 ' + VariablesDialogPlaylist.create
 								}
 							</Button>
 						</div>
