@@ -139,6 +139,7 @@ const useStylesCommon = makeStyles()({
         marginTop: '4px',
         padding: '2px 18px',
         borderRadius: '20px',
+        fontSize: '1rem',
         backgroundImage:
             'linear-gradient(to left, rgb(185, 172, 172),gray,rgb(185, 172, 172))',
         backgroundSize: '200%',
