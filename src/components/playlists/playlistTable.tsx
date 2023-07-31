@@ -39,8 +39,9 @@ const PlaylistTable: React.FC<Props> = (props) => {
 				</div>
 			</div>
 			<div className={classes.playlistTable}>
-
-				<CustomSongsTable tableId={playlist.id} tableSongs={playlist.songs.map((song) => song)} />
+				<CustomSongsTable
+					tableId={playlist.id}
+					tableSongs={playlist.songs.map((songs) => songs)} />
 			</div>
 		</div>
 	)

@@ -12,7 +12,6 @@ interface Props {
 const PlaylistsTables: React.FC<Props> = (props) => {
 	const { handleClickOpen, playlists } = props;
 
-
 	return (
 		<>
 			{playlists.map((playlist) => (

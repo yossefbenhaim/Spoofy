@@ -27,6 +27,7 @@ const CustomSongsTable: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
 	const dispatch = useDispatch();
+	console.log('testttt');
 
 	const {
 		filteredSongs,
@@ -165,4 +166,4 @@ const CustomSongsTable: React.FC<Props> = (props) => {
 	);
 };
 
-export default CustomSongsTable;
+export default React.memo(CustomSongsTable);
