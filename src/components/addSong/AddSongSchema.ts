@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import { ErrorMessageDialogAddSong } from './errorMessage';
-import { AddSongFormFieldsNames } from 'models/emuns/formFieldsName';
+import { AddSongFormFieldsNames } from 'models/enums/formFieldsName';
 
 const AddSongSchema = z.object({
     [AddSongFormFieldsNames.name]: z

@@ -8,7 +8,7 @@ import {
 } from '@mui/material/';
 
 import { VariantType, useSnackbar } from 'notistack';
-import { FeedbackMessage } from 'models/emuns/feedbackMessage';
+import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { useAppSelector } from 'redux/store';
 import { resetFavorites } from 'redux/slice/favorites';
 import { useNavigate } from 'react-router-dom';

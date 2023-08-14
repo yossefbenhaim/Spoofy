@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { VariablsRowsGroup } from "models/emuns/variablsRowsGroup";
+import { VariablsRowsGroup } from "models/enums/variablsRowsGroup";
 
 import useStyles from "./rowsGroupStyles";
 

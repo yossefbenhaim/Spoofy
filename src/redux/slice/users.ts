@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SliceName } from 'models/emuns/sliceName';
+import { SliceName } from 'models/enums/sliceName';
 import { User } from 'models/interface/user';
 
 interface CurrentSongsSlice {

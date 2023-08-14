@@ -3,7 +3,7 @@ import Lottie, { AnimationItem } from 'lottie-web';
 
 import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
 import { VariantType, useSnackbar } from 'notistack';
-import { FeedbackMessage } from 'models/emuns/feedbackMessage';
+import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { useAppSelector } from 'redux/store';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';

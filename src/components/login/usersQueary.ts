@@ -5,7 +5,7 @@ import { User } from 'models/interface/user';
 
 import GET_USERS from 'queries/query/users';
 
-const usersQueary = () => {
+const usersQuery = () => {
     const dispatch = useDispatch();
 
     const parse_users = (userDB: any) => ({
@@ -25,4 +25,4 @@ const usersQueary = () => {
     });
 };
 
-export default usersQueary;
+export default usersQuery;

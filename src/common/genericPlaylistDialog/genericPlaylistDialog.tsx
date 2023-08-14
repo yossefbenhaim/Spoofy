@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 
 import { GenericPlaylistDialogForm } from './schamaGenericPlaylistDialog';
-import { AddPlaylistFormFieldName } from 'models/emuns/addPlaylistFormFieldName';
-import { VariablesDialogPlaylist } from 'models/emuns/variablesDialogPlaylist';
+import { AddPlaylistFormFieldName } from 'models/enums/addPlaylistFormFieldName';
+import { VariablesDialogPlaylist } from 'models/enums/variablesDialogPlaylist';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Playlist } from 'models/interface/playlist';

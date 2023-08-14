@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { combineReducers } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
-import { SliceName } from 'models/emuns/sliceName';
+import { SliceName } from 'models/enums/sliceName';
 
 import usersReduser from './slice/users';
 import songsReducer from './slice/songs';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LicenseInfo } from '@mui/x-license-pro';
-import { PathName } from 'models/emuns/pathName';
+import { PathName } from 'models/enums/pathName';
 
 import Login from './login/login';
 import Library from './library/library';

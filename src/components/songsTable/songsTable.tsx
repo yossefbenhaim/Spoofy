@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
-import { TablesIds } from 'models/emuns/tablesIds';
+import { TablesIds } from 'models/enums/tablesIds';
 import { Song } from 'models/interface/song';
 
 import useStyles from './songsTableStyles';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PathName } from 'models/emuns/pathName';
+import { PathName } from 'models/enums/pathName';
 
 import Button from '@mui/material/Button';
 import useStyles from './navbarStyles';

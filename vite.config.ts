@@ -6,6 +6,10 @@ import dotenv from 'dotenv';
 export default defineConfig(({ mode }) => {
     const env = dotenv.config({ path: `.env.${mode}` }).parsed;
     return {
+        server: {
+            port: 5173,
+            host: '0.0.0.0',
+        },
         define: {
             'process.env': JSON.stringify(env),
         },

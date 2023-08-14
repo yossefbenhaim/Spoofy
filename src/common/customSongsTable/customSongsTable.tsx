@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 
 import { DataGridPremium, GridColDef } from '@mui/x-data-grid-premium';
 import { setCurrentTableId } from 'redux/slice/currentPlaylist';
-import { ColumnsNames } from 'models/emuns/columnsNames';
-import { RowsFieldsb } from 'models/emuns/rowsField';
+import { ColumnsNames } from 'models/enums/columnsNames';
+import { RowsFieldsb } from 'models/enums/rowsField';
 import { useDispatch } from 'react-redux';
 import { setSongs } from 'redux/slice/currentPlaylist';
 

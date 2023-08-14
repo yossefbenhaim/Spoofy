@@ -1,7 +1,7 @@
 import { VariantType, useSnackbar } from 'notistack';
-import { AddSongFormFieldsNames } from 'models/emuns/formFieldsName';
+import { AddSongFormFieldsNames } from 'models/enums/formFieldsName';
 import { useQuery, useMutation } from '@apollo/client';
-import { FeedbackMessage } from 'models/emuns/feedbackMessage';
+import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { AddSongForm } from './AddSongSchema';

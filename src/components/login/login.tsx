@@ -11,20 +11,20 @@ import {
 } from '@mui/material';
 
 import { VariantType, useSnackbar } from 'notistack';
-import { FeedbackMessage } from 'models/emuns/feedbackMessage';
+import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { useAppSelector } from 'redux/store';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { PathName } from 'models/emuns/pathName';
+import { PathName } from 'models/enums/pathName';
 import { setUser } from 'redux/slice/currentUser';
 import { User } from 'models/interface/user';
 
 import IconHome from 'components/lottie/iconHome/iconHome';
 import useStyles from './loginStyles';
-import usersQueary from './usersQueary';
+import usersQuery from './usersQueary';
 
 const Login: React.FC = () => {
-	usersQueary();
+	usersQuery();
 	const { classes } = useStyles();
 	const { enqueueSnackbar } = useSnackbar();
 

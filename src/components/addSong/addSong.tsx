@@ -11,7 +11,7 @@ import {
 	Dialog
 } from '@mui/material';
 
-import { AddSongFormFieldsNames } from 'models/emuns/formFieldsName';
+import { AddSongFormFieldsNames } from 'models/enums/formFieldsName';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddSongForm } from './AddSongSchema';
