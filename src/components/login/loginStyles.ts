@@ -81,7 +81,7 @@ const useStyles = makeStyles()({
     titleContainer: {
         display: 'flex',
         flexDirection: 'column',
-        width: '15%',
+        width: '17%',
     },
     iconHomeContainer: {
         width: '100%',
