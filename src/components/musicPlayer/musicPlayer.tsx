@@ -24,7 +24,7 @@ const MusicPlayer: React.FC = () => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 
-	const intarval = useRef<NodeJS.Timer | undefined>(undefined)
+	const intarval = useRef<NodeJS.Timer | undefined | number>(undefined)
 	const filterSongs = useAppSelector((state) => state.currentPlaylist.songs);
 	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 
@@ -43,7 +43,7 @@ const MusicPlayer: React.FC = () => {
 	}
 
 	const clearIntervalOfSlider = () => {
-		intarval.current && clearInterval(intarval.current);
+		intarval.current && clearInterval(intarval.current as number);
 		intarval.current = undefined;
 	}
 
