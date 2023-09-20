@@ -5,7 +5,7 @@ import { VariantType, useSnackbar } from 'notistack';
 import { useAppSelector } from 'redux/store';
 import { ErrorMessage } from './errorMassege';
 import { useMutation } from '@apollo/client';
-import { Playlist } from 'models/interface/playlist';
+import { Playlist } from 'models/interface/Playlist';
 
 import findSongNameById from 'utils/findSongById';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useAppSelector } from 'redux/store';
 import { Typography, Button } from '@mui/material';
-import { Playlist } from 'models/interface/playlist';
+import { Playlist } from 'models/interface/Playlist';
 
 import useStylesCommon from 'common/commonStyles';
 import useStyles from './playlistsTableStyles';

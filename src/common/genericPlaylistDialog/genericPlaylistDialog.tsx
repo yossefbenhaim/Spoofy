@@ -15,7 +15,7 @@ import { AddPlaylistFormFieldName } from 'models/enums/addPlaylistFormFieldName'
 import { VariablesDialogPlaylist } from 'models/enums/variablesDialogPlaylist';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Playlist } from 'models/interface/playlist';
+import { Playlist } from 'models/interface/Playlist';
 import { Song } from 'models/interface/song';
 
 
