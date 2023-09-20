@@ -1,5 +1,5 @@
 import React from "react";
-import { Playlist } from "models/interface/Playlist";
+import { Playlist } from "models/interface/playlist";
 
 import isEqual from "lodash/isEqual";
 import PlaylistTable from "./playlistTable";

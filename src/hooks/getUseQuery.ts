@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { setSongs } from 'redux/slice/songs';
 import { Favorite } from 'models/interface/favorite';
-import { Playlist } from 'models/interface/Playlist';
+import { Playlist } from 'models/interface/playlist';
 import { Song } from 'models/interface/song';
 
 import GET_PLAYLIST from 'queries/query/playlists';

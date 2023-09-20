@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PlaylistSong } from 'models/interface/addPlaylistSong';
 import { SliceName } from 'models/enums/sliceName';
-import { Playlist } from 'models/interface/Playlist';
+import { Playlist } from 'models/interface/playlist';
 
 interface CurrentSongsSlice {
     playlists: Playlist[];

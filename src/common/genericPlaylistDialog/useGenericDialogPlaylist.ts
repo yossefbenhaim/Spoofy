@@ -5,7 +5,7 @@ import { useAppSelector } from 'redux/store';
 import { SubmitHandler } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { difference } from 'lodash';
-import { Playlist } from 'models/interface/Playlist';
+import { Playlist } from 'models/interface/playlist';
 
 import ADD_PLAYLIST from 'queries/mutation/addPlaylist';
 import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';

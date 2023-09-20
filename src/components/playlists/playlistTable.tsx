@@ -2,7 +2,7 @@ import React from "react";
 
 import { IconButton, Typography } from "@mui/material";
 import { useAppSelector } from "redux/store";
-import { Playlist } from "models/interface/Playlist";
+import { Playlist } from "models/interface/playlist";
 import { User } from "models/interface/user";
 
 import CustomSongsTable from "common/customSongsTable/customSongsTable";
