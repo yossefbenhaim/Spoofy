@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:latest
 
 WORKDIR /src/components/app
 
