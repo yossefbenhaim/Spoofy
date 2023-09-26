@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     btnMenu: {
         color: 'white',
         border: '1px solid gray',
@@ -27,6 +27,6 @@ const useStyles = makeStyles()({
             backgroundColor: `rgb(4, 166, 85)`,
         },
     },
-});
+}));
 
 export default useStyles;

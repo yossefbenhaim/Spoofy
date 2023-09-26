@@ -40,7 +40,6 @@
         "redux": "^4.2.1",
         "redux-persist": "^6.0.0",
         "styled-components": "^5.3.9",
-        "subscriptions-transport-ws": "^0.11.0",
         "tss-react": "^4.7.5",
         "typescript": "^5.0.4",
         "uuid": "^9.0.0",
