@@ -2,69 +2,68 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
     fieldsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        height: '75%',
         gap: '3%',
-        overflowY: 'auto',
+        height: '75%',
+        display: 'flex',
         flexWrap: 'wrap',
         direction: 'rtl',
+        overflowY: 'auto',
+        flexDirection: 'row',
 
         '::-webkit-scrollbar': {
-            backgroundColor: '#7ead7b78',
             width: '10px',
             height: '10px',
             borderRadius: '10px',
         },
         '::-webkit-scrollbar-track': {
-            background: 'rgb(142 146 143)',
             borderRadius: '10px',
+            background: theme.palette.background.scrollbar,
         },
         '::-webkit-scrollbar-thumb': {
             borderRadius: '10px',
-            backgroundColor: '#29c029',
+            backgroundColor: theme.palette.common.scrollbar.main,
         },
         '::-webkit-scrollbar-thumb:hover': {
             borderRadius: '10px',
-            backgroundColor: '#41dc41',
+            backgroundColor: theme.palette.common.scrollbar.hover,
         },
         '::-webkit-scrollbar-corner': {
-            backgroundColor: 'gray',
             borderRadius: '10px',
+            backgroundColor: theme.palette.background.gray,
         },
     },
     container: {
+        width: '99%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        height: '100%',
-        width: '99%',
     },
     namePlaylistContainer: {
         display: 'flex',
-        flexDirection: 'column',
         direction: 'rtl',
+        flexDirection: 'column',
     },
     playlistTable: {
-        height: '338px',
         width: '100%',
+        height: '338px',
     },
 
     headerTable: {
         display: 'flex',
+        direction: 'ltr',
+        marginRight: '2%',
+        alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'end',
-        color: 'white',
-        alignItems: 'center',
-        marginRight: '2%',
-        direction: 'ltr',
+        color: theme.palette.common.white,
     },
     namePlaylist: {
         fontWeight: 'bold',
     },
     editBtn: {
         marginRight: '1%',
-        color: 'white',
+        color: theme.palette.common.white,
         '&:hover': {
             color: theme.palette.common.spoofy,
         },
@@ -72,8 +71,8 @@ const useStyles = makeStyles()((theme) => ({
 
     addSongBtnContainer: {
         height: '8%',
-        marginBottom: '1%',
         marginTop: '1%',
+        marginBottom: '1%',
         textAlign: 'center',
     },
 }));

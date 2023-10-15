@@ -2,16 +2,14 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
     dataGride: {
-        padding: '1.2%',
-        direction: 'rtl',
-        color: theme.palette.common.white,
-        borderColor: theme.palette.background.main,
         width: '100%',
         height: '100%',
-        backgroundColor: theme.palette.background.dataGrid,
-        outline: 'solid #d0130d 0px',
+        padding: '1.2%',
+        direction: 'rtl',
         borderRadius: '20px',
-
+        color: theme.palette.common.white,
+        borderColor: theme.palette.background.main,
+        backgroundColor: theme.palette.background.gray,
         '& .MuiDataGrid-columnHeader:focus': {
             outline: 'none!important',
         },
@@ -19,7 +17,7 @@ const useStyles = makeStyles()((theme) => ({
             outline: 'none',
         },
         '& .MuiDataGrid-iconSeparator': {
-            color: '#80808000',
+            color: theme.palette.common.blurred.fullBlurred,
         },
         '& .MuiDataGrid-root-dataGride': {
             fontSize: '1.5rem',
@@ -37,38 +35,46 @@ const useStyles = makeStyles()((theme) => ({
             direction: 'ltr',
         },
         '& .MuiButtonBase-root svg': {
-            color: 'white',
             fontSize: '1.5rem',
             transform: 'rotate(90deg)',
+            color: theme.palette.common.white,
         },
         '& .MuiDataGrid-groupingCriteriaCell span 3 ': {
             display: 'none',
+        },
+        '& .MuiDataGrid-row.Mui-selected': {
+            backgroundColor: theme.palette.common.blurred.selectedRow,
+        },
+        '& .MuiDataGrid-row.Mui-selected:hover': {
+            backgroundColor: theme.palette.common.blurred.selectedRow,
         },
     },
 
     addSongBtnContainer: {
         height: '8%',
-        marginBottom: '1%',
         marginTop: '1%',
+        marginBottom: '1%',
         textAlign: 'center',
     },
 
     headerDataGridArtistDuration: {
-        boxSizing: 'inherit',
-        color: 'white',
         fontSize: '1.8rem',
-        borderRight: '1px solid white',
+        boxSizing: 'inherit',
+        color: theme.palette.common.white,
+        borderRight: `1px solid ${theme.palette.common.white}`,
     },
+
     headerDataGridSong: {
-        boxSizing: 'inherit',
-        color: 'white',
         fontSize: '1.8rem',
+        boxSizing: 'inherit',
+        color: theme.palette.common.white,
     },
+
     iconEmptyRows: {
-        height: '100%',
         width: '100%',
-        alignItems: 'center',
+        height: '100%',
         display: 'flex',
+        alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
     },

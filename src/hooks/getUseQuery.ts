@@ -1,5 +1,3 @@
-import GET_SONGS from 'queries/query/songs';
-
 import { useAppSelector } from 'redux/store';
 import { setPlaylists } from 'redux/slice/playlists';
 import { setFavorites } from 'redux/slice/favorites';
@@ -10,6 +8,7 @@ import { Favorite } from 'models/interface/favorite';
 import { Playlist } from 'models/interface/playlist';
 import { Song } from 'models/interface/song';
 
+import GET_SONGS from 'queries/query/songs';
 import GET_PLAYLIST from 'queries/query/playlists';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
 

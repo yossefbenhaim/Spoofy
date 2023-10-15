@@ -112,14 +112,14 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 												label={findSongNameById(songs, option)}
 												size="small"
 												{...getTagProps({ index })}
-												className={classes.selectedSong}
+												className={classes.selectedPlaylist}
 											/>
 										))
 									}
 									renderOption={(props, option, { selected }) => (
-										<li className={classes.checkBoxSongs} {...props} key={option}>
+										<li className={classes.checkBoxPlaylists} {...props} key={option}>
 											<Checkbox
-												className={classes.checkBoxSongs}
+												className={classes.checkBoxPlaylists}
 												icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
 												checkedIcon={<CheckBoxIcon fontSize="small" />}
 												checked={selected}
@@ -130,7 +130,7 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 									)}
 									renderInput={(params) => (
 										<TextField
-											className={classes.songsInput}
+											className={classes.playlistInput}
 											{...params}
 											error={!!error}
 											variant="standard"

@@ -2,41 +2,41 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
     title: {
-        color: theme.palette.common.spoofy,
         fontSize: '5rem',
         textShadow: '2px 2px 2px black',
+        color: theme.palette.common.spoofy,
     },
     btn: {
-        backgroundImage: theme.palette.background.buttonColors.submit,
+        transition: '0.6s',
         borderRadius: '10px',
         backgroundSize: '200%',
-        transition: '0.6s',
+        backgroundImage: theme.palette.background.buttonColors.submit,
         '&:hover': {
             backgroundPosition: 'right',
         },
     },
     fieldsContainer: {
-        backgroundColor: theme.palette.background.main,
         display: 'flex',
+        height: '705px',
+        alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
-        height: '705px',
+        backgroundColor: theme.palette.background.main,
     },
     formControl: {
-        margin: '40px',
-        alignContent: 'center',
         minWidth: 120,
+        margin: '40px',
         width: '220px',
         display: 'flex',
+        alignContent: 'center',
         flexDirection: 'row-reverse',
         '& .MuiFormLabel-root': {
             transformOrigin: 'top right',
             left: '30px',
             '&.Mui-focused': {
-                color: 'white',
-                transformOrigin: 'top right',
                 left: '30px',
+                transformOrigin: 'top right',
+                color: theme.palette.common.white,
             },
         },
         '& .MuiOutlinedInput-notchedOutline legend': {
@@ -45,21 +45,20 @@ const useStyles = makeStyles()((theme) => ({
     },
     titleMenu: {
         left: '38px',
-        color: 'white',
+        color: theme.palette.common.white,
     },
     select: {
         width: '220px',
-        backgroundColor: `rgb(112, 106, 106)`,
         borderRadius: '17px',
-        color: `rgb(255, 255, 255)`,
+        color: theme.palette.common.white,
+        backgroundColor: theme.palette.background.selectUser,
         '& .MuiSelect-icon': {
             left: '7px',
-            color: 'white',
+            color: theme.palette.common.white,
         },
         '& .MuiInputBase-root': {
             borderRadius: '17px',
         },
-
         '& .MuiOutlinedInput-input': {
             padding: '16.5px 55px',
         },
@@ -79,9 +78,9 @@ const useStyles = makeStyles()((theme) => ({
         width: '200px',
     },
     titleContainer: {
+        width: '17%',
         display: 'flex',
         flexDirection: 'column',
-        width: '17%',
     },
     iconHomeContainer: {
         width: '100%',

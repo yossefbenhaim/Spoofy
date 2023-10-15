@@ -2,29 +2,29 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
     btnMenu: {
-        color: theme.palette.common.white,
-        border: '1px solid gray',
-        fontSize: '1.75rem',
-        lineHeight: '0.75',
         fontWeight: '500',
+        lineHeight: '0.75',
+        fontSize: '1.75rem',
         padding: '7px 35px',
-        backgroundColor: 'gray',
         justifyContent: 'center',
+        color: theme.palette.common.white,
+        backgroundColor: theme.palette.background.gray,
+        border: `1px solid ${theme.palette.background.gray}`,
         '&:hover': {
-            backgroundColor: `rgb(255, 255, 255)`,
-            border: `1px solid ${theme.palette.common.spoofy}`,
             color: theme.palette.common.spoofy,
+            backgroundColor: theme.palette.background.white,
+            border: `1px solid ${theme.palette.common.spoofy}`,
         },
     },
     activeBtn: {
         backgroundColor: theme.palette.background.spoofy,
     },
     btnContainer: {
+        gap: '27px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '27px',
         '& :hover': {
-            backgroundColor: `rgb(4, 166, 85)`,
+            backgroundColor: theme.palette.common.white,
         },
     },
 }));

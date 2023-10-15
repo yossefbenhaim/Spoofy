@@ -2,9 +2,9 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()({
     fieldContainer: {
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
     },
     dataGridContainer: {
         height: '75.7%',

@@ -7,51 +7,50 @@ const useStyles = makeStyles()((theme) => ({
             flexDirection: 'inherit',
         },
     },
+
     dialog: {
-        backgroundColor: theme.palette.background.dialog,
         width: '800px',
         height: '500px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        backgroundColor: theme.palette.background.dialog,
     },
 
     header: {
-        marginBottom: '2%',
-        textAlign: 'center',
         height: '10%',
-        color: 'white',
         fontSize: '2.2rem',
+        marginBottom: '2%',
         fontWeight: 'bold',
+        textAlign: 'center',
         fontFamily: 'system-ui',
+        color: theme.palette.common.white,
         backgroundColor: theme.palette.background.spoofy,
     },
+
     select: {
         color: theme.palette.common.white,
-        borderBottomColor: theme.palette.common.borderBottomAfter,
+        borderBottomColor: theme.palette.common.border.BottomAfter,
         '& .MuiInput-input:focus': {
             backgroundColor: theme.palette.background.dialog,
         },
         '&.Mui-focused:after': {
-            borderBottomColor: theme.palette.common.borderBottomAfter,
+            borderBottomColor: theme.palette.common.border.BottomAfter,
         },
         '&:before': {
-            borderBottom: `1px solid ${theme.palette.common.borderBottomBefore}`,
+            borderBottom: `1px solid ${theme.palette.common.border.BottomBefore}`,
         },
-
         '&:after': {
-            borderBottomColor: theme.palette.common.borderBottomAfter,
+            borderBottomColor: theme.palette.common.border.BottomAfter,
         },
         '& .MuiInputLabel-root.Mui-error': {
-            borderBottomColor: theme.palette.common.borderBottomError,
+            borderBottomColor: theme.palette.common.border.BottomError,
             left: 'inherit',
         },
-
         '& .MuiSelect-icon': {
             position: 'unset',
             color: theme.palette.common.white,
         },
-
         '& .MuiSelect-select': {
             paddingRight: '0px!important',
         },
@@ -59,8 +58,8 @@ const useStyles = makeStyles()((theme) => ({
 
     menu: {
         marginLeft: '2%',
-        marginRight: '2%',
         direction: 'rtl',
+        marginRight: '2%',
     },
 
     titleMenu: {
@@ -76,10 +75,10 @@ const useStyles = makeStyles()((theme) => ({
     },
 
     error: {
-        color: ' #ff0000 ',
         float: 'right',
-        fontWeight: 'bold',
         fontSize: '14px',
+        fontWeight: 'bold',
+        color: theme.palette.common.error,
     },
 }));
 

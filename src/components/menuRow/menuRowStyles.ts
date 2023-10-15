@@ -1,50 +1,50 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     addIcon: {
-        color: 'white',
+        color: theme.palette.common.white,
     },
+
     item: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: 'gray',
-        color: 'white',
-
+        backgroundColor: theme.palette.background.gray,
+        color: theme.palette.common.white,
         '&:hover': {
-            backgroundColor: 'gray',
-            color: 'black',
+            color: theme.palette.common.black,
+            backgroundColor: theme.palette.background.gray,
         },
     },
+
     menuTitle: {
-        fontWeight: 'bold',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        height: '50px',
-        backgroundColor: 'gray',
-        color: 'white',
-        textDecoration: 'underline',
-        borderBottom: '2px solid white',
-
         top: '0',
-        position: 'sticky',
         zIndex: '1',
+        height: '50px',
+        display: 'flex',
+        position: 'sticky',
+        fontWeight: 'bold',
+        flexDirection: 'column',
+        backgroundColor: theme.palette.background.gray,
+        justifyContent: 'center',
+        textDecoration: 'underline',
+        color: theme.palette.common.white,
+        borderBottom: `2px solid ${theme.palette.common.white}`,
     },
-    menuContainer: {
-        textAlignLast: 'center',
-        height: '41%',
 
+    menuContainer: {
+        height: '41%',
+        textAlignLast: 'center',
         '& .MuiPaper-root': {
-            marginRight: '0%',
             width: '10%',
-            backgroundColor: 'gray',
             direction: 'rtl',
+            marginRight: '0%',
+            backgroundColor: theme.palette.background.gray,
         },
         '& .MuiList-root': {
             paddingTop: '0px',
             paddingBottom: '1px',
         },
     },
-});
+}));
 
 export default useStyles;

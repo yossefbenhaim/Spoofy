@@ -1,21 +1,21 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     formControl: {
-        alignContent: 'center',
         minWidth: 120,
         width: '180px',
         height: '35px',
-        direction: 'ltr',
         display: 'flex',
+        direction: 'ltr',
+        alignContent: 'center',
         flexDirection: 'row-reverse',
         '& .MuiFormLabel-root': {
-            transformOrigin: 'top right',
             left: '30px',
+            transformOrigin: 'top right',
             '&.Mui-focused': {
-                color: 'white',
-                transformOrigin: 'top right',
                 left: '30px',
+                transformOrigin: 'top right',
+                color: theme.palette.common.white,
             },
         },
         '& .MuiOutlinedInput-notchedOutline legend': {
@@ -25,24 +25,24 @@ const useStyles = makeStyles()({
 
     titleMenu: {
         left: '38px',
-        color: 'white',
+        color: theme.palette.common.white,
     },
 
     select: {
         width: '220px',
-        backgroundColor: 'gray',
-        borderRadius: '10px',
         border: '1px solid',
-        color: `rgb(255, 255, 255)`,
+        borderRadius: '10px',
+        backgroundColor: theme.palette.background.gray,
+        color: theme.palette.common.white,
 
         '& .MuiSelect-select': {
-            paddingRight: '10px!important',
             direction: 'rtl',
+            paddingRight: '10px!important',
         },
 
         '& .MuiSelect-icon': {
             left: '7px',
-            color: 'white',
+            color: theme.palette.common.white,
         },
 
         '& .MuiInputBase-root': {
@@ -52,14 +52,17 @@ const useStyles = makeStyles()({
         '& .MuiOutlinedInput-input': {
             padding: '10px 75px',
         },
+
         '& .MuiOutlinedInput-notchedOutline': {
             border: '0px solid',
         },
+
         '&.Mui-focused': {
             '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ffffff00',
+                borderColor: theme.palette.common.blurred.fullBlurred,
             },
         },
+
         '& .MuiSvgIcon-root': {
             fontSize: '2.5rem',
         },
@@ -68,6 +71,6 @@ const useStyles = makeStyles()({
     menuItem: {
         direction: 'rtl',
     },
-});
+}));
 
 export default useStyles;

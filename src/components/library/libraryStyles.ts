@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     fieldsContainer: {
         width: '100%',
         height: '100vh',
@@ -19,11 +19,11 @@ const useStyles = makeStyles()({
     },
     logoContainer: {
         display: 'flex',
-        alignItems: 'center',
         padding: '15px',
         fontSize: '2rem',
-        color: 'white',
         marginTop: '-12px',
+        alignItems: 'center',
+        color: theme.palette.common.white,
     },
     logo: {
         marginRight: '4px',
@@ -39,21 +39,20 @@ const useStyles = makeStyles()({
         justifyContent: 'space-between',
     },
     buttonsContainer: {
+        width: '12%',
         height: '100%',
         paddingTop: '0%',
         marginRight: '1%',
-        width: '12%',
     },
-    content: { width: '80%', height: '100%', backgroundColor: 'green' },
 
     tableValuse: {
         width: '55%',
-        marginLeft: '22.5%',
         height: '100%',
+        marginLeft: '22.5%',
     },
     musicPlayerContainer: {
         height: '16%',
     },
-});
+}));
 
 export default useStyles;
