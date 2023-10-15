@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     dialogContainer: {
         '& .MuiPaper-root ': {
             maxWidth: '800px',
@@ -8,7 +8,7 @@ const useStyles = makeStyles()({
         },
     },
     dialog: {
-        backgroundColor: `rgb(118, 118, 118)`,
+        backgroundColor: theme.palette.background.dialog,
         width: '800px',
         height: '500px',
         display: 'flex',
@@ -20,36 +20,36 @@ const useStyles = makeStyles()({
         marginBottom: '2%',
         textAlign: 'center',
         height: '10%',
-        backgroundColor: `rgb(74, 191, 117)`,
         color: 'white',
         fontSize: '2.2rem',
         fontWeight: 'bold',
         fontFamily: 'system-ui',
+        backgroundColor: theme.palette.background.spoofy,
     },
     select: {
-        color: `rgb(255, 255, 255)`,
-        borderBottomColor: '#16b754',
+        color: theme.palette.common.white,
+        borderBottomColor: theme.palette.common.borderBottomAfter,
         '& .MuiInput-input:focus': {
-            backgroundColor: `rgb(118, 118, 118)`,
+            backgroundColor: theme.palette.background.dialog,
         },
         '&.Mui-focused:after': {
-            borderBottomColor: '#16b754',
+            borderBottomColor: theme.palette.common.borderBottomAfter,
         },
         '&:before': {
-            borderBottom: '1px solid black',
+            borderBottom: `1px solid ${theme.palette.common.borderBottomBefore}`,
         },
 
         '&:after': {
-            borderBottomColor: '#16b754',
+            borderBottomColor: theme.palette.common.borderBottomAfter,
         },
         '& .MuiInputLabel-root.Mui-error': {
-            borderBottomColor: 'red',
+            borderBottomColor: theme.palette.common.borderBottomError,
             left: 'inherit',
         },
 
         '& .MuiSelect-icon': {
             position: 'unset',
-            color: `rgb(255, 255, 255)`,
+            color: theme.palette.common.white,
         },
 
         '& .MuiSelect-select': {
@@ -65,9 +65,9 @@ const useStyles = makeStyles()({
 
     titleMenu: {
         left: 'inherit',
-        color: 'rgb(255,255,255)',
+        color: theme.palette.common.white,
         '&.Mui-focused': {
-            color: `rgb(74, 191, 117)!important`,
+            color: `${theme.palette.common.spoofy}!important`,
         },
     },
 
@@ -81,6 +81,6 @@ const useStyles = makeStyles()({
         fontWeight: 'bold',
         fontSize: '14px',
     },
-});
+}));
 
 export default useStyles;

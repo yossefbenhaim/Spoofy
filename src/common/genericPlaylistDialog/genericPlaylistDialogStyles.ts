@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     addSongBtn: {
         marginTop: '4px',
         padding: '2px 18px',
@@ -23,7 +23,7 @@ const useStyles = makeStyles()({
     },
 
     dialog: {
-        backgroundColor: `rgb(118, 118, 118)`,
+        backgroundColor: theme.palette.background.dialog,
         width: '800px',
         height: '500px',
         display: 'flex',
@@ -35,60 +35,11 @@ const useStyles = makeStyles()({
         marginBottom: '2%',
         textAlign: 'center',
         height: '10%',
-        backgroundColor: `rgb(74, 191, 117)`,
+        backgroundColor: theme.palette.common.spoofy,
         color: 'white',
         fontSize: '2.2rem',
         fontWeight: 'bold',
         fontFamily: 'system-ui',
-    },
-
-    select: {
-        color: `rgb(255, 255, 255)`,
-        borderBottomColor: '#16b754',
-        '& .MuiInput-input:focus': {
-            backgroundColor: `rgb(118, 118, 118)`,
-        },
-        '&.Mui-focused:after': {
-            borderBottomColor: '#16b754',
-        },
-        '&:before': {
-            borderBottom: '1px solid black',
-        },
-
-        '&:after': {
-            borderBottomColor: '#16b754',
-        },
-        '& .MuiInputLabel-root.Mui-error': {
-            borderBottomColor: 'red',
-            left: 'inherit',
-        },
-
-        '& .MuiSelect-icon': {
-            position: 'unset',
-            color: `rgb(255, 255, 255)`,
-        },
-
-        '& .MuiSelect-select': {
-            paddingRight: '0px!important',
-        },
-    },
-
-    menu: {
-        marginLeft: '2%',
-        marginRight: '2%',
-        direction: 'rtl',
-    },
-
-    titleMenu: {
-        left: 'inherit',
-        color: 'rgb(255,255,255)',
-        '&.Mui-focused': {
-            color: `rgb(74, 191, 117)!important`,
-        },
-    },
-
-    menuItem: {
-        direction: 'rtl',
     },
 
     error: {
@@ -123,7 +74,7 @@ const useStyles = makeStyles()({
             },
         },
         '& .MuiFormLabel-root.Mui-focused': {
-            color: 'rgb(74, 191, 117)',
+            color: theme.palette.common.spoofy,
         },
         '& .MuiInputBase-input ': {
             direction: 'rtl',
@@ -135,20 +86,20 @@ const useStyles = makeStyles()({
             paddingRight: '0px',
             flexDirection: 'row-reverse',
             justifyContent: ' flex-end',
-            borderBottomColor: 'black',
+            borderBottomColor: theme.palette.common.borderBottomBefore,
 
             '&:before': {
-                borderBottom: '1px solid black',
+                borderBottom: `1px solid ${theme.palette.common.borderBottomBefore}`,
             },
             '&.Mui-error:before': {
-                borderBottom: '1px solid black',
+                borderBottom: `1px solid ${theme.palette.common.borderBottomBefore}`,
             },
             '&.Mui-error:after': {
                 borderBottom: '2px solid #d32f2f',
             },
         },
         '& .MuiInputBase-root:after': {
-            borderBottom: '2px solid rgb(74, 191, 117)',
+            borderBottom: `2px solid ${theme.palette.common.spoofy}`,
         },
     },
 
@@ -164,6 +115,6 @@ const useStyles = makeStyles()({
             color: 'black',
         },
     },
-});
+}));
 
 export default useStyles;

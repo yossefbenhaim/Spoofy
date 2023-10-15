@@ -105,7 +105,6 @@ const GenericPlaylistDialog: React.FC<Props> = (props) => {
 									className={classes.autocomplete}
 									getOptionLabel={(option) => findSongNameById(songs, option) as string}
 									value={value || []}
-
 									renderTags={(value, getTagProps) =>
 										value.map((option, index) => (
 											<Chip

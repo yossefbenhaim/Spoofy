@@ -2,6 +2,7 @@ import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { Kind } from 'graphql';
+
 const URI_GRAGHQ_HTTP = import.meta.env.VITE_URI_GRAGHQ;
 const URI_GRAGHQ_WS = import.meta.env.VITE_URI_WS;
 

@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     fieldsContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -66,7 +66,7 @@ const useStyles = makeStyles()({
         marginRight: '1%',
         color: 'white',
         '&:hover': {
-            color: 'rgb(74, 191, 117)',
+            color: theme.palette.common.spoofy,
         },
     },
 
@@ -76,6 +76,6 @@ const useStyles = makeStyles()({
         marginTop: '1%',
         textAlign: 'center',
     },
-});
+}));
 
 export default useStyles;

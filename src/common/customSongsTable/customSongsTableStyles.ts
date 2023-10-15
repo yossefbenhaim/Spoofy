@@ -1,14 +1,14 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     dataGride: {
         padding: '1.2%',
         direction: 'rtl',
-        color: 'white',
-        borderColor: `rgb(80, 77, 77)`,
+        color: theme.palette.common.white,
+        borderColor: theme.palette.background.main,
         width: '100%',
         height: '100%',
-        backgroundColor: 'gray',
+        backgroundColor: theme.palette.background.dataGrid,
         outline: 'solid #d0130d 0px',
         borderRadius: '20px',
 
@@ -72,6 +72,6 @@ const useStyles = makeStyles()({
         flexDirection: 'column',
         justifyContent: 'center',
     },
-});
+}));
 
 export default useStyles;

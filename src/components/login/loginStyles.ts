@@ -1,13 +1,13 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     title: {
-        color: `rgb(74, 191, 117)`,
+        color: theme.palette.common.spoofy,
         fontSize: '5rem',
         textShadow: '2px 2px 2px black',
     },
     btn: {
-        backgroundImage: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
+        backgroundImage: theme.palette.background.buttonColors.submit,
         borderRadius: '10px',
         backgroundSize: '200%',
         transition: '0.6s',
@@ -16,7 +16,7 @@ const useStyles = makeStyles()({
         },
     },
     fieldsContainer: {
-        backgroundColor: `rgb(80, 77, 77)`,
+        backgroundColor: theme.palette.background.main,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -68,7 +68,7 @@ const useStyles = makeStyles()({
         },
         '&.Mui-focused': {
             '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'rgb(74, 191, 117)',
+                borderColor: theme.palette.common.spoofy,
             },
         },
     },
@@ -89,6 +89,6 @@ const useStyles = makeStyles()({
     titleNameContainer: {
         width: '100%',
     },
-});
+}));
 
 export default useStyles;

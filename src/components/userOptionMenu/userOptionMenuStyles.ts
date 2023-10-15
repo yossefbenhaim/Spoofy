@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     title: {
         color: 'white',
         textAlign: 'end',
@@ -21,6 +21,7 @@ const useStyles = makeStyles()({
     },
     btnDisconect: {
         padding: '3px 10px',
+        color: 'white',
         margin: '5px',
         borderRadius: '20px',
         minWidth: '106px',
@@ -41,6 +42,7 @@ const useStyles = makeStyles()({
         lineHeight: '1',
         border: `2px solid rgb(191, 90, 74)`,
         backgroundColor: `rgb(191, 90, 74)`,
+        color: 'white',
         '&:hover': {
             color: `rgb(191, 90, 74)`,
             backgroundColor: 'white',
@@ -59,7 +61,7 @@ const useStyles = makeStyles()({
     exitAccountTitle: {
         color: 'white',
         textAlign: 'right',
-        backgroundColor: 'rgb(74, 191, 117)',
+        backgroundColor: theme.palette.background.spoofy,
     },
     exitAccountContent: {
         display: 'flex',
@@ -74,14 +76,14 @@ const useStyles = makeStyles()({
         minWidth: '106px',
         lineHeight: '1',
         border: `2px solid white`,
-        backgroundColor: `rgb(74, 191, 117)`,
+        backgroundColor: theme.palette.background.spoofy,
         color: 'white',
         '&:hover': {
             backgroundColor: 'white',
-            color: `rgb(74, 191, 117)`,
-            border: `2px solid rgb(74, 191, 117)`,
+            color: theme.palette.common.spoofy,
+            border: `2px solid ${theme.palette.common.spoofy}`,
         },
     },
-});
+}));
 
 export default useStyles;
