@@ -78,14 +78,18 @@ const useStyles = makeStyles()((theme) => ({
         width: '200px',
     },
     titleContainer: {
-        width: '17%',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
     },
     iconHomeContainer: {
+        display: 'flex',
+        justifyContent: 'center',
         width: '100%',
     },
     titleNameContainer: {
+        display: 'flex',
+        justifyContent: 'center',
         width: '100%',
     },
 }));
