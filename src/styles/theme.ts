@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import a from '../public/loginBackground.svg';
 
 declare module '@mui/material/styles' {
     interface TypeBackground {
@@ -10,6 +11,7 @@ declare module '@mui/material/styles' {
         scrollbar: string;
         selectUser: string;
         selectedSong: string;
+        loginImage: string;
         buttonColors: {
             submit: string;
             addButton: string;
@@ -65,6 +67,7 @@ export const theme = createTheme({
             selectUser: 'rgb(112, 106, 106)',
             scrollbar: 'rgb(142 146 143)',
             selectedSong: 'rgb(75, 218, 128)',
+            loginImage: `url(${a})`,
             buttonColors: {
                 submit: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
                 addButton:

@@ -1,5 +1,5 @@
 import { makeStyles } from 'tss-react/mui';
-
+import a from '../../public/loginBackground.png';
 const useStyles = makeStyles()((theme) => ({
     title: {
         fontSize: '5rem',
@@ -17,11 +17,14 @@ const useStyles = makeStyles()((theme) => ({
     },
     fieldsContainer: {
         display: 'flex',
-        height: '705px',
+        height: '100vh',
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        backgroundColor: theme.palette.background.main,
+        backgroundImage: theme.palette.background.loginImage,
+        backgroundSize: 'cover',
+        backgroundPosition: 'bottom',
+        overflow: 'hidden',
     },
     formControl: {
         minWidth: 120,
