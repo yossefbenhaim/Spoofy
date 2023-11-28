@@ -12,14 +12,18 @@ const usersQuery = () => {
         id: userDB.id,
         firstName: userDB.firstName,
         lastName: userDB.lastName,
+        coordinates: userDB.coordinates,
     });
 
     useQuery(GET_USERS, {
         fetchPolicy: 'network-only',
         onCompleted: (data) => {
+            console.log('youuuu', data);
+
             const usersData = (data.allUsers.nodes as any[]).map<User>(
                 parse_users
             );
+
             dispatch(setUsers(usersData));
         },
     });

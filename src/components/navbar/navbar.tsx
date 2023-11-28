@@ -15,6 +15,7 @@ const MENU_BUTTONS: Navbar[] = [
 	{ item: 'שירים', path: PathName.songs },
 	{ item: 'פלייליסטים', path: PathName.playlist },
 	{ item: 'מועדפים', path: PathName.favorites },
+	{ item: 'משתמשים', path: PathName.users },
 ];
 const Navbar: React.FC = () => {
 	const { classes, cx } = useStyles();

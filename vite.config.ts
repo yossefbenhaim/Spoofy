@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+
 import react from '@vitejs/plugin-react';
 import tsconfigpaths from 'vite-tsconfig-paths';
 import dotenv from 'dotenv';
@@ -10,9 +11,10 @@ export default defineConfig(({ mode }) => {
             port: 5173,
             host: '0.0.0.0',
         },
-        define: {
-            'process.env': JSON.stringify(env),
-        },
+        //TODO:fix the problem with map
+        // define: {
+        //     'process.env': JSON.stringify(env),
+        // },
         plugins: [react(), tsconfigpaths()],
     };
 });

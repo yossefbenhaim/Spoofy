@@ -10,6 +10,7 @@ import Library from './library/library';
 import SongsTable from './songsTable/songsTable';
 import FavoritesTable from './favoritesTable/favoritesTable';
 import Playlists from './playlists/playlists';
+import Users from './users/users';
 
 LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x');
 
@@ -23,6 +24,7 @@ const App: React.FC = () => {
 					<Route path={PathName.songs} element={<SongsTable />} />
 					<Route path={PathName.playlist} element={<Playlists />} />
 					<Route path={PathName.favorites} element={<FavoritesTable />} />
+					<Route path={PathName.users} element={<Users />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
