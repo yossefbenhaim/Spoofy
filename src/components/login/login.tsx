@@ -44,7 +44,6 @@ const Login: React.FC = () => {
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.mustSelectUser, { variant });
 
-
 	const handleConnect = () => {
 		const userSelect: User | undefined = users?.find((user: User) => user.id === userSelectId);
 		if (userSelect?.id) {

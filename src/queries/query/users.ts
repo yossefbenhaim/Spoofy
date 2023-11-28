@@ -7,6 +7,7 @@ const GET_USERS = gql`
                 id
                 firstName
                 lastName
+                coordinates
             }
         }
     }
