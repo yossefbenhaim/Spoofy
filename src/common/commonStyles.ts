@@ -26,7 +26,16 @@ const useStylesCommon = makeStyles()((theme) => ({
         marginLeft: '2%',
         direction: 'rtl',
         marginRight: '2%',
-
+        '&&::after': {
+            display: 'block',
+            content: '"*"',
+            color: theme.palette.common.error,
+            position: 'absolute',
+            fontWeight: 'bold',
+            right: '0',
+            top: '0',
+            transform: 'translate(50%,60%)',
+        },
         '& .MuiFormLabel-root': {
             color: theme.palette.common.white,
         },

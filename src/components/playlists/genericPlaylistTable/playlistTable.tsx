@@ -6,7 +6,7 @@ import { Playlist } from "models/interface/playlist";
 import { User } from "models/interface/user";
 
 import CustomSongsTable from "common/customSongsTable/customSongsTable";
-import useStyles from './playlistsTableStyles';
+import useStyles from '../playlistsTableStyles';
 import EditIcon from '@mui/icons-material/Edit';
 import isEqual from "lodash/isEqual";
 

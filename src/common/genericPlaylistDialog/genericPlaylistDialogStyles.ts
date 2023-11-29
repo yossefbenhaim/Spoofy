@@ -49,6 +49,16 @@ const useStyles = makeStyles()((theme) => ({
     playlistInput: {
         width: '96%',
         marginLeft: '2%',
+        '&&::after': {
+            display: 'block',
+            content: '"*"',
+            color: theme.palette.common.error,
+            position: 'absolute',
+            fontWeight: 'bold',
+            right: '0',
+            top: '0',
+            transform: 'translate(50%,60%)',
+        },
         '& .MuiFormLabel-root': {
             right: '0',
             left: 'inherit',
