@@ -1,37 +1,21 @@
 import React, { useState } from 'react';
-import {
-	Button,
-	Dialog,
-	DialogActions,
-	DialogTitle,
-	Typography,
-	IconButton,
-} from '@mui/material/';
+
+import { resetUser } from 'redux/slice/currentUser';
+import { IconButton } from '@mui/material/';
+import { OptionUser } from '@models/enums/optionUser';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from 'redux/store';
+import { resetFavorites } from 'redux/slice/favorites';
+
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-import { VariantType, useSnackbar } from 'notistack';
-import { FeedbackMessage } from 'models/enums/feedbackMessage';
-import { useAppSelector } from 'redux/store';
-import { resetFavorites } from 'redux/slice/favorites';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { useDispatch } from 'react-redux';
-import { resetUser } from 'redux/slice/currentUser';
-import { User } from 'models/interface/user';
-
-import DELETE_USER from 'queries/mutation/deleteUser';
 import useStyles from './userOptionMenuStyles';
-
-
-enum OptionUser {
-	account = 'חשבון',
-	settings = 'הגדרות',
-	profile = 'פרופיל',
-	disconnect = 'התנתקות'
-}
+import DialogDeleteUser from './menuList/dialogDeleteUser';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const UserOptionMenu: React.FC = () => {
 	const navigation = useNavigate();
@@ -46,24 +30,16 @@ const UserOptionMenu: React.FC = () => {
 		currentUser.user?.lastName
 
 	const { classes } = useStyles();
-	const { enqueueSnackbar } = useSnackbar();
 
-	const [openDialogDelete, setOpen] = React.useState(false);
-	const [deleteUserMutation] = useMutation(DELETE_USER);
-
-	const handleQueryMessage = (variant: VariantType) =>
-		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
+	const [openDialogDelete, setOpenDialog] = React.useState(false);
 
 	const handleClickOpenDeleteDialog = () =>
-		setOpen(true);
+		setOpenDialog(true);
 
-	const handleCloseDeleteDialog = () =>
-		setOpen(false);
-
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+	const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const handleClose = () => {
+	const handleCloseMenu = () => {
 		setAnchorEl(null);
 	};
 
@@ -73,77 +49,58 @@ const UserOptionMenu: React.FC = () => {
 		navigation('/');
 	};
 
-
-
 	return (
 		<>
 			<div className={classes.userIconContainer}>
-				<Tooltip title={FULL_USER_NAME}>
-					<IconButton onClick={handleClick} className={classes.userIcon}>
+				<Tooltip componentsProps={{ tooltip: { className: classes.tooltip } }} title={FULL_USER_NAME}>
+					<IconButton onClick={handleOpenMenu} className={classes.userIcon}>
 						<PermIdentityIcon />
 					</IconButton>
 				</Tooltip>
 			</div>
 			<Menu
+				className={classes.menuContainer}
 				anchorEl={anchorEl}
 				open={open}
-				onClose={handleClose}>
+				onClose={handleCloseMenu}>
 				<MenuItem
+					className={classes.items}
 					onClick={navigateToHome}
 				>
-					{OptionUser.account}
+					{/* profile => view all ditel of user {playlist , kocation , time in app} */}
+					<div className={classes.containerIcons}>
+						{OptionUser.profile}
+						{<OpenInNewIcon className={classes.icons} />}
+					</div>
 				</MenuItem>
 				<MenuItem
-					onClick={navigateToHome}
-				>
-					{OptionUser.profile}
-				</MenuItem>
-				<MenuItem
+					className={classes.items}
 					onClick={() => {
 						handleClickOpenDeleteDialog()
-						handleClose()
+						handleCloseMenu()
 					}}
 				>
-					{OptionUser.settings}
+					{/* setting => delete user , dark or lite mode */}
+					<div className={classes.containerIcons}>
+						{OptionUser.settings}
+						{<SettingsIcon className={classes.icons} />}
+					</div>
 				</MenuItem>
 				<MenuItem
+					className={classes.disconnect}
 					onClick={navigateToHome}
 				>
 					{OptionUser.disconnect}
 				</MenuItem>
 			</Menu>
+			{openDialogDelete &&
+				<DialogDeleteUser
+					openDialogDelete={openDialogDelete}
+					setOpenDialog={setOpenDialog}
+					currentUser={currentUser.user}
+				/>}
 		</>
 	);
 };
 
 export default UserOptionMenu;
-
-
-{/* {
-				flag &&
-				<div className={classes.fieldsContainer}>
-					<Typography className={classes.title}>
-						{currentUser.user?.firstName +
-							' ' +
-							currentUser.user?.lastName +
-							'   היי  '}
-					</Typography>
-					<div className={classes.body}>
-						<Button
-							onClick={handleClickOpenDeleteDialog}
-							className={classes.btnDelete}
-							variant="contained"
-						>
-							מחק חשבון
-						</Button>
-						<Button
-							onClick={navigateToHome}
-							className={classes.btnDisconect}
-							variant="contained"
-						>
-							התנתקות
-						</Button>
-					</div>
-				</div>
-
-			} */}
