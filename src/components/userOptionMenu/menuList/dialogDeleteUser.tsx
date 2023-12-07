@@ -25,10 +25,12 @@ interface Props {
 }
 
 const DialogDeleteUser: React.FC<Props> = (props) => {
-	const { currentUser, setOpenDialog, openDialogDelete } = props
 	const { classes } = useStyles()
+	const { currentUser, setOpenDialog, openDialogDelete } = props
+
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
+
 	const [deleteUserMutation] = useMutation(DELETE_USER);
 	const { enqueueSnackbar } = useSnackbar();
 

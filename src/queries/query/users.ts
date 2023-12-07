@@ -8,6 +8,7 @@ const GET_USERS = gql`
                 firstName
                 lastName
                 coordinates
+                address
             }
         }
     }

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 import { resetFavorites } from 'redux/slice/favorites';
+import { PathName } from 'models/enums/pathName';
 
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Tooltip from '@mui/material/Tooltip';
@@ -16,12 +17,15 @@ import useStyles from './userOptionMenuStyles';
 import DialogDeleteUser from './menuList/dialogDeleteUser';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Profile from 'components/profile/profile';
 
 const UserOptionMenu: React.FC = () => {
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
 	const currentUser = useAppSelector((state) => state.currentUser);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [openProfileDialog, setOpenProfileDialog] = useState<boolean>(false)
+
 	const open = Boolean(anchorEl);
 
 	const FULL_USER_NAME =
@@ -31,7 +35,11 @@ const UserOptionMenu: React.FC = () => {
 
 	const { classes } = useStyles();
 
-	const [openDialogDelete, setOpenDialog] = React.useState(false);
+	const [openDialogDelete, setOpenDialog] = useState<boolean>(false);
+
+	const handleOpenProfileDialog = () => {
+		setOpenProfileDialog(true)
+	}
 
 	const handleClickOpenDeleteDialog = () =>
 		setOpenDialog(true);
@@ -43,6 +51,9 @@ const UserOptionMenu: React.FC = () => {
 		setAnchorEl(null);
 	};
 
+	const navigationPage = (path: string) => {
+		navigation(path);
+	}
 	const navigateToHome = () => {
 		dispatch(resetUser());
 		dispatch(resetFavorites())
@@ -65,7 +76,7 @@ const UserOptionMenu: React.FC = () => {
 				onClose={handleCloseMenu}>
 				<MenuItem
 					className={classes.items}
-					onClick={navigateToHome}
+					onClick={() => handleOpenProfileDialog()}
 				>
 					{/* profile => view all ditel of user {playlist , kocation , time in app} */}
 					<div className={classes.containerIcons}>
@@ -93,12 +104,17 @@ const UserOptionMenu: React.FC = () => {
 					{OptionUser.disconnect}
 				</MenuItem>
 			</Menu>
-			{openDialogDelete &&
-				<DialogDeleteUser
-					openDialogDelete={openDialogDelete}
-					setOpenDialog={setOpenDialog}
-					currentUser={currentUser.user}
-				/>}
+
+			<DialogDeleteUser
+				openDialogDelete={openDialogDelete}
+				setOpenDialog={setOpenDialog}
+				currentUser={currentUser.user}
+			/>
+			<Profile
+				openProfileDialog={openProfileDialog}
+				setOpenProfileDialog={setOpenProfileDialog}
+			/>
+
 		</>
 	);
 };
