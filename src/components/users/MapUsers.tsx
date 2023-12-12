@@ -1,11 +1,11 @@
 import { Typography } from '@mui/material';
 
 import React from 'react';
-import useStyles from './usersSpoofyStyles';
+import useStyles from './mapUsersStyles';
 import useStylesCommon from 'common/commonStyles';
 import Map from 'components/map/Map';
 
-const UsersSpoofy: React.FC = () => {
+const MapUsers: React.FC = () => {
 	const { classes } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
 
@@ -21,4 +21,4 @@ const UsersSpoofy: React.FC = () => {
 	);
 };
 
-export default UsersSpoofy;
+export default MapUsers;

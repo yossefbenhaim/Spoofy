@@ -7,12 +7,12 @@ const useStyles = makeStyles()((theme) => ({
         fontSize: '1.75rem',
         padding: '7px 35px',
         justifyContent: 'center',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         backgroundColor: theme.palette.background.gray,
         border: `1px solid ${theme.palette.background.gray}`,
         '&:hover': {
             color: theme.palette.common.spoofy,
-            backgroundColor: theme.palette.background.white,
+            backgroundColor: theme.palette.background.text,
             border: `1px solid ${theme.palette.common.spoofy}`,
         },
     },
@@ -24,7 +24,7 @@ const useStyles = makeStyles()((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         '& :hover': {
-            backgroundColor: theme.palette.common.white,
+            backgroundColor: theme.palette.common.text,
         },
     },
 }));

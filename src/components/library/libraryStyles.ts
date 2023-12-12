@@ -23,7 +23,7 @@ const useStyles = makeStyles()((theme) => ({
         fontSize: '2rem',
         marginTop: '-12px',
         alignItems: 'center',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
     },
     logo: {
         marginRight: '4px',

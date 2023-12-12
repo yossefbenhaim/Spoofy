@@ -47,11 +47,13 @@ const UserOptionMenu: React.FC = () => {
 	const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleCloseMenu = () => {
 		setAnchorEl(null);
 	};
 
 	const navigationPage = (path: string) => {
+		handleCloseMenu()
 		navigation(path);
 	}
 	const navigateToHome = () => {
@@ -78,7 +80,6 @@ const UserOptionMenu: React.FC = () => {
 					className={classes.items}
 					onClick={() => handleOpenProfileDialog()}
 				>
-					{/* profile => view all ditel of user {playlist , kocation , time in app} */}
 					<div className={classes.containerIcons}>
 						{OptionUser.profile}
 						{<OpenInNewIcon className={classes.icons} />}
@@ -87,8 +88,8 @@ const UserOptionMenu: React.FC = () => {
 				<MenuItem
 					className={classes.items}
 					onClick={() => {
-						handleClickOpenDeleteDialog()
-						handleCloseMenu()
+						// handleClickOpenDeleteDialog()
+						navigationPage(PathName.settings)
 					}}
 				>
 					{/* setting => delete user , dark or lite mode */}

@@ -24,7 +24,7 @@ const useStyles = makeStyles()((theme) => ({
         marginBottom: '2%',
         textAlign: 'center',
         fontFamily: 'system-ui',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         backgroundColor: theme.palette.common.spoofy,
     },
 
@@ -62,7 +62,7 @@ const useStyles = makeStyles()((theme) => ({
         '& .MuiFormLabel-root': {
             right: '0',
             left: 'inherit',
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
             '&.Mui-error': {
                 color: theme.palette.common.error,
             },

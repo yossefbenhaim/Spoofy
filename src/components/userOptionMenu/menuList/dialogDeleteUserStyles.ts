@@ -13,7 +13,7 @@ const useStyles = makeStyles()((theme) => ({
     },
     exitAccountTitle: {
         textAlign: 'right',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         backgroundColor: theme.palette.background.spoofy,
     },
     exitAccountContent: {
@@ -28,12 +28,12 @@ const useStyles = makeStyles()((theme) => ({
         minWidth: '106px',
         padding: '3px 10px',
         borderRadius: '20px',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         border: `2px solid ${theme.palette.common.white}`,
         backgroundColor: theme.palette.background.spoofy,
         '&:hover': {
             color: theme.palette.common.spoofy,
-            backgroundColor: theme.palette.common.white,
+            backgroundColor: theme.palette.common.text,
             border: `2px solid ${theme.palette.common.spoofy}`,
         },
     },

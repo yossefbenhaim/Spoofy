@@ -7,7 +7,7 @@ const useStyles = makeStyles()((theme) => ({
         padding: '1.2%',
         direction: 'rtl',
         borderRadius: '20px',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         borderColor: theme.palette.background.main,
         backgroundColor: theme.palette.background.gray,
         '& .MuiDataGrid-columnHeader:focus': {
@@ -37,7 +37,7 @@ const useStyles = makeStyles()((theme) => ({
         '& .MuiButtonBase-root svg': {
             fontSize: '1.5rem',
             transform: 'rotate(90deg)',
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
         },
         '& .MuiDataGrid-groupingCriteriaCell span 3 ': {
             display: 'none',
@@ -60,14 +60,14 @@ const useStyles = makeStyles()((theme) => ({
     headerDataGridArtistDuration: {
         fontSize: '1.8rem',
         boxSizing: 'inherit',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         borderRight: `1px solid ${theme.palette.common.white}`,
     },
 
     headerDataGridSong: {
         fontSize: '1.8rem',
         boxSizing: 'inherit',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
     },
 
     iconEmptyRows: {

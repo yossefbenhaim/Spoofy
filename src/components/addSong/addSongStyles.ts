@@ -24,12 +24,12 @@ const useStyles = makeStyles()((theme) => ({
         fontWeight: 'bold',
         textAlign: 'center',
         fontFamily: 'system-ui',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         backgroundColor: theme.palette.background.spoofy,
     },
 
     select: {
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         borderBottomColor: theme.palette.common.border.BottomAfter,
         '& .MuiInput-input:focus': {
             backgroundColor: theme.palette.background.dialog,
@@ -49,7 +49,7 @@ const useStyles = makeStyles()((theme) => ({
         },
         '& .MuiSelect-icon': {
             position: 'unset',
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
         },
         '& .MuiSelect-select': {
             paddingRight: '0px!important',
@@ -74,7 +74,7 @@ const useStyles = makeStyles()((theme) => ({
 
     titleMenu: {
         left: 'inherit',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         '&.Mui-focused': {
             color: `${theme.palette.common.spoofy}!important`,
         },

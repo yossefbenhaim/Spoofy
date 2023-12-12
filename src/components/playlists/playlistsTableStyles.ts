@@ -56,14 +56,14 @@ const useStyles = makeStyles()((theme) => ({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'end',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
     },
     namePlaylist: {
         fontWeight: 'bold',
     },
     editBtn: {
         marginRight: '1%',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         '&:hover': {
             color: theme.palette.common.spoofy,
         },

@@ -5,4 +5,5 @@ export enum SliceName {
     favorites = 'favorites',
     playlists = 'playlists',
     users = 'users',
+    themeMode = 'themeMode',
 }

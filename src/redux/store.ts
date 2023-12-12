@@ -11,6 +11,7 @@ import currentUserReducer from './slice/currentUser';
 import favoritesSongReduser from './slice/favorites';
 import PlaylistsReduser from './slice/playlists';
 import storage from 'redux-persist/lib/storage';
+import themeMode from './slice/themeMode';
 
 const persistConfig = {
     key: 'root',
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     [SliceName.songs]: songsReducer,
     [SliceName.users]: usersReduser,
     [SliceName.playlists]: PlaylistsReduser,
+    [SliceName.themeMode]: themeMode,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

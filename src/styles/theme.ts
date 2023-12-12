@@ -5,7 +5,7 @@ declare module '@mui/material/styles' {
     interface TypeBackground {
         gray: string;
         main: string;
-        white: string;
+        text: string;
         dialog: string;
         spoofy: string;
         scrollbar: string;
@@ -23,6 +23,7 @@ declare module '@mui/material/styles' {
         spoofy: string;
         error: string;
         gray: string;
+        text: string;
         border: {
             BottomError: string;
             BottomBefore: string;
@@ -56,11 +57,11 @@ declare module '@mui/material/styles' {
     }
 }
 
-export const theme = createTheme({
+export const DrakMode = createTheme({
     palette: {
         background: {
             main: 'rgb(80, 77, 77)',
-            white: 'rgb(255, 255, 255)',
+            text: 'rgb(255, 255, 255)',
             gray: 'gray',
             spoofy: 'rgb(74, 191, 117)',
             dialog: 'rgb(118, 118, 118)',
@@ -80,6 +81,49 @@ export const theme = createTheme({
             gray: 'gray',
             error: '#ff0000',
             spoofy: 'rgb(74, 191, 117)',
+            text: 'rgb(255, 255, 255)',
+            border: {
+                BottomError: 'red',
+                BottomBefore: 'black',
+                BottomAfter: '#16b754',
+            },
+            scrollbar: {
+                main: '#29c029',
+                hover: '#41dc41',
+            },
+            blurred: {
+                selectedRow: '#9d9d9dc9',
+                fullBlurred: '#ffffff00',
+            },
+        },
+    },
+});
+
+export const LightMode = createTheme({
+    palette: {
+        background: {
+            main: 'rgb(80, 77, 77)',
+            text: 'rgb(74, 191, 117)',
+            gray: 'gray',
+            spoofy: 'rgb(255, 255, 255)',
+            dialog: 'rgb(118, 118, 118)',
+            selectUser: 'rgb(112, 106, 106)',
+            scrollbar: 'rgb(142 146 143)',
+            selectedSong: 'rgb(75, 218, 128)',
+            loginImage: `url(${backgroundLoginImage})`,
+            buttonColors: {
+                submit: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
+                addButton:
+                    'linear-gradient(to left, rgb(185, 172, 172),gray,rgb(185, 172, 172))',
+                disconect: 'rgb(112, 106, 106)',
+                delete: 'rgb(191, 90, 74)',
+            },
+        },
+        common: {
+            gray: 'gray',
+            error: '#ff0000',
+            spoofy: 'rgb(255, 255, 255)',
+            text: 'rgb(74, 191, 117)',
             border: {
                 BottomError: 'red',
                 BottomBefore: 'black',
