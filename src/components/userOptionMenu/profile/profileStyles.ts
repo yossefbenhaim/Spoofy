@@ -1,14 +1,13 @@
 import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
     dialogContainer: {
-        backgroundColor: 'rgb(22 183 84 / 0%)',
         '& .MuiBackdrop-root': {
-            backgroundColor: '#faebd700',
+            backgroundColor: theme.palette.common.blurred.fullBlurred,
         },
         '& .MuiPaper-root': {
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgb(0 0 0 / 30%)',
+            backgroundColor: theme.palette.background.profile.dialog,
             alignItems: 'center',
             width: '100%',
             height: '60%',
@@ -16,7 +15,7 @@ const useStyles = makeStyles()({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            color: 'white',
+            color: theme.palette.common.text,
         },
         '& .MuiDialog-container': {
             transition: 'none!important',
@@ -54,6 +53,6 @@ const useStyles = makeStyles()({
         fontSize: '25px',
     },
     contentText: {},
-});
+}));
 
 export default useStyles;

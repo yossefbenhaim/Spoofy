@@ -14,18 +14,17 @@ import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import useStyles from './userOptionMenuStyles';
-import DialogDeleteUser from './menuList/dialogDeleteUser';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Profile from 'components/profile/profile';
+import Profile from 'components/userOptionMenu/profile/profile';
 
 const UserOptionMenu: React.FC = () => {
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
 	const currentUser = useAppSelector((state) => state.currentUser);
+
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openProfileDialog, setOpenProfileDialog] = useState<boolean>(false)
-
 	const open = Boolean(anchorEl);
 
 	const FULL_USER_NAME =
@@ -35,15 +34,6 @@ const UserOptionMenu: React.FC = () => {
 
 	const { classes } = useStyles();
 
-	const [openDialogDelete, setOpenDialog] = useState<boolean>(false);
-
-	const handleOpenProfileDialog = () => {
-		setOpenProfileDialog(true)
-	}
-
-	const handleClickOpenDeleteDialog = () =>
-		setOpenDialog(true);
-
 	const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -52,14 +42,20 @@ const UserOptionMenu: React.FC = () => {
 		setAnchorEl(null);
 	};
 
+	const handleOpenProfileDialog = () => {
+		handleCloseMenu()
+		setOpenProfileDialog(true)
+	}
+
 	const navigationPage = (path: string) => {
 		handleCloseMenu()
 		navigation(path);
 	}
+
 	const navigateToHome = () => {
 		dispatch(resetUser());
 		dispatch(resetFavorites())
-		navigation('/');
+		navigation(PathName.login);
 	};
 
 	return (
@@ -88,11 +84,9 @@ const UserOptionMenu: React.FC = () => {
 				<MenuItem
 					className={classes.items}
 					onClick={() => {
-						// handleClickOpenDeleteDialog()
 						navigationPage(PathName.settings)
 					}}
 				>
-					{/* setting => delete user , dark or lite mode */}
 					<div className={classes.containerIcons}>
 						{OptionUser.settings}
 						{<SettingsIcon className={classes.icons} />}
@@ -105,17 +99,10 @@ const UserOptionMenu: React.FC = () => {
 					{OptionUser.disconnect}
 				</MenuItem>
 			</Menu>
-
-			<DialogDeleteUser
-				openDialogDelete={openDialogDelete}
-				setOpenDialog={setOpenDialog}
-				currentUser={currentUser.user}
-			/>
 			<Profile
 				openProfileDialog={openProfileDialog}
 				setOpenProfileDialog={setOpenProfileDialog}
 			/>
-
 		</>
 	);
 };

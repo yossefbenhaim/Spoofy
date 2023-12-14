@@ -63,7 +63,7 @@ const AddSong: React.FC = () => {
 			<Button
 				variant="contained"
 				onClick={handleClickOpen}
-				className={classesCommon.addButton}
+				className={classesCommon.genericButton}
 			>
 				+ צור שיר
 			</Button>

@@ -12,6 +12,9 @@ interface Props {
 	setOpenProfileDialog: (value: boolean) => void;
 }
 
+const PLAYLISTS = 'פלייליסטים'
+const RESIDENCE = 'מקום מגורים'
+
 const Profile: React.FC<Props> = (props) => {
 	const { setOpenProfileDialog, openProfileDialog } = props;
 	const { classes } = useStyles()
@@ -23,7 +26,6 @@ const Profile: React.FC<Props> = (props) => {
 	};
 
 	const findPlylistsUserById = (userId: string | undefined): string[] => {
-		console.log('get in');
 		const filterPlaylists = playlists.filter((song) => song.creatorId === userId)
 		const playlistsName = filterPlaylists.length === 0 ? ['no have songs for this user'] : filterPlaylists.map(playlist => playlist.name + ' ')
 		return playlistsName
@@ -48,11 +50,11 @@ const Profile: React.FC<Props> = (props) => {
 			</div>
 			<div className={classes.contentProfileContainer}>
 				<div className={classes.fieldsContainer}>
-					<span className={classes.title}>פלייליסטים </span>
+					<span className={classes.title}>{PLAYLISTS}</span>
 					<Typography className={classes.contentText}>{currentProfile.playlistName}</Typography>
 				</div>
 				<div className={classes.fieldsContainer}>
-					<span className={classes.title}>מקום מגורים </span>
+					<span className={classes.title}>{RESIDENCE}</span>
 					<Typography className={classes.contentText}>{currentProfile.location}</Typography>
 				</div>
 			</div>

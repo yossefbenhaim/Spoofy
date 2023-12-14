@@ -33,7 +33,7 @@ const useStyles = makeStyles()((theme) => ({
         border: '1px solid',
         borderRadius: '10px',
         backgroundColor: theme.palette.background.gray,
-        color: theme.palette.common.text,
+        color: theme.palette.common.buttonColor.text,
 
         '& .MuiSelect-select': {
             direction: 'rtl',
@@ -42,7 +42,7 @@ const useStyles = makeStyles()((theme) => ({
 
         '& .MuiSelect-icon': {
             left: '7px',
-            color: theme.palette.common.text,
+            color: theme.palette.common.buttonColor.text,
         },
 
         '& .MuiInputBase-root': {

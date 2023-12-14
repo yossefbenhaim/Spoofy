@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SliceName } from 'models/enums/sliceName';
 
 interface CurrentThemeMode {
-    isDrakMode: boolean;
+    mode: boolean;
 }
 
 const initialState: CurrentThemeMode = {
-    isDrakMode: true,
+    mode: true,
 };
 
 const ThemeMode = createSlice({
@@ -14,7 +14,7 @@ const ThemeMode = createSlice({
     initialState,
     reducers: {
         setThemeMode: (state, action: PayloadAction<CurrentThemeMode>) => {
-            state.isDrakMode = action.payload.isDrakMode;
+            state.mode = action.payload.mode;
         },
     },
 });

@@ -17,6 +17,7 @@ import { User } from 'models/interface/user';
 
 import useStyles from './dialogDeleteUserStyles';
 import DELETE_USER from 'queries/mutation/deleteUser';
+import useStylesCommon from 'common/commonStyles';
 
 interface Props {
 	currentUser: User | undefined,
@@ -26,6 +27,7 @@ interface Props {
 
 const DialogDeleteUser: React.FC<Props> = (props) => {
 	const { classes } = useStyles()
+	const { classes: classesCommon } = useStylesCommon()
 	const { currentUser, setOpenDialog, openDialogDelete } = props
 
 	const navigation = useNavigate();
@@ -65,7 +67,7 @@ const DialogDeleteUser: React.FC<Props> = (props) => {
 					<DialogActions className={classes.exitAccountContent}>
 						<Button
 							onClick={handleCloseDeleteDialog}
-							className={classes.exitBtn}
+							className={classesCommon.genericButton}
 						>
 							לא
 						</Button>

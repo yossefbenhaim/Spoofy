@@ -3,8 +3,8 @@ import { makeStyles } from 'tss-react/mui';
 const useStyles = makeStyles()((theme) => ({
     menuContainer: {
         '& .MuiList-root': {
-            backgroundColor: '#282828',
-            color: 'white',
+            backgroundColor: theme.palette.background.nemuProfile.menu,
+            color: theme.palette.common.nemuProfile.text,
             width: '200px',
             height: '140px',
             padding: '1px',
@@ -14,13 +14,13 @@ const useStyles = makeStyles()((theme) => ({
             justifyContent: 'space-between',
         },
         '& .MuiPaper-root': {
-            backgroundColor: 'black',
+            backgroundColor: theme.palette.background.nemuProfile.menu,
             top: '70px!important',
         },
     },
 
     tooltip: {
-        backgroundColor: '#282828',
+        backgroundColor: theme.palette.background.nemuProfile.tooltip,
         fontSize: '15px',
         marginLeft: '9px',
     },
@@ -42,14 +42,14 @@ const useStyles = makeStyles()((theme) => ({
         marginBottom: '0px',
         height: '60px',
         '&:hover': {
-            backgroundColor: '#80808063',
+            backgroundColor: theme.palette.background.nemuProfile.hoverMenu,
             borderRadius: '2px',
             border: '0px',
         },
     },
     disconnect: {
         border: '0',
-        borderTop: '1px solid #80808063',
+        borderTop: theme.palette.background.nemuProfile.boundaryLine,
         marginTop: '0px',
         marginLeft: '1px',
         marginRight: '1px',
@@ -57,9 +57,9 @@ const useStyles = makeStyles()((theme) => ({
         fontSize: '15px',
         height: '60px',
         '&:hover': {
-            backgroundColor: '#80808063',
+            backgroundColor: theme.palette.background.nemuProfile.hoverMenu,
             borderRadius: '2px',
-            borderTop: '1px solid #80808000',
+            borderTop: theme.palette.common.nemuProfile.borderTop,
         },
     },
     icons: {
@@ -75,13 +75,16 @@ const useStyles = makeStyles()((theme) => ({
     userIcon: {
         border: '0',
         borderRadius: '30px',
-        backgroundColor: 'black',
-        color: 'white',
+        backgroundColor: theme.palette.background.nemuProfile.icon,
+        color: theme.palette.common.profile.text,
         width: '35px',
         height: '35px',
         '&:hover': {
             transform: 'scale(1.04)',
-            backgroundColor: 'black',
+            backgroundColor: theme.palette.background.nemuProfile.icon,
+        },
+        '& .MuiSvgIcon-root': {
+            color: theme.palette.common.buttonColor.text,
         },
     },
 }));

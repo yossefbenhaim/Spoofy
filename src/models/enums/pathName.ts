@@ -5,4 +5,5 @@ export enum PathName {
     users = 'users',
     settings = 'settings',
     library = '/library/',
+    login = '/',
 }

@@ -9,7 +9,10 @@ const useStyles = makeStyles()((theme) => ({
         borderRadius: '20px',
         color: theme.palette.common.text,
         borderColor: theme.palette.background.main,
-        backgroundColor: theme.palette.background.gray,
+        backgroundColor: theme.palette.background.dataGrid,
+        '& .MuiDataGrid-withBorderColor ': {
+            borderColor: theme.palette.common.text,
+        },
         '& .MuiDataGrid-columnHeader:focus': {
             outline: 'none!important',
         },

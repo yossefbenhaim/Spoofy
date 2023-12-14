@@ -39,7 +39,7 @@ const useStyles = makeStyles()((theme) => ({
             '&.Mui-focused': {
                 left: '30px',
                 transformOrigin: 'top right',
-                color: theme.palette.common.text,
+                color: theme.palette.common.white,
             },
         },
         '& .MuiOutlinedInput-notchedOutline legend': {
@@ -48,16 +48,16 @@ const useStyles = makeStyles()((theme) => ({
     },
     titleMenu: {
         left: '38px',
-        color: theme.palette.common.text,
+        color: theme.palette.common.white,
     },
     select: {
         width: '220px',
         borderRadius: '17px',
-        color: theme.palette.common.text,
-        backgroundColor: theme.palette.background.selectUser,
+        color: theme.palette.common.white,
+        backgroundColor: theme.palette.background.login,
         '& .MuiSelect-icon': {
             left: '7px',
-            color: theme.palette.common.text,
+            color: theme.palette.common.white,
         },
         '& .MuiInputBase-root': {
             borderRadius: '17px',

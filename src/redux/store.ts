@@ -23,6 +23,7 @@ const persistConfig = {
         SliceName.favorites,
         SliceName.playlists,
         SliceName.users,
+        SliceName.themeMode,
     ],
 };
 
