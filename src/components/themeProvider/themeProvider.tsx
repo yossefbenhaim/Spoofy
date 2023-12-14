@@ -9,7 +9,6 @@ const StylesProviders: React.FC<{ children?: React.ReactNode }> = ({ children })
 	return (
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={isDrakMode ? DrakMode : LightMode}>
-				{/* <CssBaseline /> */}
 				{children}
 			</ThemeProvider>
 		</StyledEngineProvider>
