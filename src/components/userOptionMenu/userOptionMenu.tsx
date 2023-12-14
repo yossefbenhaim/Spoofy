@@ -1,111 +1,109 @@
-import React from 'react';
-import {
-	Button,
-	Dialog,
-	DialogActions,
-	DialogTitle,
-	Typography
-} from '@mui/material/';
+import React, { useState } from 'react';
 
-import { VariantType, useSnackbar } from 'notistack';
-import { FeedbackMessage } from 'models/enums/feedbackMessage';
+import { resetUser } from 'redux/slice/currentUser';
+import { IconButton } from '@mui/material/';
+import { OptionUser } from '@models/enums/optionUser';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/store';
 import { resetFavorites } from 'redux/slice/favorites';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { useDispatch } from 'react-redux';
-import { resetUser } from 'redux/slice/currentUser';
-import { User } from 'models/interface/user';
+import { PathName } from 'models/enums/pathName';
 
-import DELETE_USER from 'queries/mutation/deleteUser';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import Tooltip from '@mui/material/Tooltip';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import useStyles from './userOptionMenuStyles';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Profile from 'components/userOptionMenu/profile/profile';
 
 const UserOptionMenu: React.FC = () => {
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
 	const currentUser = useAppSelector((state) => state.currentUser);
 
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [openProfileDialog, setOpenProfileDialog] = useState<boolean>(false)
+	const open = Boolean(anchorEl);
+
+	const FULL_USER_NAME =
+		currentUser.user?.firstName +
+		' ' +
+		currentUser.user?.lastName
+
 	const { classes } = useStyles();
-	const { enqueueSnackbar } = useSnackbar();
 
-	const [openDialogDelete, setOpen] = React.useState(false);
-	const [deleteUserMutation] = useMutation(DELETE_USER);
+	const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
 
-	const handleQueryMessage = (variant: VariantType) =>
-		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
+	const handleCloseMenu = () => {
+		setAnchorEl(null);
+	};
 
-	const handleClickOpen = () =>
-		setOpen(true);
+	const handleOpenProfileDialog = () => {
+		handleCloseMenu()
+		setOpenProfileDialog(true)
+	}
 
-	const handleClose = () =>
-		setOpen(false);
+	const navigationPage = (path: string) => {
+		handleCloseMenu()
+		navigation(path);
+	}
 
 	const navigateToHome = () => {
 		dispatch(resetUser());
 		dispatch(resetFavorites())
-		navigation('/');
-	};
-
-	const handleDeleteUser = (userId: User | undefined) => {
-		deleteUserMutation({ variables: { id: userId?.id } })
-			.then(() => { handleQueryMessage('info') })
-			.catch((err) => console.error('Failed to delete user: ', err));
+		navigation(PathName.login);
 	};
 
 	return (
-		<div className={classes.fieldsContainer}>
-			<Typography className={classes.title}>
-				{currentUser.user?.firstName +
-					' ' +
-					currentUser.user?.lastName +
-					'   היי  '}
-			</Typography>
-			<div className={classes.body}>
-				<Button
-					onClick={handleClickOpen}
-					className={classes.btnDelete}
-					variant="contained"
-				>
-					מחק חשבון
-				</Button>
-				<Button
-					onClick={navigateToHome}
-					className={classes.btnDisconect}
-					variant="contained"
-				>
-					התנתקות
-				</Button>
-				<Dialog
-					open={openDialogDelete}
-					keepMounted
-					onClose={handleClose}
-					className={classes.exitAccountContainer}
-				>
-					<DialogTitle className={classes.exitAccountTitle}>
-						<Typography> ?האם אתה בטוח שאתה רוצה למחוק את החשבון</Typography>
-					</DialogTitle>
-
-					<DialogActions className={classes.exitAccountContent}>
-						<Button
-							onClick={handleClose}
-							className={classes.exitBtn}
-						>
-							לא
-						</Button>
-						<Button
-							className={classes.exitBtn}
-							onClick={() => {
-								handleClose();
-								navigateToHome();
-								handleDeleteUser(currentUser.user);
-							}}
-						>
-							כן
-						</Button>
-					</DialogActions>
-				</Dialog>
+		<>
+			<div className={classes.userIconContainer}>
+				<Tooltip componentsProps={{ tooltip: { className: classes.tooltip } }} title={FULL_USER_NAME}>
+					<IconButton onClick={handleOpenMenu} className={classes.userIcon}>
+						<PermIdentityIcon />
+					</IconButton>
+				</Tooltip>
 			</div>
-		</div>
+			<Menu
+				className={classes.menuContainer}
+				anchorEl={anchorEl}
+				open={open}
+				onClose={handleCloseMenu}>
+				<MenuItem
+					className={classes.items}
+					onClick={() => handleOpenProfileDialog()}
+				>
+					<div className={classes.containerIcons}>
+						{OptionUser.profile}
+						{<OpenInNewIcon className={classes.icons} />}
+					</div>
+				</MenuItem>
+				<MenuItem
+					className={classes.items}
+					onClick={() => {
+						navigationPage(PathName.settings)
+					}}
+				>
+					<div className={classes.containerIcons}>
+						{OptionUser.settings}
+						{<SettingsIcon className={classes.icons} />}
+					</div>
+				</MenuItem>
+				<MenuItem
+					className={classes.disconnect}
+					onClick={navigateToHome}
+				>
+					{OptionUser.disconnect}
+				</MenuItem>
+			</Menu>
+			<Profile
+				openProfileDialog={openProfileDialog}
+				setOpenProfileDialog={setOpenProfileDialog}
+			/>
+		</>
 	);
 };
 

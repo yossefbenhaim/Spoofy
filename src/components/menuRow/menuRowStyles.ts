@@ -2,14 +2,14 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
     addIcon: {
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
     },
 
     item: {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.palette.background.gray,
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         '&:hover': {
             color: theme.palette.common.black,
             backgroundColor: theme.palette.background.gray,
@@ -27,7 +27,7 @@ const useStyles = makeStyles()((theme) => ({
         backgroundColor: theme.palette.background.gray,
         justifyContent: 'center',
         textDecoration: 'underline',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         borderBottom: `2px solid ${theme.palette.common.white}`,
     },
 

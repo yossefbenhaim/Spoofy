@@ -18,7 +18,6 @@ const Playlists: React.FC = () => {
 	const playlists = useAppSelector((state) => state.playlists.playlists);
 
 	const handleClickOpen = (newCurrentPlaylist: Playlist | undefined) => {
-
 		if (newCurrentPlaylist !== undefined) {
 			setCurrentPlaylist(newCurrentPlaylist)
 		} else {
@@ -41,7 +40,7 @@ const Playlists: React.FC = () => {
 			<div className={classes.addSongBtnContainer}>
 				<Button
 					variant="contained"
-					className={classesCommon.addButton}
+					className={classesCommon.genericButton}
 					onClick={() => { handleClickOpen(undefined) }}
 				>
 					+ צור פלייליסט חדש

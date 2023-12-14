@@ -3,5 +3,7 @@ export enum PathName {
     favorites = 'favorites',
     playlist = 'playlist',
     users = 'users',
+    settings = 'settings',
     library = '/library/',
+    login = '/',
 }

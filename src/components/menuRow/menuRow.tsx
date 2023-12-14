@@ -53,7 +53,6 @@ const MenuRow: React.FC<Props> = (props) => {
 				songId: rowId
 			},
 			onCompleted: () => {
-
 				handleQueryMessage('success', songName as string, playlistName)
 			},
 			onError: () => {

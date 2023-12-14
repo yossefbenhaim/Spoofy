@@ -23,7 +23,7 @@ const useStyles = makeStyles()((theme) => ({
         marginRight: '2.5%',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        color: theme.palette.common.white,
+        color: theme.palette.common.musicPlayer.text,
     },
 
     songTime: {
@@ -59,11 +59,11 @@ const useStyles = makeStyles()((theme) => ({
         padding: '0px',
         marginLeft: '2.5%',
         marginBottom: '0.1%',
-        color: theme.palette.common.white,
+        color: theme.palette.common.musicPlayer.slider,
     },
 
     sizeIcon: {
-        color: theme.palette.common.white,
+        color: theme.palette.common.musicPlayer.icon,
     },
 
     sizeSvg: {
@@ -100,7 +100,7 @@ const useStyles = makeStyles()((theme) => ({
 
     tinyText: {
         fontSize: '1rem',
-        color: theme.palette.common.white,
+        color: theme.palette.common.musicPlayer.text,
     },
 }));
 

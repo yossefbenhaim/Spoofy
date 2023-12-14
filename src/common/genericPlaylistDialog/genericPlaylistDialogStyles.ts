@@ -24,7 +24,7 @@ const useStyles = makeStyles()((theme) => ({
         marginBottom: '2%',
         textAlign: 'center',
         fontFamily: 'system-ui',
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
         backgroundColor: theme.palette.common.spoofy,
     },
 
@@ -49,10 +49,20 @@ const useStyles = makeStyles()((theme) => ({
     playlistInput: {
         width: '96%',
         marginLeft: '2%',
+        '&&::after': {
+            display: 'block',
+            content: '"*"',
+            color: theme.palette.common.error,
+            position: 'absolute',
+            fontWeight: 'bold',
+            right: '0',
+            top: '0',
+            transform: 'translate(50%,60%)',
+        },
         '& .MuiFormLabel-root': {
             right: '0',
             left: 'inherit',
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
             '&.Mui-error': {
                 color: theme.palette.common.error,
             },

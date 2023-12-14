@@ -11,14 +11,14 @@ const useStylesCommon = makeStyles()((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         backgroundColor: theme.palette.background.spoofy,
-        color: theme.palette.common.white,
+        color: theme.palette.common.text,
     },
 
     header: {
         marginTop: '-5px',
         fontSize: '2.8rem',
         fontWeight: 'bold',
-        color: theme.palette.common.white,
+        color: theme.palette.common.title,
     },
 
     input: {
@@ -26,14 +26,23 @@ const useStylesCommon = makeStyles()((theme) => ({
         marginLeft: '2%',
         direction: 'rtl',
         marginRight: '2%',
-
+        '&&::after': {
+            display: 'block',
+            content: '"*"',
+            color: theme.palette.common.error,
+            position: 'absolute',
+            fontWeight: 'bold',
+            right: '0',
+            top: '0',
+            transform: 'translate(50%,60%)',
+        },
         '& .MuiFormLabel-root': {
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
         },
         '& .MuiInputBase-input': {
             direction: 'ltr',
             textAlign: 'end',
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
         },
         '& .MuiInputLabel-root': {
             left: 'inherit',
@@ -71,7 +80,7 @@ const useStylesCommon = makeStyles()((theme) => ({
         '& .MuiInput-input': {
             direction: 'ltr',
             textAlign: 'end',
-            color: theme.palette.common.white,
+            color: theme.palette.common.text,
         },
         '& .MuiInput-root:after': {
             borderBottomColor: theme.palette.common.border.BottomAfter,
@@ -120,7 +129,7 @@ const useStylesCommon = makeStyles()((theme) => ({
     },
 
     submitButton: {
-        width: '18%',
+        width: '19%',
         minWidth: '15%',
         fontSize: '1rem',
         transition: '0.6s',
@@ -128,22 +137,27 @@ const useStylesCommon = makeStyles()((theme) => ({
         padding: '3px 16px',
         borderRadius: '30px',
         backgroundSize: '200%',
-        color: theme.palette.common.white,
+        border: '1px solid black',
+        color: theme.palette.common.buttonColor.text,
         backgroundImage: theme.palette.background.buttonColors.submit,
         '&:hover': {
             backgroundPosition: 'right',
         },
     },
 
-    addButton: {
+    genericButton: {
+        justifyContent: 'space-between',
         marginTop: '4px',
         fontSize: '1rem',
         transition: '0.6s',
         padding: '2px 18px',
         borderRadius: '20px',
         backgroundSize: '200%',
-        color: theme.palette.common.white,
-        backgroundImage: theme.palette.background.buttonColors.addButton,
+        maxHeight: '35px',
+        minWidth: '12%',
+        border: '1px solid black',
+        color: theme.palette.common.buttonColor.text,
+        backgroundImage: theme.palette.background.buttonColors.genericButton,
         '&:hover': {
             backgroundPosition: 'right',
         },

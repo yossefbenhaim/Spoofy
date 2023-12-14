@@ -54,7 +54,7 @@ const useStyles = makeStyles()((theme) => ({
         width: '220px',
         borderRadius: '17px',
         color: theme.palette.common.white,
-        backgroundColor: theme.palette.background.selectUser,
+        backgroundColor: theme.palette.background.login,
         '& .MuiSelect-icon': {
             left: '7px',
             color: theme.palette.common.white,

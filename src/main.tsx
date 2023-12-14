@@ -11,26 +11,24 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import ReactDOM from 'react-dom/client';
 import App from 'components/App';
 import client from 'utils/client';
-import { theme } from 'styles/theme'
 import React from 'react';
 import './index.css';
+import StylesProviders from 'components/themeProvider/themeProvider';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<StyledEngineProvider injectFirst>
-				<SnackbarProvider maxSnack={2}>
-					<ApolloProvider client={client}>
-						<Provider store={store}>
-							<PersistGate persistor={persistodStore}>
-								<ThemeProvider theme={theme}>
-									<App />
-								</ThemeProvider>
-							</PersistGate>
-						</Provider>
-					</ApolloProvider>
-				</SnackbarProvider>
-			</StyledEngineProvider>
+			<SnackbarProvider maxSnack={2}>
+				<Provider store={store}>
+					<PersistGate persistor={persistodStore}>
+						<StylesProviders>
+							<ApolloProvider client={client}>
+								<App />
+							</ApolloProvider>
+						</StylesProviders>
+					</PersistGate>
+				</Provider>
+			</SnackbarProvider>
 		</LocalizationProvider>
 	</React.StrictMode>
 );

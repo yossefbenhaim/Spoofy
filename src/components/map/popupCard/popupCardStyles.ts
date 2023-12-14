@@ -2,8 +2,8 @@ import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
     cardContainer: {
-        backgroundColor: 'rgb(22 183 84 / 50%)',
-        color: 'white',
+        color: theme.palette.common.text,
+        backgroundColor: theme.palette.background.map.locationCard,
         backdropFilter: 'blur(5px)',
         width: '200px',
         direction: 'rtl',

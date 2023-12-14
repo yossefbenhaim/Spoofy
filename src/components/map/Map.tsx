@@ -2,7 +2,8 @@ import "ol/ol.css";
 import "rlayers/control/layers.css";
 
 import { fromLonLat, transform } from "ol/proj";
-import { RControl, RMap, ROSMWebGL, useOL, } from "rlayers";
+import { RControl, RMap, ROSMWebGL, useOL, RLayerVector, RStyle } from "rlayers";
+import GeoJSON from "ol/format/GeoJSON";
 
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import UsersLocationLayer from "./layers/usersLocation/usersLocationLayer";
@@ -18,7 +19,7 @@ const Map = () => {
 	const olMap = useOL()
 
 	function CenterMap() {
-		olMap.map.getView().setCenter(transform([35.0818155, 31.4117257], 'EPSG:4326', 'EPSG:3857'));
+		// olMap.map.setView().fit()
 		olMap.map.getView().setZoom(5);
 	}
 	return (
