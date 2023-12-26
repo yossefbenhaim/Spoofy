@@ -9,9 +9,9 @@ import useStyles from './libraryStyles';
 
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
-import Navbar from 'components/navbar/navbar';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import getUseQuery from 'hooks/getUseQuery';
+import Navbar from 'components/navbar/navbar';
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();

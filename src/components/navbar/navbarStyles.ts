@@ -1,31 +1,70 @@
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
-    btnMenu: {
-        fontWeight: '500',
-        lineHeight: '0.75',
-        fontSize: '1.75rem',
-        padding: '7px 35px',
+    drawerContainer: {
+        position: 'initial',
+        overflowX: 'hidden',
+        display: 'flex',
         justifyContent: 'center',
-        color: theme.palette.common.buttonColor.text,
-        backgroundColor: theme.palette.background.gray,
-        border: `1px solid ${theme.palette.background.gray}`,
+        height: '265px',
+        transition: 'width 0.5s',
+        borderRadius: '30px',
+        '& .MuiPaper-root': {
+            backgroundColor: 'rgb(0 0 0 / 30%)',
+            backdropFilter: 'blur(10px)',
+            overflowX: 'hidden',
+            left: 'initial',
+            right: '0',
+            top: 'initial',
+            position: 'initial',
+            display: 'flex',
+            justifyContent: 'space-between',
+            borderRadius: '30px',
+            direction: 'ltr',
+        },
+        '& .MuiListItemText-root': {
+            display: 'flex',
+            justifyContent: 'end',
+        },
+    },
+    openDrawBtn: {
+        display: 'flex',
+        marginTop: '15px',
+    },
+    cheveronIcon: {
+        width: '15px',
+        '&:hover': {
+            backgroundColor: '#fff0',
+            transform: 'scale(1.2)',
+        },
+    },
+    listNavButton: {
+        paddingLeft: '20px',
+        paddingRight: '20px',
         '&:hover': {
             color: theme.palette.common.spoofy,
-            backgroundColor: theme.palette.background.buttonColors.disconect,
-            border: `1px solid ${theme.palette.common.spoofy}`,
+            backgroundColor: theme.palette.background.buttonColors.active,
+            backdropFilter: 'blur(10px)',
+            '& .MuiListItemIcon-root': {
+                color: theme.palette.common.spoofy,
+            },
+            '& .MuiListItemText-root': {
+                color: theme.palette.common.spoofy,
+            },
         },
     },
-    activeBtn: {
-        backgroundColor: theme.palette.background.spoofy,
+    iconActive: {
+        color: theme.palette.common.spoofy,
+        transform: 'scale(1.2)',
     },
-    btnContainer: {
-        gap: '27px',
-        display: 'flex',
-        flexDirection: 'column',
-        '& :hover': {
-            backgroundColor: theme.palette.common.text,
-        },
+    iconActiveText: {
+        color: theme.palette.common.spoofy,
+    },
+    listContainer: {
+        width: '100%',
+    },
+    textBtn: {
+        color: theme.palette.common.text,
     },
 }));
 

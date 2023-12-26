@@ -7,6 +7,7 @@ const useStyles = makeStyles()((theme) => ({
         padding: '1.2%',
         direction: 'rtl',
         borderRadius: '20px',
+        backdropFilter: 'blur(10px)',
         color: theme.palette.common.text,
         borderColor: theme.palette.background.main,
         backgroundColor: theme.palette.background.dataGrid,

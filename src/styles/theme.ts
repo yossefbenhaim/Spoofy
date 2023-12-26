@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import backgroundLoginImage from '../public/loginBackground.svg';
-
+import mainBackgroundDarkMode from '../public/mainBackgroundDarkMode.svg';
+import mainBackgroundLghitMode from '../public/mainBackgroundLghitMode.svg';
 declare module '@mui/material/styles' {
     interface TypeBackground {
         gray: string;
@@ -14,11 +15,14 @@ declare module '@mui/material/styles' {
         loginImage: string;
         dataGrid: string;
         login: string;
+        musicPlayer: string;
+        backgroundMainImage: string;
         buttonColors: {
             submit: string;
             genericButton: string;
             disconect: string;
             delete: string;
+            active: string;
         };
         map: {
             locationCard: string;
@@ -111,14 +115,17 @@ export const DrakMode = createTheme({
             scrollbar: 'rgb(142 146 143)',
             selectedSong: 'rgb(75, 218, 128)',
             dataGrid: 'gray',
+            musicPlayer: 'gray',
             login: '#797777',
             loginImage: `url(${backgroundLoginImage})`,
+            backgroundMainImage: `url(${mainBackgroundDarkMode})`,
             buttonColors: {
                 submit: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
                 genericButton:
                     'linear-gradient(to left, rgb(185, 172, 172),gray,rgb(185, 172, 172))',
                 disconect: 'rgb(112, 106, 106)',
                 delete: 'linear-gradient(to left, rgb(185, 172, 172),gray,rgb(185, 172, 172))',
+                active: 'rgb(255 255 255 / 15%)',
             },
             map: {
                 locationCard: 'rgb(22 183 84 / 50%)',
@@ -127,7 +134,7 @@ export const DrakMode = createTheme({
                 boundaryLine: '1px solid #838383',
                 icon: 'black',
                 tooltip: '#282828',
-                menu: '#282828',
+                menu: 'rgb(0 0 0 / 40%)',
                 setting: 'rgb(40 40 40)',
                 hoverMenu: '#80808063',
             },
@@ -194,15 +201,18 @@ export const LightMode = createTheme({
             selectUser: 'rgb(255, 255, 255)',
             scrollbar: 'rgb(142 146 143)',
             selectedSong: 'rgb(75, 218, 128)',
-            dataGrid: '#87878754',
+            dataGrid: '#8787876e',
+            musicPlayer: '#8787876e',
             login: '#797777',
             loginImage: `url(${backgroundLoginImage})`,
+            backgroundMainImage: `url(${mainBackgroundLghitMode})`,
             buttonColors: {
                 submit: 'linear-gradient(to left, #C4E538,#009432,#C4E538)',
                 genericButton:
                     'linear-gradient(to left, rgb(185, 172, 172),gray,rgb(185, 172, 172))',
                 disconect: 'rgb(112, 106, 106)',
                 delete: 'linear-gradient(to left, rgb(255 0 0),#f900008c,rgb(255 0 0))',
+                active: 'rgb(255 255 255 / 15%)',
             },
             map: {
                 locationCard: 'rgb(22 183 84 / 50%)',
@@ -211,7 +221,7 @@ export const LightMode = createTheme({
                 boundaryLine: '1px solid white',
                 icon: 'rgb(255, 255, 255)',
                 tooltip: '#797777',
-                menu: '#797777',
+                menu: 'rgb(0 0 0 / 40%)',
                 setting: '#797777',
                 hoverMenu: '#4f4f4fd9',
             },

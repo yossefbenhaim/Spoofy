@@ -39,14 +39,18 @@ const useStyles = makeStyles()((theme) => ({
         justifyContent: 'space-between',
     },
     buttonsContainer: {
-        width: '12%',
-        height: '100%',
+        width: '22%',
+        height: '80%',
         paddingTop: '0%',
         marginRight: '1%',
+        display: 'flex',
+        justifyContent: 'end',
+        alignItems: 'center',
+        padding: '1%',
     },
 
     tableValuse: {
-        width: '55%',
+        width: '60%',
         height: '100%',
         marginLeft: '22.5%',
     },

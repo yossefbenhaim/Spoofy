@@ -3,7 +3,6 @@ import { makeStyles } from 'tss-react/mui';
 const useStyles = makeStyles()((theme) => ({
     menuContainer: {
         '& .MuiList-root': {
-            backgroundColor: theme.palette.background.nemuProfile.menu,
             color: theme.palette.common.nemuProfile.text,
             width: '200px',
             height: '140px',
@@ -14,8 +13,10 @@ const useStyles = makeStyles()((theme) => ({
             justifyContent: 'space-between',
         },
         '& .MuiPaper-root': {
-            backgroundColor: theme.palette.background.nemuProfile.menu,
+            backgroundImage: 'initial',
             top: '70px!important',
+            backgroundColor: theme.palette.background.nemuProfile.menu,
+            backdropFilter: 'blur(10px)',
         },
     },
 

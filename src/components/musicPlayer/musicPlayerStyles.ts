@@ -8,7 +8,8 @@ const useStyles = makeStyles()((theme) => ({
         textAlign: 'center',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        backgroundColor: theme.palette.background.selectUser,
+        backgroundColor: theme.palette.background.musicPlayer,
+        backdropFilter: 'blur(10px)',
     },
 
     playSong: {

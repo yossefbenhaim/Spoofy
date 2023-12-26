@@ -1,5 +1,4 @@
 import { makeStyles } from 'tss-react/mui';
-import a from '../../public/loginBackground.png';
 const useStyles = makeStyles()((theme) => ({
     title: {
         fontSize: '5rem',

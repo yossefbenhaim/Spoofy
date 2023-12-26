@@ -4,7 +4,7 @@ import Switch from '@mui/material/Switch';
 
 const useStyles = makeStyles()((theme) => ({
     containerFields: {
-        width: '100%',
+        width: '88%',
         height: '70%',
         backgroundColor: theme.palette.background.nemuProfile.setting,
         borderRadius: '15px',
